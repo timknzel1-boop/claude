@@ -48,8 +48,9 @@
 <nav class="bg-white shadow-sm border-b sticky top-0 z-40">
   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
     <span class="font-bold text-gray-900">📊 Ad Research Tool</span>
-    <div class="flex gap-2">
-      <button onclick="showTab('products')"     id="tab-products"     class="px-4 py-2 rounded-lg text-sm font-medium tab-on">🛍️ Produkte</button>
+    <div class="flex gap-2 flex-wrap">
+      <button onclick="showTab('daily')"        id="tab-daily"        class="px-4 py-2 rounded-lg text-sm font-medium tab-on">🌟 Täglich</button>
+      <button onclick="showTab('products')"     id="tab-products"     class="px-4 py-2 rounded-lg text-sm font-medium tab-off">🛍️ Produkte</button>
       <button onclick="showTab('competitors')"  id="tab-competitors"  class="px-4 py-2 rounded-lg text-sm font-medium tab-off">🔍 Konkurrenten</button>
       <button onclick="showTab('gap')"          id="tab-gap"          class="px-4 py-2 rounded-lg text-sm font-medium tab-off">🇺🇸→🇩🇪 Lücken</button>
     </div>
@@ -59,8 +60,41 @@
 
 <div class="max-w-7xl mx-auto px-4 py-6">
 
+<!-- ═══ TÄGLICH ═══ -->
+<div id="tab-daily-content">
+  <div class="flex items-start justify-between mb-4">
+    <div>
+      <h2 class="text-2xl font-bold">🌟 Tägliche Produkt-Entdeckungen</h2>
+      <p class="text-gray-500 text-sm mt-1">Jeden Tag automatisch neue Produkte — aus Meta Ads + AliExpress (neue Produkte aus China)</p>
+    </div>
+    <button onclick="runDailyScan(true)" id="daily-btn"
+      class="px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-sm shrink-0">
+      🔄 Neu laden
+    </button>
+  </div>
+
+  <div id="daily-status" class="hidden mb-4 p-4 bg-purple-50 border border-purple-200 text-purple-700 rounded-xl text-sm">
+    <div class="flex items-center gap-3 mb-2"><div class="spinner" style="border-top-color:#7c3aed"></div><span id="daily-status-text">Scanne...</span></div>
+    <div class="w-full bg-purple-100 rounded-full h-1.5"><div id="daily-progress-bar" class="bg-purple-500 h-1.5 rounded-full transition-all" style="width:0%"></div></div>
+  </div>
+
+  <div id="daily-meta" class="hidden mb-5 flex flex-wrap gap-3 text-xs">
+    <span id="daily-date-badge" class="px-3 py-1 bg-green-100 text-green-700 rounded-full font-medium"></span>
+    <span id="daily-count-badge" class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full font-medium"></span>
+    <span id="daily-ali-badge" class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full font-medium hidden"></span>
+  </div>
+
+  <div id="daily-results">
+    <div class="text-center py-20 text-gray-400">
+      <div class="text-6xl mb-4">🌟</div>
+      <p class="text-lg font-medium text-gray-500">Täglich neue Produkte</p>
+      <p class="text-sm mt-2">Wird automatisch beim ersten Besuch des Tages geladen.</p>
+    </div>
+  </div>
+</div>
+
 <!-- ═══ PRODUKTE ═══ -->
-<div id="tab-products-content">
+<div id="tab-products-content" class="hidden">
   <div class="flex items-start justify-between mb-5">
     <div>
       <h2 class="text-2xl font-bold">Produkt-Suche</h2>
@@ -234,6 +268,8 @@ function changeToken(){
 function init(){
   if(getToken()){
     document.getElementById('main-app').classList.remove('hidden');
+    // daily tab is default — trigger auto-scan
+    checkDailyTrigger();
   } else {
     document.getElementById('setup-screen').classList.remove('hidden');
   }
@@ -241,10 +277,11 @@ function init(){
 
 // ── Tabs ──────────────────────────────────────────────────────
 function showTab(name){
-  ['products','competitors','gap'].forEach(t=>{
+  ['daily','products','competitors','gap'].forEach(t=>{
     document.getElementById('tab-'+t+'-content').classList.toggle('hidden', t!==name);
     document.getElementById('tab-'+t).className = 'px-4 py-2 rounded-lg text-sm font-medium '+(t===name?'tab-on':'tab-off');
   });
+  if(name==='daily') checkDailyTrigger();
 }
 
 // ── Meta API ──────────────────────────────────────────────────
@@ -570,6 +607,278 @@ async function showAds(pageId, pageName){
   } catch(e){
     document.getElementById('modal-body').innerHTML=`<p class="text-red-500 text-center py-8">${esc(e.message)}</p>`;
   }
+}
+
+// ── TÄGLICHE PRODUKT-ENTDECKUNG ──────────────────────────────
+const DAILY_CACHE_KEY  = 'daily_products_v2';
+const DAILY_DATE_KEY   = 'daily_scan_date_v2';
+const CORS_PROXIES = [
+  url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+  url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+];
+
+const META_SCAN_CATS = [
+  { name: '🌿 Supplement', kws: ['collagen drink','vitamin supplement','detox supplement','omega 3 capsules'] },
+  { name: '🧴 Beauty',     kws: ['retinol serum','hyaluronic acid face','anti aging cream','glow skin'] },
+  { name: '🍳 Küche',      kws: ['kitchen gadget','air fryer accessories','cleaning gadget','coffee gadget'] },
+  { name: '🐾 Haustier',   kws: ['dog supplement','cat toy','pet health','dog training'] },
+  { name: '💡 Tech',       kws: ['led light strip','phone accessory','smart home gadget','wireless earbuds'] },
+  { name: '💪 Fitness',    kws: ['resistance bands','massage gun','protein supplement','workout equipment'] },
+  { name: '🏠 Zuhause',    kws: ['home organizer','wall decor','bedroom gadget','storage solution'] },
+  { name: '👶 Baby & Kids',kws: ['baby product','kids educational toy','toddler gift','baby care'] },
+];
+
+const ALI_SEARCHES = [
+  { label: 'New Tech Gadgets',   q: 'new gadget 2025' },
+  { label: 'Trending Health',    q: 'trending health product' },
+  { label: 'Hot Home Products',  q: 'trending home decor' },
+  { label: 'Beauty Bestseller',  q: 'beauty bestseller skincare' },
+  { label: 'New China Products', q: 'new arrival dropshipping' },
+];
+
+function setDailyStatus(text, pct){
+  document.getElementById('daily-status-text').textContent = text;
+  document.getElementById('daily-progress-bar').style.width = pct+'%';
+}
+
+async function fetchWithProxy(url){
+  for(const makeProxy of CORS_PROXIES){
+    try{
+      const resp = await fetch(makeProxy(url), {signal: AbortSignal.timeout(9000)});
+      if(resp.ok){ const text = await resp.text(); if(text.length > 500) return text; }
+    }catch(e){ /* try next proxy */ }
+  }
+  return null;
+}
+
+function parseAliExpress(html){
+  const products = [];
+  // Try Next.js __NEXT_DATA__ first
+  const nextMatch = html.match(/<script id="__NEXT_DATA__"[^>]*>(\{.+?\})<\/script>/s);
+  if(nextMatch){
+    try{
+      const d = JSON.parse(nextMatch[1]);
+      const items = d?.props?.pageProps?.searchSSRProps?.searchProductsJson
+                 || d?.props?.pageProps?.data?.mods?.itemList?.content
+                 || [];
+      for(const it of items.slice(0,8)){
+        const title = it.title || it.productTitle || it.subject || '';
+        const price = it.prices?.salePrice?.formattedPrice || it.price?.salePrice?.formattedPrice || '';
+        const orders= it.trade?.tradeDesc || it.tradeDesc || '';
+        const img   = it.imageUrl || it.image?.imgUrl || '';
+        const id    = it.productId || it.listingId || '';
+        if(title) products.push({title, price, orders, img, url:`https://www.aliexpress.com/item/${id}.html`, source:'AliExpress'});
+      }
+    }catch(e){}
+  }
+  // Try window.runParams fallback
+  if(!products.length){
+    const rpMatch = html.match(/window\.runParams\s*=\s*(\{[\s\S]+?\});\s*(?:window|try|\()/);
+    if(rpMatch){
+      try{
+        const d = JSON.parse(rpMatch[1]);
+        const items = d?.data?.mods?.itemList?.content || [];
+        for(const it of items.slice(0,8)){
+          const title = it.productTitle||it.title||'';
+          const price = it.prices?.salePrice?.formattedPrice||'';
+          const orders= it.tradeDesc||'';
+          const img   = it.imageUrl||'';
+          const id    = it.productId||'';
+          if(title) products.push({title, price, orders, img, url:`https://www.aliexpress.com/item/${id}.html`, source:'AliExpress'});
+        }
+      }catch(e){}
+    }
+  }
+  return products;
+}
+
+async function scanAliExpress(){
+  const results = [];
+  for(const cat of ALI_SEARCHES){
+    const url = `https://www.aliexpress.com/wholesale?SearchText=${encodeURIComponent(cat.q)}&SortType=NEWEST_VOLUME_DESC`;
+    const html = await fetchWithProxy(url);
+    if(html){
+      const parsed = parseAliExpress(html);
+      for(const p of parsed) p.category = cat.label;
+      results.push(...parsed);
+    }
+  }
+  return results;
+}
+
+function checkDailyTrigger(){
+  const today = new Date().toISOString().split('T')[0];
+  const lastDate = localStorage.getItem(DAILY_DATE_KEY);
+  if(lastDate === today){
+    const cached = localStorage.getItem(DAILY_CACHE_KEY);
+    if(cached){
+      try{ renderDailyProducts(JSON.parse(cached), today, true); return; }catch(e){}
+    }
+  }
+  runDailyScan(false);
+}
+
+async function runDailyScan(force=false){
+  const today = new Date().toISOString().split('T')[0];
+  if(!force){
+    const lastDate = localStorage.getItem(DAILY_DATE_KEY);
+    if(lastDate === today){
+      const cached = localStorage.getItem(DAILY_CACHE_KEY);
+      if(cached){ try{ renderDailyProducts(JSON.parse(cached), today, true); return; }catch(e){} }
+    }
+  }
+
+  const btn = document.getElementById('daily-btn');
+  btn.disabled=true; btn.innerHTML='<div class="spinner mx-auto"></div>';
+  document.getElementById('daily-status').classList.remove('hidden');
+  document.getElementById('daily-meta').classList.add('hidden');
+  document.getElementById('daily-results').innerHTML='';
+
+  const allProducts = [];
+  const totalSteps = META_SCAN_CATS.length + 1;
+  let step = 0;
+
+  // ── 1. Meta Ads scan ──
+  setDailyStatus('Scanne Meta Ads (0/'+META_SCAN_CATS.length+' Nischen)...', 5);
+  const seenMeta = new Set();
+  for(const cat of META_SCAN_CATS){
+    step++;
+    setDailyStatus(`Scanne Meta: ${cat.name} (${step}/${META_SCAN_CATS.length})...`, Math.round(step/totalSteps*60));
+    for(const kw of cat.kws.slice(0,2)){
+      try{
+        const ads = await fetchAds(kw, 'US', 150);
+        const pages = Object.values(groupByPage(ads));
+        for(const pg of pages.slice(0,4)){
+          if(pg.ads.length < 8) continue;
+          if(seenMeta.has(pg.page_id)) continue;
+          seenMeta.add(pg.page_id);
+          const sample = pg.sample_ads[0]||{};
+          allProducts.push({
+            source:'Meta', category:cat.name,
+            title: pg.page_name,
+            description: (sample.body||'').substring(0,130),
+            adCount: pg.ads.length,
+            impressions: pg.max_imp,
+            page_id: pg.page_id,
+            score: pg.ads.length * (pg.max_imp ? Math.log10(pg.max_imp+1) : 1)
+          });
+        }
+      }catch(e){}
+    }
+  }
+
+  // ── 2. AliExpress scan ──
+  step++;
+  setDailyStatus('Suche neue Produkte auf AliExpress...', 65);
+  let aliProducts = [];
+  try{
+    aliProducts = await scanAliExpress();
+  }catch(e){}
+
+  // ── 3. Combine + deduplicate ──
+  setDailyStatus('Kombiniere Ergebnisse...', 92);
+  const metaSorted = allProducts.sort((a,b)=>b.score-a.score);
+
+  const final = { meta: metaSorted, ali: aliProducts, date: today };
+  localStorage.setItem(DAILY_CACHE_KEY, JSON.stringify(final));
+  localStorage.setItem(DAILY_DATE_KEY, today);
+
+  document.getElementById('daily-status').classList.add('hidden');
+  btn.disabled=false; btn.innerHTML='🔄 Neu laden';
+  renderDailyProducts(final, today, false);
+}
+
+function renderDailyProducts(data, today, fromCache){
+  const el = document.getElementById('daily-results');
+  const { meta=[], ali=[] } = data;
+
+  // badges
+  const dateBadge = document.getElementById('daily-date-badge');
+  dateBadge.textContent = fromCache ? `📅 Heute gecacht` : `📅 Gerade gescannt`;
+  document.getElementById('daily-count-badge').textContent = `${meta.length} Meta-Produkte`;
+  document.getElementById('daily-meta').classList.remove('hidden');
+  if(ali.length){
+    const ab = document.getElementById('daily-ali-badge');
+    ab.textContent = `${ali.length} AliExpress-Produkte`;
+    ab.classList.remove('hidden');
+  }
+
+  let html = '';
+
+  // ── AliExpress section (new China products) ──
+  if(ali.length){
+    html += `
+    <div class="mb-8">
+      <h3 class="text-lg font-bold mb-3 flex items-center gap-2">
+        <span class="px-2 py-0.5 bg-orange-500 text-white rounded text-xs font-bold">AliExpress</span>
+        Neue Produkte aus China
+        <span class="text-xs text-gray-400 font-normal ml-auto">Direkt von AliExpress · ${ali.length} Produkte</span>
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        ${ali.slice(0,16).map(p=>`
+        <a href="${esc(p.url||'#')}" target="_blank" rel="noopener"
+           class="bg-white rounded-xl shadow-sm border hover:shadow-md hover:border-orange-200 transition-all flex flex-col overflow-hidden group">
+          ${p.img?`<div class="aspect-square bg-gray-50 overflow-hidden">
+            <img src="${esc(p.img)}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform" loading="lazy" onerror="this.parentElement.style.display='none'"/>
+          </div>`:''}
+          <div class="p-3 flex-1 flex flex-col gap-1">
+            <p class="text-xs font-semibold text-gray-800 leading-snug line-clamp">${esc(p.title)}</p>
+            <p class="text-xs text-gray-400">${esc(p.category||'')}</p>
+            <div class="flex items-center justify-between mt-auto pt-2">
+              ${p.price?`<span class="text-sm font-bold text-orange-600">${esc(p.price)}</span>`:'<span></span>'}
+              ${p.orders?`<span class="text-xs text-gray-400">${esc(p.orders)}</span>`:''}
+            </div>
+          </div>
+        </a>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  // ── Meta section grouped by category ──
+  const byCategory = {};
+  for(const p of meta){
+    if(!byCategory[p.category]) byCategory[p.category]=[];
+    byCategory[p.category].push(p);
+  }
+
+  html += `
+  <div>
+    <h3 class="text-lg font-bold mb-3 flex items-center gap-2">
+      <span class="px-2 py-0.5 bg-blue-600 text-white rounded text-xs font-bold">Meta</span>
+      Trending auf Facebook/Instagram
+      <span class="text-xs text-gray-400 font-normal ml-auto">Viele aktive Ads = bewiesene Nachfrage</span>
+    </h3>`;
+
+  for(const [catName, products] of Object.entries(byCategory)){
+    html += `
+    <div class="mb-6">
+      <h4 class="text-sm font-semibold text-gray-600 mb-2">${esc(catName)}</h4>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        ${products.slice(0,6).map(p=>`
+        <div class="bg-white rounded-xl p-4 shadow-sm border flex flex-col gap-2">
+          <div class="flex items-start justify-between gap-2">
+            <h5 class="font-semibold text-sm leading-snug flex-1">${esc(p.title)}</h5>
+            <div class="flex flex-col items-end gap-1 shrink-0">
+              <span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full">${p.adCount} Ads</span>
+              ${p.impressions?`<span class="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs rounded-full">${fmtImp(p.impressions)}</span>`:''}
+            </div>
+          </div>
+          ${p.description?`<p class="text-xs text-gray-500 line-clamp">${esc(p.description)}</p>`:''}
+          <button onclick="showAds('${p.page_id}','${esc(p.title).replace(/'/g,"\\'")}')"
+            class="mt-auto py-1.5 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-lg text-xs font-medium">
+            Ads ansehen →
+          </button>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  }
+  html += '</div>';
+
+  if(!meta.length && !ali.length){
+    html = '<div class="text-center py-16 text-gray-400"><p>Keine Produkte gefunden. Token prüfen und nochmal versuchen.</p></div>';
+  }
+
+  el.innerHTML = html;
 }
 
 init();
