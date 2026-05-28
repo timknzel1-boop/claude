@@ -21,7 +21,7 @@
 <div id="setup-screen" class="hidden fixed inset-0 bg-white z-50 flex items-center justify-center p-4">
   <div class="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 border">
     <div class="text-center mb-6">
-      <div class="text-5xl mb-3">📊</div>
+      <div class="text-5xl mb-3">&#128202;</div>
       <h1 class="text-2xl font-bold text-gray-900">Ad Research Tool</h1>
       <p class="text-gray-500 mt-2 text-sm">Einmalig deinen Meta Access Token eingeben</p>
     </div>
@@ -33,10 +33,10 @@
     </div>
     <button onclick="saveToken()"
       class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold">
-      Speichern & loslegen →
+      Speichern &amp; loslegen &rarr;
     </button>
     <div class="mt-4 p-3 bg-blue-50 rounded-lg text-xs text-blue-700">
-      <strong>Token holen:</strong> developers.facebook.com/tools/explorer → "Generate Access Token"
+      <strong>Token holen:</strong> developers.facebook.com/tools/explorer &rarr; "Generate Access Token"
     </div>
   </div>
 </div>
@@ -47,12 +47,12 @@
 <!-- NAV -->
 <nav class="bg-white shadow-sm border-b sticky top-0 z-40">
   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-    <span class="font-bold text-gray-900">📊 Ad Research Tool</span>
+    <span class="font-bold text-gray-900">&#128202; Ad Research Tool</span>
     <div class="flex gap-2 flex-wrap">
-      <button onclick="showTab('daily')"        id="tab-daily"        class="px-4 py-2 rounded-lg text-sm font-medium tab-on">🌟 Täglich</button>
-      <button onclick="showTab('products')"     id="tab-products"     class="px-4 py-2 rounded-lg text-sm font-medium tab-off">🛍️ Produkte</button>
-      <button onclick="showTab('competitors')"  id="tab-competitors"  class="px-4 py-2 rounded-lg text-sm font-medium tab-off">🔍 Konkurrenten</button>
-      <button onclick="showTab('gap')"          id="tab-gap"          class="px-4 py-2 rounded-lg text-sm font-medium tab-off">🇺🇸→🇩🇪 Lücken</button>
+      <button onclick="showTab('daily')"        id="tab-daily"        class="px-4 py-2 rounded-lg text-sm font-medium tab-on">&#127775; Täglich</button>
+      <button onclick="showTab('products')"     id="tab-products"     class="px-4 py-2 rounded-lg text-sm font-medium tab-off">&#128717; Produkte</button>
+      <button onclick="showTab('competitors')"  id="tab-competitors"  class="px-4 py-2 rounded-lg text-sm font-medium tab-off">&#128269; Konkurrenten</button>
+      <button onclick="showTab('gap')"          id="tab-gap"          class="px-4 py-2 rounded-lg text-sm font-medium tab-off">&#127482;&#127480;&rarr;&#127465;&#127466; Lücken</button>
     </div>
     <button onclick="changeToken()" class="text-xs text-gray-400 hover:text-gray-600">Token ändern</button>
   </div>
@@ -60,16 +60,16 @@
 
 <div class="max-w-7xl mx-auto px-4 py-6">
 
-<!-- ═══ TÄGLICH ═══ -->
+<!-- TAEGLICH -->
 <div id="tab-daily-content">
   <div class="flex items-start justify-between mb-4">
     <div>
-      <h2 class="text-2xl font-bold">🌟 Tägliche Produkt-Entdeckungen</h2>
-      <p class="text-gray-500 text-sm mt-1">Jeden Tag automatisch neue Produkte — aus Meta Ads + AliExpress (neue Produkte aus China)</p>
+      <h2 class="text-2xl font-bold">&#127775; Tägliche Produkt-Entdeckungen</h2>
+      <p class="text-gray-500 text-sm mt-1">Jeden Tag automatisch neue Produkte — 10 Nischen aus Meta Ads + AliExpress Direktlinks</p>
     </div>
     <button onclick="runDailyScan(true)" id="daily-btn"
       class="px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-sm shrink-0">
-      🔄 Neu laden
+      &#128260; Neu laden
     </button>
   </div>
 
@@ -81,19 +81,18 @@
   <div id="daily-meta" class="hidden mb-5 flex flex-wrap gap-3 text-xs">
     <span id="daily-date-badge" class="px-3 py-1 bg-green-100 text-green-700 rounded-full font-medium"></span>
     <span id="daily-count-badge" class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full font-medium"></span>
-    <span id="daily-ali-badge" class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full font-medium hidden"></span>
   </div>
 
   <div id="daily-results">
     <div class="text-center py-20 text-gray-400">
-      <div class="text-6xl mb-4">🌟</div>
+      <div class="text-6xl mb-4">&#127775;</div>
       <p class="text-lg font-medium text-gray-500">Täglich neue Produkte</p>
       <p class="text-sm mt-2">Wird automatisch beim ersten Besuch des Tages geladen.</p>
     </div>
   </div>
 </div>
 
-<!-- ═══ PRODUKTE ═══ -->
+<!-- PRODUKTE -->
 <div id="tab-products-content" class="hidden">
   <div class="flex items-start justify-between mb-5">
     <div>
@@ -102,7 +101,7 @@
     </div>
     <button onclick="searchProducts()" id="prod-btn"
       class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium text-sm">
-      🔍 Suchen
+      &#128269; Suchen
     </button>
   </div>
 
@@ -115,15 +114,15 @@
     <div>
       <label class="block text-xs font-medium text-gray-600 mb-1">Land</label>
       <select id="prod-country" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
-        <option value="US">🇺🇸 USA</option>
-        <option value="DE" selected>🇩🇪 Deutschland</option>
-        <option value="AT">🇦🇹 Österreich</option>
-        <option value="CH">🇨🇭 Schweiz</option>
-        <option value="GB">🇬🇧 UK</option>
-        <option value="FR">🇫🇷 Frankreich</option>
-        <option value="IT">🇮🇹 Italien</option>
-        <option value="ES">🇪🇸 Spanien</option>
-        <option value="NL">🇳🇱 Niederlande</option>
+        <option value="US">USA</option>
+        <option value="DE" selected>Deutschland</option>
+        <option value="AT">Österreich</option>
+        <option value="CH">Schweiz</option>
+        <option value="GB">UK</option>
+        <option value="FR">Frankreich</option>
+        <option value="IT">Italien</option>
+        <option value="ES">Spanien</option>
+        <option value="NL">Niederlande</option>
       </select>
     </div>
     <div>
@@ -139,53 +138,51 @@
 
   <div id="prod-results" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     <div class="col-span-full text-center py-16 text-gray-400">
-      <div class="text-5xl mb-3">🛍️</div>
       <p>Klicke auf "Suchen" um loszulegen.</p>
     </div>
   </div>
 </div>
 
-<!-- ═══ KONKURRENTEN ═══ -->
+<!-- KONKURRENTEN -->
 <div id="tab-competitors-content" class="hidden">
   <h2 class="text-2xl font-bold mb-2">Konkurrenten-Analyse</h2>
-  <p class="text-gray-500 text-sm mb-5">Klick auf eine Nische — oder gib eigene Keywords ein.</p>
+  <p class="text-gray-500 text-sm mb-5">Klick auf eine Nische oder gib eigene Keywords ein.</p>
 
-  <!-- NISCHEN-PRESETS -->
   <div class="bg-white rounded-xl p-4 shadow-sm mb-4">
     <p class="text-xs font-semibold text-gray-500 uppercase mb-3">Schnell-Nischen</p>
     <div class="flex flex-wrap gap-2">
-      <button onclick="usePreset('detox')"     class="preset-btn px-4 py-2 bg-green-100  hover:bg-green-200  text-green-800  rounded-full text-sm font-medium">🌿 Detox / Supplement</button>
-      <button onclick="usePreset('ai-video')"  class="preset-btn px-4 py-2 bg-blue-100   hover:bg-blue-200   text-blue-800   rounded-full text-sm font-medium">🤖 KI Video</button>
-      <button onclick="usePreset('fitness')"   class="preset-btn px-4 py-2 bg-orange-100 hover:bg-orange-200 text-orange-800 rounded-full text-sm font-medium">💪 Fitness / Abnehmen</button>
-      <button onclick="usePreset('beauty')"    class="preset-btn px-4 py-2 bg-pink-100   hover:bg-pink-200   text-pink-800   rounded-full text-sm font-medium">🧴 Beauty / Anti-Aging</button>
-      <button onclick="usePreset('ecommerce')" class="preset-btn px-4 py-2 bg-purple-100 hover:bg-purple-200 text-purple-800 rounded-full text-sm font-medium">🛍️ E-Commerce</button>
-      <button onclick="usePreset('mindset')"   class="preset-btn px-4 py-2 bg-yellow-100 hover:bg-yellow-200 text-yellow-800 rounded-full text-sm font-medium">🧠 Mindset / Coaching</button>
+      <button onclick="usePreset('detox')"     class="preset-btn px-4 py-2 bg-green-100  hover:bg-green-200  text-green-800  rounded-full text-sm font-medium">Detox / Supplement</button>
+      <button onclick="usePreset('ai-video')"  class="preset-btn px-4 py-2 bg-blue-100   hover:bg-blue-200   text-blue-800   rounded-full text-sm font-medium">KI Video</button>
+      <button onclick="usePreset('fitness')"   class="preset-btn px-4 py-2 bg-orange-100 hover:bg-orange-200 text-orange-800 rounded-full text-sm font-medium">Fitness / Abnehmen</button>
+      <button onclick="usePreset('beauty')"    class="preset-btn px-4 py-2 bg-pink-100   hover:bg-pink-200   text-pink-800   rounded-full text-sm font-medium">Beauty / Anti-Aging</button>
+      <button onclick="usePreset('ecommerce')" class="preset-btn px-4 py-2 bg-purple-100 hover:bg-purple-200 text-purple-800 rounded-full text-sm font-medium">E-Commerce</button>
+      <button onclick="usePreset('mindset')"   class="preset-btn px-4 py-2 bg-yellow-100 hover:bg-yellow-200 text-yellow-800 rounded-full text-sm font-medium">Mindset / Coaching</button>
     </div>
   </div>
 
   <div class="bg-white rounded-xl p-5 shadow-sm mb-5 flex flex-wrap gap-3 items-end">
     <div class="flex-1 min-w-0">
-      <label class="block text-xs font-medium text-gray-600 mb-1">Eigenes Keyword (oder nach Preset-Klick auto-befüllt)</label>
+      <label class="block text-xs font-medium text-gray-600 mb-1">Eigenes Keyword</label>
       <input id="comp-keyword" type="text" placeholder="z.B. collagen drink, keto shake..."
         class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full"/>
     </div>
     <div>
-      <label class="block text-xs font-medium text-gray-600 mb-1">Land / Region</label>
+      <label class="block text-xs font-medium text-gray-600 mb-1">Land</label>
       <select id="comp-country" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
-        <option value="DE">🇩🇪 Deutschland</option>
-        <option value="AT">🇦🇹 Österreich</option>
-        <option value="CH">🇨🇭 Schweiz</option>
-        <option value="FR">🇫🇷 Frankreich</option>
-        <option value="IT">🇮🇹 Italien</option>
-        <option value="ES">🇪🇸 Spanien</option>
-        <option value="NL">🇳🇱 Niederlande</option>
-        <option value="GB">🇬🇧 UK</option>
-        <option value="US">🇺🇸 USA</option>
+        <option value="DE">Deutschland</option>
+        <option value="AT">Österreich</option>
+        <option value="CH">Schweiz</option>
+        <option value="FR">Frankreich</option>
+        <option value="IT">Italien</option>
+        <option value="ES">Spanien</option>
+        <option value="NL">Niederlande</option>
+        <option value="GB">UK</option>
+        <option value="US">USA</option>
       </select>
     </div>
     <button onclick="searchCompetitors()" id="comp-btn"
       class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium">
-      🔍 Suchen
+      &#128269; Suchen
     </button>
   </div>
 
@@ -195,26 +192,25 @@
 
   <div id="comp-results">
     <div class="text-center py-16 text-gray-400">
-      <div class="text-5xl mb-3">🔍</div>
-      <p>Suchbegriff eingeben und suchen.</p>
+      <p>Nische wählen oder Suchbegriff eingeben.</p>
     </div>
   </div>
 </div>
 
-<!-- ═══ USA → DACH LÜCKEN ═══ -->
+<!-- LUECKEN -->
 <div id="tab-gap-content" class="hidden">
-  <h2 class="text-2xl font-bold mb-2">🇺🇸 → 🇩🇪 Marktlücken</h2>
+  <h2 class="text-2xl font-bold mb-2">Marktlücken USA &rarr; DACH</h2>
   <p class="text-gray-500 text-sm mb-5">Findet Produkte die in den USA stark laufen, aber in DACH noch niemand macht.</p>
 
   <div class="bg-white rounded-xl p-5 shadow-sm mb-5 flex flex-wrap gap-3 items-end">
     <div>
-      <label class="block text-xs font-medium text-gray-600 mb-1">Keyword (USA-Suche)</label>
+      <label class="block text-xs font-medium text-gray-600 mb-1">Keyword</label>
       <input id="gap-keyword" type="text" placeholder="z.B. detox, supplement, collagen..."
         class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-56"/>
     </div>
     <button onclick="searchGap()" id="gap-btn"
       class="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium">
-      🔍 Lücken finden
+      &#128269; Lücken finden
     </button>
   </div>
 
@@ -225,14 +221,13 @@
 
   <div id="gap-results">
     <div class="text-center py-16 text-gray-400">
-      <div class="text-5xl mb-3">🎯</div>
       <p>Keyword eingeben und auf "Lücken finden" klicken.</p>
     </div>
   </div>
 </div>
 
-</div><!-- /max-w -->
-</div><!-- /main-app -->
+</div>
+</div>
 
 <!-- ADS MODAL -->
 <div id="ads-modal" class="hidden fixed inset-0 bg-black/60 z-50 overflow-auto" onclick="if(event.target===this)this.classList.add('hidden')">
@@ -240,7 +235,7 @@
     <div class="bg-white rounded-2xl shadow-2xl">
       <div class="flex items-center justify-between p-5 border-b">
         <h3 class="font-bold text-lg" id="modal-title">Ads</h3>
-        <button onclick="document.getElementById('ads-modal').classList.add('hidden')" class="text-gray-400 text-2xl">✕</button>
+        <button onclick="document.getElementById('ads-modal').classList.add('hidden')" class="text-gray-400 text-2xl">&times;</button>
       </div>
       <div id="modal-body" class="p-5 max-h-[70vh] overflow-y-auto space-y-3"></div>
     </div>
@@ -252,7 +247,6 @@ const TOKEN_KEY = 'meta_access_token';
 const LIKED_KEY = 'liked_products';
 const API = 'https://graph.facebook.com/v19.0/ads_archive';
 
-// ── Token ─────────────────────────────────────────────────────
 function getToken(){ return localStorage.getItem(TOKEN_KEY)||''; }
 function saveToken(){
   const t = document.getElementById('token-input').value.trim();
@@ -260,6 +254,7 @@ function saveToken(){
   localStorage.setItem(TOKEN_KEY, t);
   document.getElementById('setup-screen').classList.add('hidden');
   document.getElementById('main-app').classList.remove('hidden');
+  checkDailyTrigger();
 }
 function changeToken(){
   document.getElementById('token-input').value = getToken();
@@ -268,14 +263,12 @@ function changeToken(){
 function init(){
   if(getToken()){
     document.getElementById('main-app').classList.remove('hidden');
-    // daily tab is default — trigger auto-scan
     checkDailyTrigger();
   } else {
     document.getElementById('setup-screen').classList.remove('hidden');
   }
 }
 
-// ── Tabs ──────────────────────────────────────────────────────
 function showTab(name){
   ['daily','products','competitors','gap'].forEach(t=>{
     document.getElementById('tab-'+t+'-content').classList.toggle('hidden', t!==name);
@@ -284,7 +277,6 @@ function showTab(name){
   if(name==='daily') checkDailyTrigger();
 }
 
-// ── Meta API ──────────────────────────────────────────────────
 async function fetchAds(terms, country, limit=200){
   const params = new URLSearchParams({
     search_terms: terms,
@@ -317,32 +309,27 @@ function groupByPage(ads){
   return map;
 }
 
-function fmtImp(n){ if(!n) return '–'; if(n>=1e6) return (n/1e6).toFixed(1)+'M'; if(n>=1000) return (n/1000).toFixed(0)+'K'; return n; }
+function fmtImp(n){ if(!n) return ''; if(n>=1e6) return (n/1e6).toFixed(1)+'M'; if(n>=1000) return (n/1000).toFixed(0)+'K'; return n; }
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-// ── PRODUKTE ─────────────────────────────────────────────────
+// ── PRODUKTE
 async function searchProducts(){
-  const kw      = document.getElementById('prod-keyword').value.trim() || 'shop now';
-  const country = document.getElementById('prod-country').value;
-  const minAds  = parseInt(document.getElementById('prod-min').value)||20;
+  const kw=document.getElementById('prod-keyword').value.trim()||'shop now';
+  const country=document.getElementById('prod-country').value;
+  const minAds=parseInt(document.getElementById('prod-min').value)||20;
   const btn=document.getElementById('prod-btn');
   const st=document.getElementById('prod-status');
   btn.disabled=true; btn.innerHTML='<div class="spinner"></div>';
   st.classList.remove('hidden');
   document.getElementById('prod-results').innerHTML='';
-
   try {
-    const ads = await fetchAds(kw, country, 200);
-    const pages = groupByPage(ads);
-    const results = Object.values(pages)
-      .filter(p=>p.ads.length>=minAds)
-      .sort((a,b)=>b.max_imp-a.max_imp)
-      .slice(0,12);
+    const ads=await fetchAds(kw,country,200);
+    const results=Object.values(groupByPage(ads)).filter(p=>p.ads.length>=minAds).sort((a,b)=>b.max_imp-a.max_imp).slice(0,12);
     renderProducts(results);
   } catch(e){
     document.getElementById('prod-results').innerHTML=`<div class="col-span-full bg-red-50 text-red-600 rounded-xl p-6 text-center">${esc(e.message)}</div>`;
   }
-  btn.disabled=false; btn.innerHTML='🔍 Suchen';
+  btn.disabled=false; btn.innerHTML='&#128269; Suchen';
   st.classList.add('hidden');
 }
 
@@ -357,138 +344,107 @@ function renderProducts(list){
     const vote=liked[p.page_id]||'';
     const cls=vote==='liked'?'card-liked':vote==='disliked'?'card-disliked':'';
     const s=p.sample_ads[0]||{};
-    return `
-    <div id="pc-${p.page_id.replace(/\W/g,'')}" class="bg-white rounded-xl p-5 shadow-sm border-2 border-transparent ${cls} flex flex-col">
-      <div class="flex items-start justify-between gap-2 mb-2">
-        <h3 class="font-bold text-sm leading-snug flex-1">${esc(p.page_name)}</h3>
-        <div class="flex flex-col items-end gap-1 shrink-0">
-          <span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full">${p.ads.length} Ads</span>
-          ${p.max_imp?`<span class="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs rounded-full">${fmtImp(p.max_imp)} Imp.</span>`:''}
+    return `<div class="bg-white rounded-xl shadow-sm border-2 border-transparent ${cls} flex flex-col overflow-hidden">
+      <img src="https://graph.facebook.com/${p.page_id}/picture?type=normal" class="w-full h-40 object-cover bg-gray-100" onerror="this.style.display='none'"/>
+      <div class="p-4 flex flex-col gap-2 flex-1">
+        <div class="flex items-start justify-between gap-2">
+          <h3 class="font-bold text-sm leading-snug flex-1">${esc(p.page_name)}</h3>
+          <div class="flex flex-col items-end gap-1 shrink-0">
+            <span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full">${p.ads.length} Ads</span>
+            ${p.max_imp?`<span class="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs rounded-full">${fmtImp(p.max_imp)} Imp.</span>`:''}
+          </div>
         </div>
+        ${s.body?`<p class="text-gray-500 text-xs line-clamp flex-1">${esc(s.body)}</p>`:''}
+        <div class="flex gap-2">
+          <button onclick="voteProduct('${p.page_id}','like')" class="flex-1 py-1.5 ${vote==='liked'?'bg-green-500 text-white':'bg-gray-100 hover:bg-green-100'} rounded-lg text-sm">&#128077; Gut</button>
+          <button onclick="voteProduct('${p.page_id}','dislike')" class="flex-1 py-1.5 ${vote==='disliked'?'bg-red-400 text-white':'bg-gray-100 hover:bg-red-100'} rounded-lg text-sm">&#128078; Nein</button>
+        </div>
+        <button onclick="showAds('${p.page_id}','${esc(p.page_name).replace(/'/g,"\\'")}')'" class="py-1.5 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-lg text-xs font-medium">Alle Ads ansehen &rarr;</button>
       </div>
-      ${s.body?`<p class="text-gray-600 text-sm mb-3 line-clamp flex-1">${esc(s.body)}</p>`:'<p class="text-gray-400 text-sm italic mb-3 flex-1">Kein Text</p>'}
-      <div class="flex gap-2 mb-2">
-        <button onclick="voteProduct('${p.page_id}','${esc(p.page_name).replace(/'/g,"\\'")}','liked')" class="flex-1 py-1.5 ${vote==='liked'?'bg-green-500 text-white':'bg-gray-100 hover:bg-green-100 text-gray-700'} rounded-lg text-sm font-medium">👍 Gut</button>
-        <button onclick="voteProduct('${p.page_id}','${esc(p.page_name).replace(/'/g,"\\'")}','disliked')" class="flex-1 py-1.5 ${vote==='disliked'?'bg-red-400 text-white':'bg-gray-100 hover:bg-red-100 text-gray-700'} rounded-lg text-sm font-medium">👎 Nein</button>
-      </div>
-      <button onclick="showAds('${p.page_id}','${esc(p.page_name).replace(/'/g,"\\'")}')" class="w-full py-1.5 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-lg text-xs font-medium">Alle Ads ansehen →</button>
     </div>`;
   }).join('');
 }
 
-function voteProduct(pid, name, vote){
-  const liked=getLiked();
-  liked[pid]={vote, name};
-  setLiked(liked);
-  // re-render just that card's buttons
-  searchProducts(); // simplest: just re-run the search
+function voteProduct(pid, vote){
+  const liked=getLiked(); liked[pid]=vote; setLiked(liked); searchProducts();
 }
 
-// ── NISCHEN PRESETS ──────────────────────────────────────────
+// ── NISCHEN PRESETS
 const NICHES = {
-  'detox': {
-    label: '🌿 Detox / Supplement',
-    keywords: ['detox supplement', 'liver detox', 'detox drink', 'colon cleanse', 'entgiftung kur', 'darmreinigung', 'metabolism booster', 'gut health cleanse']
-  },
-  'ai-video': {
-    label: '🤖 KI Video',
-    keywords: ['AI video generator', 'text to video AI', 'KI Video erstellen', 'video AI tool', 'AI content creator', 'Kling AI', 'Seedance video', 'AI video maker']
-  },
-  'fitness': {
-    label: '💪 Fitness / Abnehmen',
-    keywords: ['fat burner supplement', 'weight loss supplement', 'protein shake', 'schnell abnehmen', 'keto diet supplement', 'thermogenic fat loss', 'workout supplement']
-  },
-  'beauty': {
-    label: '🧴 Beauty / Anti-Aging',
-    keywords: ['anti aging serum', 'collagen supplement', 'collagen drink', 'retinol serum', 'vitamin C serum', 'hyaluronic acid', 'skin glow supplement']
-  },
-  'ecommerce': {
-    label: '🛍️ E-Commerce',
-    keywords: ['free shipping today', 'limited offer', 'buy now discount', 'shop sale', 'order now save', 'exclusive deal online']
-  },
-  'mindset': {
-    label: '🧠 Mindset / Coaching',
-    keywords: ['online coaching program', 'mindset training', 'life coach', 'manifestation program', 'selbstentwicklung kurs', 'financial freedom coaching', 'business mindset']
-  }
+  detox:    { label:'Detox / Supplement',  keywords:['detox supplement','liver detox','detox drink','colon cleanse','entgiftung','darmreinigung','metabolism booster','gut health'] },
+  'ai-video':{ label:'KI Video',           keywords:['AI video generator','text to video AI','KI Video erstellen','video AI tool','AI content creator','AI video maker'] },
+  fitness:  { label:'Fitness / Abnehmen',  keywords:['fat burner supplement','weight loss supplement','protein shake','schnell abnehmen','keto supplement','workout supplement'] },
+  beauty:   { label:'Beauty / Anti-Aging', keywords:['anti aging serum','collagen supplement','collagen drink','retinol serum','vitamin C serum','hyaluronic acid'] },
+  ecommerce:{ label:'E-Commerce',          keywords:['free shipping today','limited offer','buy now discount','shop sale','order now save','exclusive deal'] },
+  mindset:  { label:'Mindset / Coaching',  keywords:['online coaching program','mindset training','life coach','manifestation','selbstentwicklung kurs','financial freedom'] }
 };
 
 async function usePreset(nicheKey) {
   const niche = NICHES[nicheKey];
   if (!niche) return;
   document.getElementById('comp-keyword').value = niche.label;
-  // highlight active button
   document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('ring-2','ring-offset-1','ring-green-500'));
   event.target.classList.add('ring-2','ring-offset-1','ring-green-500');
   await searchCompetitors(niche.keywords);
 }
 
-// ── KONKURRENTEN ─────────────────────────────────────────────
-async function searchCompetitors(presetKeywords = null){
-  const customKw = document.getElementById('comp-keyword').value.trim();
-  const keywords = presetKeywords || (customKw ? [customKw] : null);
-  if (!keywords){ alert('Bitte Suchbegriff eingeben oder Nische wählen'); return; }
-  const country = document.getElementById('comp-country').value;
-  const displayLabel = presetKeywords ? document.getElementById('comp-keyword').value : customKw;
-  const btn = document.getElementById('comp-btn');
-  const st  = document.getElementById('comp-status');
-  btn.disabled = true; btn.innerHTML = '<div class="spinner mx-auto"></div>';
+// ── KONKURRENTEN
+async function searchCompetitors(presetKeywords=null){
+  const customKw=document.getElementById('comp-keyword').value.trim();
+  const keywords=presetKeywords||(customKw?[customKw]:null);
+  if(!keywords){ alert('Bitte Suchbegriff eingeben oder Nische wählen'); return; }
+  const country=document.getElementById('comp-country').value;
+  const displayLabel=presetKeywords?document.getElementById('comp-keyword').value:customKw;
+  const btn=document.getElementById('comp-btn');
+  const st=document.getElementById('comp-status');
+  btn.disabled=true; btn.innerHTML='<div class="spinner mx-auto"></div>';
   st.classList.remove('hidden');
-  st.querySelector('span').textContent = `Suche ${keywords.length} Keywords... bitte warten.`;
-
+  st.querySelector('span').textContent=`Suche ${keywords.length} Keywords...`;
   try {
-    // fetch all keywords, combine + deduplicate ads
-    let allAds = [];
-    const seen = new Set();
-    for (const kw of keywords) {
-      try {
-        const ads = await fetchAds(kw, country, 200);
-        for (const ad of ads) {
-          if (!seen.has(ad.id)) { seen.add(ad.id); allAds.push(ad); }
-        }
-      } catch(e) { /* skip single-keyword failure */ }
+    let allAds=[]; const seen=new Set();
+    for(const kw of keywords){
+      try{ const ads=await fetchAds(kw,country,200); for(const ad of ads){ if(!seen.has(ad.id)){seen.add(ad.id);allAds.push(ad);} } }catch(e){}
     }
-    const pages = Object.values(groupByPage(allAds)).sort((a,b) => b.ads.length - a.ads.length).slice(0, 30);
-    renderCompetitors(pages, displayLabel, country);
+    const pages=Object.values(groupByPage(allAds)).sort((a,b)=>b.ads.length-a.ads.length).slice(0,30);
+    renderCompetitors(pages,displayLabel,country);
   } catch(e){
-    document.getElementById('comp-results').innerHTML = `<div class="bg-red-50 text-red-600 rounded-xl p-6 text-center">${esc(e.message)}</div>`;
+    document.getElementById('comp-results').innerHTML=`<div class="bg-red-50 text-red-600 rounded-xl p-6 text-center">${esc(e.message)}</div>`;
   }
-  btn.disabled = false; btn.innerHTML = '🔍 Suchen';
+  btn.disabled=false; btn.innerHTML='&#128269; Suchen';
   st.classList.add('hidden');
 }
 
-function renderCompetitors(list, kw, country){
+function renderCompetitors(list,kw,country){
   const el=document.getElementById('comp-results');
   if(!list.length){ el.innerHTML='<p class="text-gray-400 text-center py-12">Keine Konkurrenten gefunden.</p>'; return; }
-  el.innerHTML=`
-  <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-    <div class="px-5 py-3 border-b bg-gray-50 text-sm font-semibold text-gray-700">${list.length} Konkurrenten für "<strong>${esc(kw)}</strong>" in ${country}</div>
-    <div class="overflow-x-auto">
-      <table class="w-full text-sm">
-        <thead><tr class="border-b text-xs text-gray-500 uppercase bg-gray-50">
-          <th class="px-4 py-3 text-left">#</th>
-          <th class="px-4 py-3 text-left">Advertiser</th>
-          <th class="px-4 py-3 text-left">Aktive Ads</th>
-          <th class="px-4 py-3 text-left hidden md:table-cell">Max. Imp.</th>
-          <th class="px-4 py-3 text-left hidden md:table-cell">Beispiel</th>
-          <th class="px-4 py-3"></th>
-        </tr></thead>
-        <tbody>${list.map((c,i)=>{
-          const s=c.sample_ads[0]||{};
-          return `<tr class="border-b hover:bg-gray-50">
-            <td class="px-4 py-3 text-gray-400">${i+1}</td>
-            <td class="px-4 py-3 font-medium">${esc(c.page_name)}</td>
-            <td class="px-4 py-3"><span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">${c.ads.length}</span></td>
-            <td class="px-4 py-3 hidden md:table-cell"><span class="px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full text-xs">${fmtImp(c.max_imp)}</span></td>
-            <td class="px-4 py-3 text-gray-500 text-xs max-w-xs hidden md:table-cell">${esc((s.body||'').substring(0,70))}</td>
-            <td class="px-4 py-3"><button onclick="showAds('${c.page_id}','${esc(c.page_name).replace(/'/g,"\\'")}')" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-xs">Ads →</button></td>
-          </tr>`;
-        }).join('')}</tbody>
-      </table>
-    </div>
+  el.innerHTML=`<div class="bg-white rounded-xl shadow-sm overflow-hidden">
+    <div class="px-5 py-3 border-b bg-gray-50 text-sm font-semibold">${list.length} Konkurrenten für "<strong>${esc(kw)}</strong>" in ${country}</div>
+    <div class="overflow-x-auto"><table class="w-full text-sm">
+      <thead><tr class="border-b text-xs text-gray-500 uppercase bg-gray-50">
+        <th class="px-4 py-3 text-left">#</th><th class="px-4 py-3 text-left">Advertiser</th>
+        <th class="px-4 py-3 text-left">Ads</th><th class="px-4 py-3 text-left hidden md:table-cell">Imp.</th>
+        <th class="px-4 py-3 text-left hidden md:table-cell">Beispiel</th><th class="px-4 py-3"></th>
+      </tr></thead>
+      <tbody>${list.map((c,i)=>{ const s=c.sample_ads[0]||{};
+        return `<tr class="border-b hover:bg-gray-50">
+          <td class="px-4 py-3 text-gray-400">${i+1}</td>
+          <td class="px-4 py-3">
+            <div class="flex items-center gap-2">
+              <img src="https://graph.facebook.com/${c.page_id}/picture?type=square" class="w-8 h-8 rounded-full object-cover bg-gray-100 shrink-0" onerror="this.style.display='none'"/>
+              <span class="font-medium">${esc(c.page_name)}</span>
+            </div>
+          </td>
+          <td class="px-4 py-3"><span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">${c.ads.length}</span></td>
+          <td class="px-4 py-3 hidden md:table-cell"><span class="px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full text-xs">${fmtImp(c.max_imp)}</span></td>
+          <td class="px-4 py-3 text-gray-500 text-xs max-w-xs hidden md:table-cell">${esc((s.body||'').substring(0,70))}</td>
+          <td class="px-4 py-3"><button onclick="showAds('${c.page_id}','${esc(c.page_name).replace(/'/g,"\\'")}')'" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-xs">Ads &rarr;</button></td>
+        </tr>`;
+      }).join('')}</tbody>
+    </table></div>
   </div>`;
 }
 
-// ── USA → DACH LÜCKEN ────────────────────────────────────────
+// ── USA → DACH
 async function searchGap(){
   const kw=document.getElementById('gap-keyword').value.trim();
   if(!kw){ alert('Bitte Keyword eingeben'); return; }
@@ -497,388 +453,244 @@ async function searchGap(){
   btn.disabled=true; btn.innerHTML='<div class="spinner mx-auto"></div>';
   st.classList.remove('hidden');
   document.getElementById('gap-results').innerHTML='';
-
   try {
-    // Search US
     const usAds=await fetchAds(kw,'US',200);
-    const usPages=groupByPage(usAds);
-    const usStrong=Object.values(usPages).filter(p=>p.ads.length>=15);
-
-    // Search DACH
+    const usStrong=Object.values(groupByPage(usAds)).filter(p=>p.ads.length>=15);
     const dachIds=new Set();
-    for(const c of ['DE','AT','CH']){
-      const ads=await fetchAds(kw,c,100);
-      for(const ad of ads) if(ad.page_id) dachIds.add(ad.page_id);
-    }
-
-    // Gaps = strong in US, absent in DACH
+    for(const c of ['DE','AT','CH']){ const ads=await fetchAds(kw,c,100); for(const ad of ads) if(ad.page_id) dachIds.add(ad.page_id); }
     const gaps=usStrong.filter(p=>!dachIds.has(p.page_id)).sort((a,b)=>b.max_imp-a.max_imp).slice(0,20);
-    renderGaps(gaps, kw);
+    renderGaps(gaps,kw);
   } catch(e){
     document.getElementById('gap-results').innerHTML=`<div class="bg-red-50 text-red-600 rounded-xl p-6 text-center">${esc(e.message)}</div>`;
   }
-  btn.disabled=false; btn.innerHTML='🔍 Lücken finden';
+  btn.disabled=false; btn.innerHTML='&#128269; Lücken finden';
   st.classList.add('hidden');
 }
 
-function renderGaps(list, kw){
+function renderGaps(list,kw){
   const el=document.getElementById('gap-results');
-  if(!list.length){ el.innerHTML='<div class="bg-yellow-50 border border-yellow-200 rounded-xl p-6 text-center text-yellow-800"><strong>Keine Lücken gefunden</strong> — der Markt scheint schon besetzt zu sein. Anderen Begriff versuchen.</div>'; return; }
-  el.innerHTML=`
-  <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4 text-sm text-amber-800">
-    🎯 <strong>${list.length} Marktlücken gefunden</strong> für "<strong>${esc(kw)}</strong>" — diese Advertiser sind stark in den USA, schalten aber <strong>keine Ads in Deutschland, Österreich oder der Schweiz</strong>.
+  if(!list.length){ el.innerHTML='<div class="bg-yellow-50 border border-yellow-200 rounded-xl p-6 text-center text-yellow-800">Keine Lücken gefunden. Anderen Begriff versuchen.</div>'; return; }
+  el.innerHTML=`<div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4 text-sm text-amber-800">
+    <strong>${list.length} Marktlücken</strong> für "<strong>${esc(kw)}</strong>" — stark in USA, aber nicht in DACH.
   </div>
-  <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-    <div class="overflow-x-auto">
-      <table class="w-full text-sm">
-        <thead><tr class="border-b text-xs text-gray-500 uppercase bg-gray-50">
-          <th class="px-4 py-3 text-left">#</th>
-          <th class="px-4 py-3 text-left">Advertiser (USA)</th>
-          <th class="px-4 py-3 text-left">USA Ads</th>
-          <th class="px-4 py-3 text-left">Impressionen</th>
-          <th class="px-4 py-3 text-left hidden md:table-cell">Beispiel-Ad</th>
-          <th class="px-4 py-3"></th>
-        </tr></thead>
-        <tbody>${list.map((c,i)=>{
-          const s=c.sample_ads[0]||{};
-          return `<tr class="border-b hover:bg-amber-50">
-            <td class="px-4 py-3 text-gray-400 font-bold">${i+1}</td>
-            <td class="px-4 py-3">
-              <p class="font-semibold">${esc(c.page_name)}</p>
-              <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Nicht in DACH ✓</span>
-            </td>
-            <td class="px-4 py-3"><span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">${c.ads.length}</span></td>
-            <td class="px-4 py-3"><span class="px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold">${fmtImp(c.max_imp)}</span></td>
-            <td class="px-4 py-3 text-gray-500 text-xs max-w-xs hidden md:table-cell">${esc((s.body||'').substring(0,80))}</td>
-            <td class="px-4 py-3"><button onclick="showAds('${c.page_id}','${esc(c.page_name).replace(/'/g,"\\'")}')" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-xs">Ads →</button></td>
-          </tr>`;
-        }).join('')}</tbody>
-      </table>
-    </div>
-  </div>`;
+  <div class="bg-white rounded-xl shadow-sm overflow-hidden"><div class="overflow-x-auto"><table class="w-full text-sm">
+    <thead><tr class="border-b text-xs text-gray-500 uppercase bg-gray-50">
+      <th class="px-4 py-3 text-left">#</th><th class="px-4 py-3 text-left">Advertiser (USA)</th>
+      <th class="px-4 py-3 text-left">USA Ads</th><th class="px-4 py-3 text-left">Imp.</th>
+      <th class="px-4 py-3 text-left hidden md:table-cell">Beispiel</th><th class="px-4 py-3"></th>
+    </tr></thead>
+    <tbody>${list.map((c,i)=>{ const s=c.sample_ads[0]||{};
+      return `<tr class="border-b hover:bg-amber-50">
+        <td class="px-4 py-3 text-gray-400 font-bold">${i+1}</td>
+        <td class="px-4 py-3">
+          <div class="flex items-center gap-2">
+            <img src="https://graph.facebook.com/${c.page_id}/picture?type=square" class="w-8 h-8 rounded-full object-cover bg-gray-100 shrink-0" onerror="this.style.display='none'"/>
+            <div><p class="font-semibold">${esc(c.page_name)}</p><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Nicht in DACH</span></div>
+          </div>
+        </td>
+        <td class="px-4 py-3"><span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">${c.ads.length}</span></td>
+        <td class="px-4 py-3"><span class="px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold">${fmtImp(c.max_imp)}</span></td>
+        <td class="px-4 py-3 text-gray-500 text-xs max-w-xs hidden md:table-cell">${esc((s.body||'').substring(0,80))}</td>
+        <td class="px-4 py-3"><button onclick="showAds('${c.page_id}','${esc(c.page_name).replace(/'/g,"\\'")}')'" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-xs">Ads &rarr;</button></td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table></div></div>`;
 }
 
-// ── ADS ANZEIGEN ─────────────────────────────────────────────
+// ── ADS MODAL
 async function showAds(pageId, pageName){
   document.getElementById('modal-title').textContent = pageName;
   document.getElementById('modal-body').innerHTML='<div class="text-center py-8"><div class="spinner mx-auto"></div><p class="mt-3 text-gray-500 text-sm">Lade Ads...</p></div>';
   document.getElementById('ads-modal').classList.remove('hidden');
-
   try {
-    // Use search_page_ids as plain comma-separated string (not JSON array)
-    // Try ALL status first to show as many ads as possible
-    const params=new URLSearchParams({
-      search_page_ids: pageId,
-      ad_type: 'ALL',
-      ad_active_status: 'ALL',
-      fields: 'id,ad_creation_time,ad_creative_bodies,impressions,ad_active_status',
-      limit: 50,
-      access_token: getToken()
-    });
-    const resp = await fetch(API+'?'+params);
-    const data = await resp.json();
+    const params=new URLSearchParams({ search_page_ids:pageId, ad_type:'ALL', ad_active_status:'ALL', fields:'id,ad_creation_time,ad_creative_bodies,impressions,ad_active_status', limit:50, access_token:getToken() });
+    const resp=await fetch(API+'?'+params);
+    const data=await resp.json();
     if(data.error){ throw new Error(data.error.message||'API Fehler'); }
-    const allAds = data.data || [];
-    // Prefer active ads, then show the rest
-    const active  = allAds.filter(a => a.ad_active_status === 'ACTIVE');
-    const ads = (active.length ? active : allAds)
-      .sort((a,b) => (parseInt(b.impressions?.lower_bound||0)) - (parseInt(a.impressions?.lower_bound||0)));
-
-    if(!ads.length){ document.getElementById('modal-body').innerHTML='<p class="text-gray-400 text-center py-8">Keine Ads gefunden für diese Seite.</p>'; return; }
-    document.getElementById('modal-body').innerHTML = `
-      <p class="text-xs text-gray-400 mb-3">${active.length} aktive Ads · ${allAds.length} gesamt</p>
-      ${ads.map((ad,i)=>{
+    const allAds=data.data||[];
+    const active=allAds.filter(a=>a.ad_active_status==='ACTIVE');
+    const ads=(active.length?active:allAds).sort((a,b)=>(parseInt(b.impressions?.lower_bound||0))-(parseInt(a.impressions?.lower_bound||0)));
+    if(!ads.length){ document.getElementById('modal-body').innerHTML='<p class="text-gray-400 text-center py-8">Keine Ads gefunden.</p>'; return; }
+    document.getElementById('modal-body').innerHTML=`<p class="text-xs text-gray-400 mb-3">${active.length} aktive &middot; ${allAds.length} gesamt</p>`+
+      ads.map(ad=>{
         const b=(ad.ad_creative_bodies||[])[0]||'';
         const lo=parseInt(ad.impressions?.lower_bound||0)||0;
         const hi=parseInt(ad.impressions?.upper_bound||0)||0;
         const dt=ad.ad_creation_time?new Date(ad.ad_creation_time).toLocaleDateString('de-DE'):'';
-        const isActive = ad.ad_active_status === 'ACTIVE';
+        const isActive=ad.ad_active_status==='ACTIVE';
         return `<div class="border rounded-xl p-4 ${isActive?'border-green-200 bg-green-50/30':''}">
           <div class="flex justify-between items-center mb-2 flex-wrap gap-2">
             <div class="flex items-center gap-2">
-              <span class="text-xs ${isActive?'text-green-600 font-semibold':'text-gray-400'}">${isActive?'● Aktiv':'○ Archiviert'}</span>
+              <span class="text-xs ${isActive?'text-green-600 font-semibold':'text-gray-400'}">${isActive?'&#9679; Aktiv':'&#9675; Archiviert'}</span>
               ${dt?`<span class="text-xs text-gray-400">${dt}</span>`:''}
             </div>
-            ${lo?`<span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">${fmtImp(lo)}–${fmtImp(hi)} Imp.</span>`:''}
+            ${lo?`<span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">${fmtImp(lo)}&ndash;${fmtImp(hi)} Imp.</span>`:''}
           </div>
-          ${b?`<p class="text-sm text-gray-800 leading-relaxed">${esc(b)}</p>`:'<p class="text-gray-400 italic text-sm">Kein Text (Bild/Video-Ad)</p>'}
+          ${b?`<p class="text-sm text-gray-800 leading-relaxed">${esc(b)}</p>`:'<p class="text-gray-400 italic text-sm">Bild/Video-Ad (kein Text)</p>'}
         </div>`;
-      }).join('')}`;
+      }).join('');
   } catch(e){
     document.getElementById('modal-body').innerHTML=`<p class="text-red-500 text-center py-8">${esc(e.message)}</p>`;
   }
 }
 
-// ── TÄGLICHE PRODUKT-ENTDECKUNG ──────────────────────────────
-const DAILY_CACHE_KEY  = 'daily_products_v2';
-const DAILY_DATE_KEY   = 'daily_scan_date_v2';
-const CORS_PROXIES = [
-  url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-  url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+// ── TAEGLICH
+const DAILY_KEY  = 'daily_v4';
+const DAILY_DATE = 'daily_date_v4';
+
+const SCAN_CATS = [
+  { name:'Supplement & Detox', emoji:'&#127807;', kws:['collagen supplement','detox drink','liver detox','gut health probiotic','vitamin supplement','metabolism booster','immune booster'] },
+  { name:'Beauty & Anti-Aging', emoji:'&#129516;', kws:['anti aging serum','retinol cream','hyaluronic serum','glow face serum','collagen face cream','vitamin C serum'] },
+  { name:'Kueche & Gadgets',    emoji:'&#127859;', kws:['kitchen gadget','air fryer','coffee gadget','vegetable chopper','cleaning gadget','meal prep'] },
+  { name:'Haustier',            emoji:'&#128062;', kws:['dog supplement','dog toy','cat bed','pet grooming','cat supplement','dog training treat'] },
+  { name:'Tech & Gadgets',      emoji:'&#128161;', kws:['led strip lights','phone stand','wireless charger','bluetooth speaker','ring light','smart plug'] },
+  { name:'Fitness & Abnehmen',  emoji:'&#128170;', kws:['resistance band','fat burner','protein powder','massage gun','weight loss supplement','ab workout'] },
+  { name:'Zuhause & Deko',      emoji:'&#127968;', kws:['home organizer','wall art print','scented candle','storage box','plant pot','bedroom decor'] },
+  { name:'Baby & Kids',         emoji:'&#128118;', kws:['baby monitor','baby carrier','educational toy','toddler gift','baby sleep aid','kids craft'] },
+  { name:'Frauen & Wellness',   emoji:'&#127804;', kws:['hormone balance supplement','womens health supplement','fertility supplement','self care gift','period pain relief'] },
+  { name:'Mindset & Coaching',  emoji:'&#129504;', kws:['online coaching','stress relief supplement','anxiety supplement','manifestation','meditation app','sleep supplement'] },
 ];
 
-const META_SCAN_CATS = [
-  { name: '🌿 Supplement', kws: ['collagen drink','vitamin supplement','detox supplement','omega 3 capsules'] },
-  { name: '🧴 Beauty',     kws: ['retinol serum','hyaluronic acid face','anti aging cream','glow skin'] },
-  { name: '🍳 Küche',      kws: ['kitchen gadget','air fryer accessories','cleaning gadget','coffee gadget'] },
-  { name: '🐾 Haustier',   kws: ['dog supplement','cat toy','pet health','dog training'] },
-  { name: '💡 Tech',       kws: ['led light strip','phone accessory','smart home gadget','wireless earbuds'] },
-  { name: '💪 Fitness',    kws: ['resistance bands','massage gun','protein supplement','workout equipment'] },
-  { name: '🏠 Zuhause',    kws: ['home organizer','wall decor','bedroom gadget','storage solution'] },
-  { name: '👶 Baby & Kids',kws: ['baby product','kids educational toy','toddler gift','baby care'] },
-];
-
-const ALI_SEARCHES = [
-  { label: 'New Tech Gadgets',   q: 'new gadget 2025' },
-  { label: 'Trending Health',    q: 'trending health product' },
-  { label: 'Hot Home Products',  q: 'trending home decor' },
-  { label: 'Beauty Bestseller',  q: 'beauty bestseller skincare' },
-  { label: 'New China Products', q: 'new arrival dropshipping' },
+const ALI_LINKS = [
+  { label:'Tech & Gadgets',     q:'new gadgets trending 2025',   color:'#3b82f6' },
+  { label:'Health & Supplement',q:'health supplement trending',   color:'#22c55e' },
+  { label:'Home & Living',      q:'trending home decor 2025',     color:'#a855f7' },
+  { label:'Beauty & Skincare',  q:'bestseller skincare beauty',   color:'#ec4899' },
+  { label:'Fitness',            q:'new fitness equipment',        color:'#f97316' },
+  { label:'Pet Products',       q:'trending pet products',        color:'#f59e0b' },
+  { label:'Kitchen Gadgets',    q:'new kitchen gadget',           color:'#ef4444' },
+  { label:'Baby & Kids',        q:'trending baby products',       color:'#06b6d4' },
 ];
 
 function setDailyStatus(text, pct){
-  document.getElementById('daily-status-text').textContent = text;
-  document.getElementById('daily-progress-bar').style.width = pct+'%';
-}
-
-async function fetchWithProxy(url){
-  for(const makeProxy of CORS_PROXIES){
-    try{
-      const resp = await fetch(makeProxy(url), {signal: AbortSignal.timeout(9000)});
-      if(resp.ok){ const text = await resp.text(); if(text.length > 500) return text; }
-    }catch(e){ /* try next proxy */ }
-  }
-  return null;
-}
-
-function parseAliExpress(html){
-  const products = [];
-  // Try Next.js __NEXT_DATA__ first
-  const nextMatch = html.match(/<script id="__NEXT_DATA__"[^>]*>(\{.+?\})<\/script>/s);
-  if(nextMatch){
-    try{
-      const d = JSON.parse(nextMatch[1]);
-      const items = d?.props?.pageProps?.searchSSRProps?.searchProductsJson
-                 || d?.props?.pageProps?.data?.mods?.itemList?.content
-                 || [];
-      for(const it of items.slice(0,8)){
-        const title = it.title || it.productTitle || it.subject || '';
-        const price = it.prices?.salePrice?.formattedPrice || it.price?.salePrice?.formattedPrice || '';
-        const orders= it.trade?.tradeDesc || it.tradeDesc || '';
-        const img   = it.imageUrl || it.image?.imgUrl || '';
-        const id    = it.productId || it.listingId || '';
-        if(title) products.push({title, price, orders, img, url:`https://www.aliexpress.com/item/${id}.html`, source:'AliExpress'});
-      }
-    }catch(e){}
-  }
-  // Try window.runParams fallback
-  if(!products.length){
-    const rpMatch = html.match(/window\.runParams\s*=\s*(\{[\s\S]+?\});\s*(?:window|try|\()/);
-    if(rpMatch){
-      try{
-        const d = JSON.parse(rpMatch[1]);
-        const items = d?.data?.mods?.itemList?.content || [];
-        for(const it of items.slice(0,8)){
-          const title = it.productTitle||it.title||'';
-          const price = it.prices?.salePrice?.formattedPrice||'';
-          const orders= it.tradeDesc||'';
-          const img   = it.imageUrl||'';
-          const id    = it.productId||'';
-          if(title) products.push({title, price, orders, img, url:`https://www.aliexpress.com/item/${id}.html`, source:'AliExpress'});
-        }
-      }catch(e){}
-    }
-  }
-  return products;
-}
-
-async function scanAliExpress(){
-  const results = [];
-  for(const cat of ALI_SEARCHES){
-    const url = `https://www.aliexpress.com/wholesale?SearchText=${encodeURIComponent(cat.q)}&SortType=NEWEST_VOLUME_DESC`;
-    const html = await fetchWithProxy(url);
-    if(html){
-      const parsed = parseAliExpress(html);
-      for(const p of parsed) p.category = cat.label;
-      results.push(...parsed);
-    }
-  }
-  return results;
+  document.getElementById('daily-status-text').textContent=text;
+  document.getElementById('daily-progress-bar').style.width=pct+'%';
 }
 
 function checkDailyTrigger(){
-  const today = new Date().toISOString().split('T')[0];
-  const lastDate = localStorage.getItem(DAILY_DATE_KEY);
-  if(lastDate === today){
-    const cached = localStorage.getItem(DAILY_CACHE_KEY);
-    if(cached){
-      try{ renderDailyProducts(JSON.parse(cached), today, true); return; }catch(e){}
-    }
+  const today=new Date().toISOString().split('T')[0];
+  if(localStorage.getItem(DAILY_DATE)===today){
+    const cached=localStorage.getItem(DAILY_KEY);
+    if(cached){ try{ renderDailyProducts(JSON.parse(cached),true); return; }catch(e){} }
   }
   runDailyScan(false);
 }
 
 async function runDailyScan(force=false){
-  const today = new Date().toISOString().split('T')[0];
-  if(!force){
-    const lastDate = localStorage.getItem(DAILY_DATE_KEY);
-    if(lastDate === today){
-      const cached = localStorage.getItem(DAILY_CACHE_KEY);
-      if(cached){ try{ renderDailyProducts(JSON.parse(cached), today, true); return; }catch(e){} }
-    }
+  const today=new Date().toISOString().split('T')[0];
+  if(!force && localStorage.getItem(DAILY_DATE)===today){
+    const cached=localStorage.getItem(DAILY_KEY);
+    if(cached){ try{ renderDailyProducts(JSON.parse(cached),true); return; }catch(e){} }
   }
-
-  const btn = document.getElementById('daily-btn');
+  const btn=document.getElementById('daily-btn');
   btn.disabled=true; btn.innerHTML='<div class="spinner mx-auto"></div>';
   document.getElementById('daily-status').classList.remove('hidden');
   document.getElementById('daily-meta').classList.add('hidden');
   document.getElementById('daily-results').innerHTML='';
 
-  const allProducts = [];
-  const totalSteps = META_SCAN_CATS.length + 1;
-  let step = 0;
-
-  // ── 1. Meta Ads scan ──
-  setDailyStatus('Scanne Meta Ads (0/'+META_SCAN_CATS.length+' Nischen)...', 5);
-  const seenMeta = new Set();
-  for(const cat of META_SCAN_CATS){
-    step++;
-    setDailyStatus(`Scanne Meta: ${cat.name} (${step}/${META_SCAN_CATS.length})...`, Math.round(step/totalSteps*60));
-    for(const kw of cat.kws.slice(0,2)){
+  const products=[]; const seen=new Set();
+  for(let i=0;i<SCAN_CATS.length;i++){
+    const cat=SCAN_CATS[i];
+    setDailyStatus('Scanne '+cat.name+' ('+(i+1)+'/'+SCAN_CATS.length+')...', Math.round((i/SCAN_CATS.length)*95)+3);
+    for(const kw of cat.kws.slice(0,3)){
       try{
-        const ads = await fetchAds(kw, 'US', 150);
-        const pages = Object.values(groupByPage(ads));
-        for(const pg of pages.slice(0,4)){
-          if(pg.ads.length < 8) continue;
-          if(seenMeta.has(pg.page_id)) continue;
-          seenMeta.add(pg.page_id);
-          const sample = pg.sample_ads[0]||{};
-          allProducts.push({
-            source:'Meta', category:cat.name,
-            title: pg.page_name,
-            description: (sample.body||'').substring(0,130),
-            adCount: pg.ads.length,
-            impressions: pg.max_imp,
-            page_id: pg.page_id,
-            score: pg.ads.length * (pg.max_imp ? Math.log10(pg.max_imp+1) : 1)
+        const ads=await fetchAds(kw,'US',200);
+        for(const pg of Object.values(groupByPage(ads)).slice(0,8)){
+          if(pg.ads.length<2||seen.has(pg.page_id)) continue;
+          seen.add(pg.page_id);
+          const sample=pg.sample_ads[0]||{};
+          products.push({
+            cat:cat.name, emoji:cat.emoji,
+            title:pg.page_name,
+            desc:(sample.body||'').substring(0,120),
+            adCount:pg.ads.length,
+            imp:pg.max_imp,
+            page_id:pg.page_id,
+            score:pg.ads.length*(pg.max_imp?Math.log10(pg.max_imp+1):1)
           });
         }
       }catch(e){}
     }
   }
-
-  // ── 2. AliExpress scan ──
-  step++;
-  setDailyStatus('Suche neue Produkte auf AliExpress...', 65);
-  let aliProducts = [];
-  try{
-    aliProducts = await scanAliExpress();
-  }catch(e){}
-
-  // ── 3. Combine + deduplicate ──
-  setDailyStatus('Kombiniere Ergebnisse...', 92);
-  const metaSorted = allProducts.sort((a,b)=>b.score-a.score);
-
-  const final = { meta: metaSorted, ali: aliProducts, date: today };
-  localStorage.setItem(DAILY_CACHE_KEY, JSON.stringify(final));
-  localStorage.setItem(DAILY_DATE_KEY, today);
-
+  setDailyStatus('Fertig!',100);
+  products.sort((a,b)=>b.score-a.score);
+  const final={products, date:today};
+  localStorage.setItem(DAILY_KEY,JSON.stringify(final));
+  localStorage.setItem(DAILY_DATE,today);
   document.getElementById('daily-status').classList.add('hidden');
-  btn.disabled=false; btn.innerHTML='🔄 Neu laden';
-  renderDailyProducts(final, today, false);
+  btn.disabled=false; btn.innerHTML='&#128260; Neu laden';
+  renderDailyProducts(final,false);
 }
 
-function renderDailyProducts(data, today, fromCache){
-  const el = document.getElementById('daily-results');
-  const { meta=[], ali=[] } = data;
-
-  // badges
-  const dateBadge = document.getElementById('daily-date-badge');
-  dateBadge.textContent = fromCache ? `📅 Heute gecacht` : `📅 Gerade gescannt`;
-  document.getElementById('daily-count-badge').textContent = `${meta.length} Meta-Produkte`;
+function renderDailyProducts(data, fromCache){
+  const el=document.getElementById('daily-results');
+  const {products=[]}=data;
+  document.getElementById('daily-date-badge').textContent=fromCache?'Heute gecacht':'Gerade gescannt';
+  document.getElementById('daily-count-badge').textContent=products.length+' Produkte gefunden';
   document.getElementById('daily-meta').classList.remove('hidden');
-  if(ali.length){
-    const ab = document.getElementById('daily-ali-badge');
-    ab.textContent = `${ali.length} AliExpress-Produkte`;
-    ab.classList.remove('hidden');
+
+  // AliExpress Direktlinks
+  let html=`<div class="mb-8 bg-white rounded-xl p-5 shadow-sm border-l-4 border-orange-400">
+    <div class="flex items-center gap-2 mb-1">
+      <span class="px-2 py-0.5 bg-orange-500 text-white rounded text-xs font-bold">AliExpress</span>
+      <h3 class="font-bold">Neue Produkte aus China &mdash; Direkt suchen</h3>
+    </div>
+    <p class="text-xs text-gray-400 mb-4">Klicke auf eine Kategorie &rarr; öffnet AliExpress sortiert nach "Neueste"</p>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">`;
+  for(const l of ALI_LINKS){
+    const url=`https://www.aliexpress.com/wholesale?SearchText=${encodeURIComponent(l.q)}&SortType=NEWEST_VOLUME_DESC`;
+    html+=`<a href="${url}" target="_blank" rel="noopener"
+      style="border-left:3px solid ${l.color}"
+      class="flex items-center justify-between px-3 py-2.5 bg-gray-50 hover:bg-gray-100 rounded-xl text-sm font-medium transition-colors">
+      ${esc(l.label)} <span class="text-gray-400 text-xs">&rarr;</span>
+    </a>`;
   }
+  html+=`</div></div>`;
 
-  let html = '';
+  // Meta Produkte nach Kategorie
+  const byCat={};
+  for(const p of products){ if(!byCat[p.cat]) byCat[p.cat]=[]; byCat[p.cat].push(p); }
 
-  // ── AliExpress section (new China products) ──
-  if(ali.length){
-    html += `
-    <div class="mb-8">
-      <h3 class="text-lg font-bold mb-3 flex items-center gap-2">
-        <span class="px-2 py-0.5 bg-orange-500 text-white rounded text-xs font-bold">AliExpress</span>
-        Neue Produkte aus China
-        <span class="text-xs text-gray-400 font-normal ml-auto">Direkt von AliExpress · ${ali.length} Produkte</span>
-      </h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        ${ali.slice(0,16).map(p=>`
-        <a href="${esc(p.url||'#')}" target="_blank" rel="noopener"
-           class="bg-white rounded-xl shadow-sm border hover:shadow-md hover:border-orange-200 transition-all flex flex-col overflow-hidden group">
-          ${p.img?`<div class="aspect-square bg-gray-50 overflow-hidden">
-            <img src="${esc(p.img)}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform" loading="lazy" onerror="this.parentElement.style.display='none'"/>
-          </div>`:''}
-          <div class="p-3 flex-1 flex flex-col gap-1">
-            <p class="text-xs font-semibold text-gray-800 leading-snug line-clamp">${esc(p.title)}</p>
-            <p class="text-xs text-gray-400">${esc(p.category||'')}</p>
-            <div class="flex items-center justify-between mt-auto pt-2">
-              ${p.price?`<span class="text-sm font-bold text-orange-600">${esc(p.price)}</span>`:'<span></span>'}
-              ${p.orders?`<span class="text-xs text-gray-400">${esc(p.orders)}</span>`:''}
-            </div>
-          </div>
-        </a>`).join('')}
-      </div>
+  html+=`<div>
+    <div class="flex items-center gap-2 mb-4">
+      <span class="px-2 py-0.5 bg-blue-600 text-white rounded text-xs font-bold">Meta Ads</span>
+      <h3 class="font-bold">Trending auf Facebook &amp; Instagram</h3>
+      <span class="text-xs text-gray-400 ml-1">${products.length} Produkte aus ${SCAN_CATS.length} Nischen</span>
     </div>`;
-  }
 
-  // ── Meta section grouped by category ──
-  const byCategory = {};
-  for(const p of meta){
-    if(!byCategory[p.category]) byCategory[p.category]=[];
-    byCategory[p.category].push(p);
-  }
-
-  html += `
-  <div>
-    <h3 class="text-lg font-bold mb-3 flex items-center gap-2">
-      <span class="px-2 py-0.5 bg-blue-600 text-white rounded text-xs font-bold">Meta</span>
-      Trending auf Facebook/Instagram
-      <span class="text-xs text-gray-400 font-normal ml-auto">Viele aktive Ads = bewiesene Nachfrage</span>
-    </h3>`;
-
-  for(const [catName, products] of Object.entries(byCategory)){
-    html += `
-    <div class="mb-6">
-      <h4 class="text-sm font-semibold text-gray-600 mb-2">${esc(catName)}</h4>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        ${products.slice(0,6).map(p=>`
-        <div class="bg-white rounded-xl p-4 shadow-sm border flex flex-col gap-2">
-          <div class="flex items-start justify-between gap-2">
-            <h5 class="font-semibold text-sm leading-snug flex-1">${esc(p.title)}</h5>
-            <div class="flex flex-col items-end gap-1 shrink-0">
-              <span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full">${p.adCount} Ads</span>
-              ${p.impressions?`<span class="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs rounded-full">${fmtImp(p.impressions)}</span>`:''}
+  for(const [catName, list] of Object.entries(byCat)){
+    const cat=SCAN_CATS.find(c=>c.name===catName);
+    html+=`<div class="mb-7">
+      <h4 class="text-sm font-semibold text-gray-600 mb-3 pb-1 border-b flex items-center gap-2">
+        <span>${cat?cat.emoji:''}</span> ${esc(catName)}
+        <span class="text-xs text-gray-400 font-normal">${list.length} Anzeiger</span>
+      </h4>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+        ${list.slice(0,10).map(p=>`
+        <div class="bg-white rounded-xl shadow-sm border hover:shadow-md transition-shadow flex flex-col overflow-hidden cursor-pointer" onclick="showAds('${p.page_id}','${esc(p.title).replace(/'/g,"\\'")}')">
+          <div class="bg-gray-100 aspect-square relative overflow-hidden">
+            <img src="https://graph.facebook.com/${p.page_id}/picture?type=normal"
+              class="w-full h-full object-cover"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <div class="absolute inset-0 items-center justify-center text-3xl hidden bg-gradient-to-br from-gray-100 to-gray-200">${cat?cat.emoji:'&#128230;'}</div>
+          </div>
+          <div class="p-2.5 flex flex-col gap-1 flex-1">
+            <p class="text-xs font-semibold text-gray-900 leading-snug line-clamp">${esc(p.title)}</p>
+            <div class="flex gap-1 flex-wrap mt-auto pt-1">
+              <span class="px-1.5 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full">${p.adCount} Ads</span>
+              ${p.imp?`<span class="px-1.5 py-0.5 bg-purple-100 text-purple-700 text-xs rounded-full">${fmtImp(p.imp)}</span>`:''}
             </div>
           </div>
-          ${p.description?`<p class="text-xs text-gray-500 line-clamp">${esc(p.description)}</p>`:''}
-          <button onclick="showAds('${p.page_id}','${esc(p.title).replace(/'/g,"\\'")}')"
-            class="mt-auto py-1.5 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-lg text-xs font-medium">
-            Ads ansehen →
-          </button>
         </div>`).join('')}
       </div>
     </div>`;
   }
-  html += '</div>';
+  html+='</div>';
 
-  if(!meta.length && !ali.length){
-    html = '<div class="text-center py-16 text-gray-400"><p>Keine Produkte gefunden. Token prüfen und nochmal versuchen.</p></div>';
+  if(!products.length){
+    html='<div class="text-center py-16 text-gray-400"><p>Keine Produkte gefunden. Token prüfen und nochmal versuchen.</p></div>';
   }
-
-  el.innerHTML = html;
+  el.innerHTML=html;
 }
 
 init();
