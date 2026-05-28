@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ad Research Tool</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .card-liked  { border-color: #10b981 !important; background: #f0fdf4; }
+    .card-disliked { border-color: #ef4444 !important; background: #fef2f2; opacity: .65; }
+    .tab-active  { background: #2563eb; color: #fff; }
+    .tab-inactive { background: #e5e7eb; color: #374151; }
+    .line-clamp-3 { display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+    .spinner { border:3px solid #e5e7eb; border-top-color:#2563eb; border-radius:50%; width:24px; height:24px; animation:spin .8s linear infinite; display:inline-block; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+<!-- NAV -->
+<nav class="bg-white shadow-sm border-b sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <span class="text-2xl">📊</span>
+      <span class="font-bold text-gray-900 text-lg">Ad Research Tool</span>
+    </div>
+    <div class="flex gap-2">
+      <button onclick="showTab('products')"  id="tab-products"  class="tab-btn px-4 py-2 rounded-lg text-sm font-medium tab-active">🛍️ Produkte</button>
+      <button onclick="showTab('competitors')" id="tab-competitors" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium tab-inactive">🔍 Konkurrenten</button>
+    </div>
+  </div>
+</nav>
+
+<div class="max-w-7xl mx-auto px-4 py-6">
+
+  <!-- ═══════════════ PRODUCTS TAB ═══════════════ -->
+  <div id="tab-products-content">
+
+    <!-- Header row -->
+    <div class="flex items-start justify-between mb-5">
+      <div>
+        <h2 class="text-2xl font-bold text-gray-900">Tägliche Produkt-Empfehlungen</h2>
+        <p class="text-gray-500 text-sm mt-1" id="today-date"></p>
+      </div>
+      <button onclick="triggerScrape()" id="scrape-btn"
+        class="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium text-sm transition-colors">
+        🔄 Neue Suche starten
+      </button>
+    </div>
+
+    <!-- Filter info -->
+    <div class="bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 mb-5 text-sm text-blue-800 flex gap-3 items-center">
+      <span>🎯</span>
+      <span>Filter: <strong>mind. 50 aktive Ads</strong> + <strong>mind. 200.000 Impressionen</strong> bei Video-Ads • Beliebige Nische</span>
+    </div>
+
+    <!-- Scrape status -->
+    <div id="scrape-status" class="hidden mb-4 p-3 bg-blue-50 border border-blue-200 text-blue-700 rounded-lg flex items-center gap-3 text-sm">
+      <div class="spinner"></div>
+      <span>Suche läuft... Das kann 30–60 Sekunden dauern. Bitte warten.</span>
+    </div>
+
+    <!-- Preferences -->
+    <div id="prefs-section" class="hidden bg-white rounded-xl shadow-sm p-4 mb-5">
+      <h3 class="text-sm font-semibold text-gray-600 mb-3 uppercase tracking-wide">Deine Vorlieben</h3>
+      <div id="prefs-tags" class="flex flex-wrap gap-2"></div>
+    </div>
+
+    <!-- Products grid -->
+    <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="col-span-full text-center py-16 text-gray-400">
+        <div class="text-6xl mb-4">📦</div>
+        <p class="text-lg font-medium">Noch keine Produkte für heute</p>
+        <p class="text-sm mt-1">Klicke auf "Neue Suche starten" um loszulegen.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ COMPETITORS TAB ═══════════════ -->
+  <div id="tab-competitors-content" class="hidden">
+
+    <h2 class="text-2xl font-bold text-gray-900 mb-5">Konkurrenten-Analyse</h2>
+
+    <!-- Search form -->
+    <div class="bg-white rounded-xl shadow-sm p-6 mb-5">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Nische</label>
+          <select id="niche-select" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            <option value="detox_supplement">🌿 Detox / Supplement</option>
+            <option value="ai_video">🤖 AI Video</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Land</label>
+          <select id="country-select" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            <option value="DE">🇩🇪 Deutschland</option>
+            <option value="AT">🇦🇹 Österreich</option>
+            <option value="CH">🇨🇭 Schweiz</option>
+            <option value="US">🇺🇸 USA</option>
+            <option value="GB">🇬🇧 UK</option>
+          </select>
+        </div>
+        <div class="flex items-end">
+          <button onclick="searchCompetitors()" id="comp-search-btn"
+            class="w-full py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors">
+            🔍 Konkurrenten suchen
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="comp-status" class="hidden mb-4 p-3 bg-blue-50 border border-blue-200 text-blue-700 rounded-lg flex items-center gap-3 text-sm">
+      <div class="spinner"></div>
+      <span>Suche läuft...</span>
+    </div>
+
+    <!-- Results -->
+    <div id="competitors-list">
+      <div class="text-center py-16 text-gray-400">
+        <div class="text-6xl mb-4">🔍</div>
+        <p>Wähle eine Nische und starte die Suche.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /max-w -->
+
+<!-- ═══ ADS MODAL ═══ -->
+<div id="ads-modal" class="hidden fixed inset-0 bg-black/60 z-50 overflow-auto" onclick="closeModalBg(event)">
+  <div class="max-w-3xl mx-auto my-10 px-4">
+    <div class="bg-white rounded-2xl shadow-2xl">
+      <div class="flex items-center justify-between p-5 border-b">
+        <div>
+          <h3 class="text-lg font-bold text-gray-900" id="modal-title">Ads</h3>
+          <p class="text-sm text-gray-500" id="modal-subtitle"></p>
+        </div>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-2xl leading-none">✕</button>
+      </div>
+      <div id="modal-body" class="p-5 max-h-[70vh] overflow-y-auto space-y-3">
+        <div class="text-center py-8"><div class="spinner mx-auto"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = '';
+
+// ── Tabs ──────────────────────────────────────────────────────
+function showTab(name) {
+  ['products','competitors'].forEach(t => {
+    document.getElementById('tab-'+t+'-content').classList.toggle('hidden', t !== name);
+    document.getElementById('tab-'+t).className =
+      'tab-btn px-4 py-2 rounded-lg text-sm font-medium ' +
+      (t === name ? 'tab-active' : 'tab-inactive');
+  });
+}
+
+// Set date
+document.getElementById('today-date').textContent =
+  new Date().toLocaleDateString('de-DE', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+
+// ── Products ──────────────────────────────────────────────────
+async function loadProducts() {
+  const resp = await fetch('/api/products/today');
+  const products = await resp.json();
+  renderProducts(products);
+  if (products.length) loadPreferences();
+}
+
+function fmt(n) {
+  if (!n) return '–';
+  if (n >= 1_000_000) return (n/1_000_000).toFixed(1) + 'M';
+  if (n >= 1_000) return (n/1_000).toFixed(0) + 'K';
+  return n.toString();
+}
+
+function renderProducts(products) {
+  const grid = document.getElementById('products-grid');
+  if (!products.length) {
+    grid.innerHTML = `<div class="col-span-full text-center py-16 text-gray-400">
+      <div class="text-6xl mb-4">📦</div>
+      <p class="text-lg font-medium">Noch keine Produkte für heute</p>
+      <p class="text-sm mt-1">Klicke auf "Neue Suche starten" um loszulegen.</p>
+    </div>`;
+    return;
+  }
+  grid.innerHTML = products.map(p => {
+    const tags = JSON.parse(p.tags || '[]');
+    const cls = p.vote === 'liked' ? 'card-liked' : p.vote === 'disliked' ? 'card-disliked' : '';
+    const likedBtn   = p.vote === 'liked'    ? 'bg-green-500 text-white' : 'bg-gray-100 hover:bg-green-100 text-gray-700';
+    const dislikedBtn = p.vote === 'disliked' ? 'bg-red-400 text-white'   : 'bg-gray-100 hover:bg-red-100 text-gray-700';
+    return `
+    <div id="prod-${p.id}" class="bg-white rounded-xl p-5 shadow-sm border-2 border-transparent ${cls} transition-all">
+      <div class="flex items-start justify-between gap-2 mb-2">
+        <h3 class="font-bold text-gray-900 text-sm leading-snug flex-1">${esc(p.page_name)}</h3>
+        <div class="flex flex-col items-end gap-1 shrink-0">
+          <span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full whitespace-nowrap">${p.ad_count} Ads</span>
+          ${p.max_impressions > 0 ? `<span class="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs rounded-full">${fmt(p.max_impressions)} Imp.</span>` : ''}
+          ${p.has_video ? '<span class="px-2 py-0.5 bg-orange-100 text-orange-700 text-xs rounded-full">📹 Video</span>' : ''}
+        </div>
+      </div>
+      ${p.sample_body
+        ? `<p class="text-gray-600 text-sm mb-3 line-clamp-3">${esc(p.sample_body)}</p>`
+        : `<p class="text-gray-400 text-sm italic mb-3">Kein Beispieltext verfügbar</p>`}
+      <div class="flex flex-wrap gap-1 mb-4">
+        ${tags.map(t => `<span class="px-2 py-0.5 bg-gray-100 text-gray-500 text-xs rounded">${t}</span>`).join('')}
+      </div>
+      <div class="flex gap-2">
+        <button onclick="vote(${p.id},'liked')"
+          class="flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${likedBtn}">
+          👍 Gut
+        </button>
+        <button onclick="vote(${p.id},'disliked')"
+          class="flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${dislikedBtn}">
+          👎 Nein
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function vote(id, v) {
+  await fetch(`/api/products/${id}/vote`, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({vote: v})
+  });
+  loadProducts();
+}
+
+let scrapeTimer;
+async function triggerScrape() {
+  const btn = document.getElementById('scrape-btn');
+  const status = document.getElementById('scrape-status');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div>';
+  status.classList.remove('hidden');
+
+  await fetch('/api/products/scrape', {method:'POST'});
+
+  clearTimeout(scrapeTimer);
+  scrapeTimer = setTimeout(async () => {
+    await loadProducts();
+    btn.disabled = false;
+    btn.innerHTML = '🔄 Neue Suche starten';
+    status.classList.add('hidden');
+  }, 50_000);
+}
+
+async function loadPreferences() {
+  const resp = await fetch('/api/preferences');
+  const prefs = await resp.json();
+  if (!prefs.length) return;
+  document.getElementById('prefs-section').classList.remove('hidden');
+  document.getElementById('prefs-tags').innerHTML = prefs.map(p => {
+    const score = p.likes - p.dislikes;
+    const [bg, text] = score > 0 ? ['bg-green-100','text-green-700'] : score < 0 ? ['bg-red-100','text-red-600'] : ['bg-gray-100','text-gray-600'];
+    return `<span class="px-3 py-1 ${bg} ${text} rounded-full text-sm font-medium">
+      ${p.tag} <span class="opacity-70">(+${p.likes} / -${p.dislikes})</span>
+    </span>`;
+  }).join('');
+}
+
+// ── Competitors ───────────────────────────────────────────────
+async function searchCompetitors() {
+  const niche   = document.getElementById('niche-select').value;
+  const country = document.getElementById('country-select').value;
+  const btn    = document.getElementById('comp-search-btn');
+  const status = document.getElementById('comp-status');
+
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner mx-auto"></div>';
+  status.classList.remove('hidden');
+
+  try {
+    const resp = await fetch(`/api/competitors/search/${niche}?country=${country}`);
+    const data = await resp.json();
+    renderCompetitors(data, niche);
+  } catch(e) {
+    document.getElementById('competitors-list').innerHTML =
+      '<p class="text-red-500 p-4 text-center">Fehler – bitte erneut versuchen.</p>';
+  }
+  btn.disabled = false;
+  btn.innerHTML = '🔍 Konkurrenten suchen';
+  status.classList.add('hidden');
+}
+
+function renderCompetitors(list, niche) {
+  const el = document.getElementById('competitors-list');
+  if (!list.length) {
+    el.innerHTML = '<p class="text-gray-400 text-center py-12">Keine Konkurrenten gefunden.</p>';
+    return;
+  }
+  const nicheLabel = niche === 'detox_supplement' ? '🌿 Detox / Supplement' : '🤖 AI Video';
+  el.innerHTML = `
+  <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+    <div class="px-5 py-3 border-b bg-gray-50 flex items-center justify-between">
+      <span class="font-semibold text-gray-700">${list.length} Konkurrenten · ${nicheLabel}</span>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead><tr class="border-b text-xs text-gray-500 uppercase tracking-wide">
+          <th class="px-4 py-3 text-left font-medium w-8">#</th>
+          <th class="px-4 py-3 text-left font-medium">Advertiser</th>
+          <th class="px-4 py-3 text-left font-medium">Aktive Ads</th>
+          <th class="px-4 py-3 text-left font-medium hidden md:table-cell">Beispiel</th>
+          <th class="px-4 py-3 text-left font-medium"></th>
+        </tr></thead>
+        <tbody>
+        ${list.map((c, i) => {
+          const sample = c.sample_ads && c.sample_ads[0];
+          const body = sample ? esc((sample.body||'').substring(0,80)) : '—';
+          return `<tr class="border-b hover:bg-gray-50">
+            <td class="px-4 py-3 text-gray-400">${i+1}</td>
+            <td class="px-4 py-3">
+              <p class="font-medium text-gray-900">${esc(c.page_name)}</p>
+              <p class="text-xs text-gray-400 mt-0.5">${c.page_id}</p>
+            </td>
+            <td class="px-4 py-3">
+              <span class="px-2.5 py-1 bg-blue-100 text-blue-700 rounded-full font-semibold">${c.ad_count}</span>
+            </td>
+            <td class="px-4 py-3 text-gray-500 max-w-xs hidden md:table-cell">${body}</td>
+            <td class="px-4 py-3">
+              <button onclick="viewAds('${c.page_id}','${esc(c.page_name).replace(/'/g,'\\')}',${c.ad_count})"
+                class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-medium transition-colors whitespace-nowrap">
+                Alle Ads →
+              </button>
+            </td>
+          </tr>`;
+        }).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+// ── Ads Modal ─────────────────────────────────────────────────
+async function viewAds(pageId, pageName, adCount) {
+  document.getElementById('modal-title').textContent = pageName;
+  document.getElementById('modal-subtitle').textContent = `${adCount} aktive Ads`;
+  document.getElementById('modal-body').innerHTML =
+    '<div class="text-center py-8"><div class="spinner mx-auto"></div><p class="mt-3 text-gray-500 text-sm">Lade Ads...</p></div>';
+  document.getElementById('ads-modal').classList.remove('hidden');
+
+  try {
+    const resp = await fetch(`/api/competitors/${pageId}/ads`);
+    const ads  = await resp.json();
+    if (!ads.length) {
+      document.getElementById('modal-body').innerHTML =
+        '<p class="text-gray-400 text-center py-8">Keine aktiven Ads gefunden.</p>';
+      return;
+    }
+    document.getElementById('modal-body').innerHTML = ads.map((ad, i) => `
+      <div class="border rounded-xl p-4">
+        <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+          <span class="text-xs text-gray-400">Ad #${i+1} · ${ad.start_date ? new Date(ad.start_date).toLocaleDateString('de-DE') : '–'}</span>
+          <div class="flex gap-2">
+            ${ad.impressions_lower > 0
+              ? `<span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">${fmt(ad.impressions_lower)}–${fmt(ad.impressions_upper)} Imp.</span>`
+              : ''}
+            ${ad.has_video ? '<span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">📹 Video</span>' : ''}
+          </div>
+        </div>
+        ${ad.body
+          ? `<p class="text-gray-800 text-sm leading-relaxed">${esc(ad.body)}</p>`
+          : '<p class="text-gray-400 italic text-sm">Kein Text verfügbar</p>'}
+      </div>`).join('');
+  } catch(e) {
+    document.getElementById('modal-body').innerHTML =
+      '<p class="text-red-500 text-center py-8">Fehler beim Laden.</p>';
+  }
+}
+
+function closeModal() {
+  document.getElementById('ads-modal').classList.add('hidden');
+}
+function closeModalBg(e) {
+  if (e.target === document.getElementById('ads-modal')) closeModal();
+}
+
+function esc(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Init
+loadProducts();
+</script>
+</body>
+</html>
