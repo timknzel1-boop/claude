@@ -90,19 +90,28 @@
         </select>
       </div>
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Land</label>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Land / Region</label>
         <select id="country-select" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm">
+          <option value="EUROPE">🌍 Europa gesamt</option>
           <option value="DE">🇩🇪 Deutschland</option>
           <option value="AT">🇦🇹 Österreich</option>
           <option value="CH">🇨🇭 Schweiz</option>
-          <option value="US">🇺🇸 USA</option>
+          <option value="FR">🇫🇷 Frankreich</option>
+          <option value="IT">🇮🇹 Italien</option>
+          <option value="ES">🇪🇸 Spanien</option>
+          <option value="NL">🇳🇱 Niederlande</option>
           <option value="GB">🇬🇧 UK</option>
+          <option value="US">🇺🇸 USA</option>
         </select>
       </div>
-      <div class="flex items-end">
+      <div class="flex items-end flex-col gap-2">
         <button onclick="searchCompetitors()" id="comp-search-btn"
           class="w-full py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors">
           🔍 Konkurrenten suchen
+        </button>
+        <button onclick="runUsaGap()" id="usa-gap-btn"
+          class="w-full py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium transition-colors">
+          🇺🇸→🇩🇪 USA-Lücken in DACH
         </button>
       </div>
     </div>
@@ -514,6 +523,80 @@ function renderVideoScript(s) {
         <p class="text-sm font-mono leading-relaxed">${esc(sp)}</p>
       </div>` : ''}
     </div>`;
+}
+
+// ── USA → DACH GAP ───────────────────────────────────────────
+async function runUsaGap() {
+  const niche = document.getElementById('niche-select').value;
+  const btn   = document.getElementById('usa-gap-btn');
+  const st    = document.getElementById('comp-status');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner mx-auto"></div>';
+  st.querySelector('span').textContent = 'Vergleiche USA vs. DACH... Das kann 60 Sek. dauern.';
+  st.classList.remove('hidden');
+
+  try {
+    const resp = await fetch(`/api/competitors/usa-gap/${niche}`);
+    const data = await resp.json();
+    renderUsaGap(data, niche);
+  } catch(e) {
+    document.getElementById('competitors-list').innerHTML =
+      '<p class="text-red-500 text-center py-12">Fehler – bitte erneut versuchen.</p>';
+  }
+  btn.disabled = false;
+  btn.innerHTML = '🇺🇸→🇩🇪 USA-Lücken in DACH';
+  st.classList.add('hidden');
+}
+
+function renderUsaGap(list, niche) {
+  const el = document.getElementById('competitors-list');
+  const nicheLabel = niche === 'detox_supplement' ? '🌿 Detox / Supplement' : '🤖 AI Video';
+  if (!list.length) {
+    el.innerHTML = '<p class="text-gray-400 text-center py-12">Keine Lücken gefunden — Markt scheint besetzt.</p>';
+    return;
+  }
+  el.innerHTML = `
+  <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4 text-sm text-amber-800">
+    <strong>🎯 Marktlücken-Analyse · ${nicheLabel}</strong><br/>
+    Diese ${list.length} Advertiser sind stark in den USA, haben aber <strong>keine aktiven Ads in DACH</strong> — ideale Produkte zum Testen!
+  </div>
+  <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead><tr class="border-b text-xs text-gray-500 uppercase tracking-wide bg-gray-50">
+          <th class="px-4 py-3 text-left w-8">#</th>
+          <th class="px-4 py-3 text-left">Advertiser (USA)</th>
+          <th class="px-4 py-3 text-left">USA Ads</th>
+          <th class="px-4 py-3 text-left">Max. Impressionen</th>
+          <th class="px-4 py-3 text-left hidden md:table-cell">Beispiel-Ad</th>
+          <th class="px-4 py-3 text-left">Aktionen</th>
+        </tr></thead>
+        <tbody>
+        ${list.map((c, i) => {
+          const s = c.sample_ads && c.sample_ads[0];
+          const imp = c.max_impressions;
+          const impStr = imp >= 1e6 ? (imp/1e6).toFixed(1)+'M' : imp >= 1000 ? (imp/1000).toFixed(0)+'K' : imp||'–';
+          return `<tr class="border-b hover:bg-amber-50">
+            <td class="px-4 py-3 text-gray-400 font-bold">${i+1}</td>
+            <td class="px-4 py-3">
+              <p class="font-semibold text-gray-900">${esc(c.page_name)}</p>
+              <span class="text-xs badge-green px-2 py-0.5 rounded-full">Nicht in DACH</span>
+            </td>
+            <td class="px-4 py-3"><span class="px-2 py-1 badge-blue rounded-full text-xs font-semibold">${c.us_ad_count}</span></td>
+            <td class="px-4 py-3"><span class="px-2 py-1 badge-purple rounded-full text-xs font-semibold">${impStr}</span></td>
+            <td class="px-4 py-3 text-gray-500 max-w-xs hidden md:table-cell text-xs">${s ? esc((s.body||'').substring(0,80)) : '—'}</td>
+            <td class="px-4 py-3 flex gap-1 flex-wrap">
+              <button onclick="viewAds('${c.page_id}','${esc(c.page_name).replace(/'/g,"\\'")}',${c.us_ad_count})"
+                class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-xs">Ads →</button>
+              <button onclick="prefillShopify(0,'${esc(c.page_name).replace(/'/g,"\\'")}','')"
+                class="px-2 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded text-xs">🛒 Store</button>
+            </td>
+          </tr>`;
+        }).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
 }
 
 // ── SHOPIFY KI-BUILDER ────────────────────────────────────────

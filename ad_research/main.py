@@ -208,36 +208,102 @@ async def discover_products(
     return products
 
 
+EUROPE_COUNTRIES = ["DE", "AT", "CH", "FR", "IT", "ES", "NL", "BE", "PL", "GB", "SE", "DK", "NO"]
+DACH_COUNTRIES   = ["DE", "AT", "CH"]
+
 async def search_niche_competitors(niche: str, country: str = "DE") -> list:
     keywords = NICHE_KEYWORDS.get(niche, [niche])
-    page_map: dict = {}
 
+    # "EUROPE" = aggregate across all major European countries
+    if country == "EUROPE":
+        countries = EUROPE_COUNTRIES
+    else:
+        countries = [country]
+
+    page_map: dict = {}
     for kw in keywords[:3]:
-        ads = await fetch_ads(search_terms=kw, country=country, limit=200)
-        for ad in ads:
+        for c in countries:
+            ads = await fetch_ads(search_terms=kw, country=c, limit=200)
+            for ad in ads:
+                pid = ad.get("page_id")
+                if not pid:
+                    continue
+                if pid not in page_map:
+                    page_map[pid] = {
+                        "page_id": pid,
+                        "page_name": ad.get("page_name", "Unbekannt"),
+                        "ad_count": 0,
+                        "countries": set(),
+                        "sample_ads": [],
+                    }
+                page_map[pid]["ad_count"] += 1
+                page_map[pid]["countries"].add(c)
+                if len(page_map[pid]["sample_ads"]) < 3:
+                    bodies = ad.get("ad_creative_bodies", [])
+                    page_map[pid]["sample_ads"].append({
+                        "id": ad.get("id"),
+                        "body": bodies[0][:200] if bodies else "",
+                        "start_date": ad.get("ad_creation_time", ""),
+                        "impressions": parse_impressions(ad.get("impressions", {})),
+                    })
+
+    results = list(page_map.values())
+    for r in results:
+        r["countries"] = sorted(r["countries"])  # set → list for JSON
+    results.sort(key=lambda x: x["ad_count"], reverse=True)
+    return results[:30]
+
+
+async def find_usa_not_in_europe(niche: str) -> list:
+    """Find advertisers strong in USA but absent in DACH — market gap analysis."""
+    keywords = NICHE_KEYWORDS.get(niche, [niche])
+
+    # Collect US pages
+    us_map: dict = {}
+    for kw in keywords[:3]:
+        for ad in await fetch_ads(search_terms=kw, country="US", limit=200):
             pid = ad.get("page_id")
             if not pid:
                 continue
-            if pid not in page_map:
-                page_map[pid] = {
-                    "page_id": pid,
-                    "page_name": ad.get("page_name", "Unbekannt"),
-                    "ad_count": 0,
-                    "sample_ads": [],
-                }
-            page_map[pid]["ad_count"] += 1
-            if len(page_map[pid]["sample_ads"]) < 3:
+            if pid not in us_map:
+                us_map[pid] = {"page_id": pid, "page_name": ad.get("page_name", "?"),
+                               "ads": [], "max_imp": 0, "sample_ads": []}
+            imp = parse_impressions(ad.get("impressions", {}))
+            us_map[pid]["max_imp"] = max(us_map[pid]["max_imp"], imp)
+            us_map[pid]["ads"].append(ad)
+            if len(us_map[pid]["sample_ads"]) < 2:
                 bodies = ad.get("ad_creative_bodies", [])
-                page_map[pid]["sample_ads"].append({
-                    "id": ad.get("id"),
+                us_map[pid]["sample_ads"].append({
                     "body": bodies[0][:200] if bodies else "",
-                    "start_date": ad.get("ad_creation_time", ""),
-                    "impressions": parse_impressions(ad.get("impressions", {})),
+                    "impressions": imp,
                 })
 
-    results = list(page_map.values())
-    results.sort(key=lambda x: x["ad_count"], reverse=True)
-    return results[:30]
+    us_strong = {pid: v for pid, v in us_map.items() if len(v["ads"]) >= 20}
+
+    # Collect DACH pages
+    dach_pages: set = set()
+    for kw in keywords[:2]:
+        for c in DACH_COUNTRIES:
+            for ad in await fetch_ads(search_terms=kw, country=c, limit=100):
+                pid = ad.get("page_id")
+                if pid:
+                    dach_pages.add(pid)
+
+    # Return US strong but NOT in DACH
+    gaps = [
+        {
+            "page_id": v["page_id"],
+            "page_name": v["page_name"],
+            "us_ad_count": len(v["ads"]),
+            "max_impressions": v["max_imp"],
+            "in_dach": False,
+            "sample_ads": v["sample_ads"],
+        }
+        for pid, v in us_strong.items()
+        if pid not in dach_pages
+    ]
+    gaps.sort(key=lambda x: x["max_impressions"], reverse=True)
+    return gaps[:20]
 
 
 async def get_competitor_ads_list(page_id: str, country: str = "DE") -> list:
@@ -387,6 +453,13 @@ async def search_competitors(niche: str, country: str = "DE"):
 @app.get("/api/competitors/{page_id}/ads")
 async def get_competitor_ads(page_id: str, country: str = "DE"):
     return await get_competitor_ads_list(page_id, country)
+
+@app.get("/api/competitors/usa-gap/{niche}")
+async def usa_gap_analysis(niche: str):
+    """Find US winners not present in DACH — market gap opportunities."""
+    if niche not in NICHE_KEYWORDS:
+        raise HTTPException(400, f"Unknown niche. Valid: {list(NICHE_KEYWORDS.keys())}")
+    return await find_usa_not_in_europe(niche)
 
 @app.get("/api/competitors/saved/{niche}")
 async def get_saved_competitors(niche: str):
