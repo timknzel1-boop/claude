@@ -1,16 +1,21 @@
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
-from pydantic import BaseModel
 import aiosqlite
 import httpx
 import os
 import json
 from datetime import datetime, date
-from typing import Optional
 from dotenv import load_dotenv
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from contextlib import asynccontextmanager
+from shopify_builder import (
+    generate_store_content,
+    generate_video_script,
+    create_shopify_product,
+    create_shopify_page,
+    create_shopify_collection,
+)
 
 load_dotenv()
 
@@ -391,6 +396,100 @@ async def get_saved_competitors(niche: str):
             "SELECT * FROM competitors WHERE niche = ? ORDER BY ad_count DESC", (niche,)
         )
         return [dict(r) for r in await cursor.fetchall()]
+
+# ── Shopify + AI Video ────────────────────────────────────────────────────────
+
+@app.get("/api/config/status")
+async def config_status():
+    return {
+        "meta": bool(META_TOKEN),
+        "anthropic": bool(os.getenv("ANTHROPIC_API_KEY")),
+        "shopify": bool(os.getenv("SHOPIFY_STORE") and os.getenv("SHOPIFY_ACCESS_TOKEN")),
+        "shopify_store": os.getenv("SHOPIFY_STORE", ""),
+    }
+
+@app.post("/api/shopify/generate")
+async def shopify_generate(payload: dict):
+    """Generate conversion-optimized store content with Claude AI."""
+    product_name = payload.get("product_name", "").strip()
+    if not product_name:
+        raise HTTPException(400, "product_name required")
+    try:
+        content = await generate_store_content(
+            product_name=product_name,
+            niche=payload.get("niche", ""),
+            target_audience=payload.get("target_audience", ""),
+            ad_copy=payload.get("ad_copy", ""),
+        )
+        return content
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
+@app.post("/api/shopify/create")
+async def shopify_create(payload: dict):
+    """Create product + landing page + collection in Shopify."""
+    content = payload.get("content", {})
+    price = str(payload.get("price", "29.99"))
+    if not content:
+        raise HTTPException(400, "content required")
+
+    product_result = await create_shopify_product(content, price)
+    page_result = await create_shopify_page(content)
+    collection_result = await create_shopify_collection(content)
+
+    shopify_store = os.getenv("SHOPIFY_STORE", "")
+    product_id = product_result.get("product", {}).get("id")
+    page_id = page_result.get("page", {}).get("id")
+
+    return {
+        "product": product_result,
+        "page": page_result,
+        "collection": collection_result,
+        "admin_links": {
+            "product": f"https://{shopify_store}/admin/products/{product_id}" if product_id else None,
+            "page": f"https://{shopify_store}/admin/pages/{page_id}" if page_id else None,
+        },
+    }
+
+@app.post("/api/products/{product_id}/video-script")
+async def get_video_script(product_id: int):
+    """Generate a 30-second AI video script for a product."""
+    async with aiosqlite.connect(DB_PATH) as db:
+        cursor = await db.execute(
+            "SELECT page_name, sample_body, tags FROM daily_products WHERE id = ?",
+            (product_id,),
+        )
+        row = await cursor.fetchone()
+        if not row:
+            raise HTTPException(404, "Produkt nicht gefunden")
+        page_name, sample_body, tags_json = row
+        tags = json.loads(tags_json or "[]")
+
+    try:
+        script = await generate_video_script(
+            product_name=page_name,
+            ad_copy=sample_body or "",
+            niche=tags[0] if tags else "",
+        )
+        return script
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
+@app.post("/api/shopify/video-script")
+async def shopify_video_script(payload: dict):
+    """Generate a video script from custom product description."""
+    product_name = payload.get("product_name", "").strip()
+    if not product_name:
+        raise HTTPException(400, "product_name required")
+    try:
+        script = await generate_video_script(
+            product_name=product_name,
+            ad_copy=payload.get("ad_copy", ""),
+            niche=payload.get("niche", ""),
+        )
+        return script
+    except Exception as e:
+        raise HTTPException(500, str(e))
 
 if __name__ == "__main__":
     import uvicorn
