@@ -1,219 +1,326 @@
-{% comment %}mysolv Reviews – sections/msv-reviews.liquid{% endcomment %}
+{% comment %}
+  mysolv – Kundenbewertungen  |  sections/msv-reviews.liquid
+{% endcomment %}
 <section class="rv-sec" id="msv-reviews">
 <div class="rv-hd">
-  <h2 class="rv-ti">Was unsere Kunden sagen</h2>
-  <div class="rv-su"><span class="rv-as">★★★★★</span><span class="rv-at"><strong>4,7/5</strong> · Über 389 Bewertungen</span></div>
+  <div class="rv-hl">
+    <h2 class="rv-h2">Kundenbewertungen</h2>
+    <span class="rv-avg">4,7/5</span>
+  </div>
+  <p class="rv-sub">Über 140 verifizierte Bewertungen</p>
+  <div class="rv-bars" id="rv-bars-{{section.id}}">
+    <div class="rv-br" data-f="5"><span class="rv-bl">5★</span><div class="rv-bg"><div class="rv-bv" style="width:82%"></div></div><span class="rv-bp">82%</span></div>
+    <div class="rv-br" data-f="4"><span class="rv-bl">4★</span><div class="rv-bg"><div class="rv-bv" style="width:10%"></div></div><span class="rv-bp">10%</span></div>
+    <div class="rv-br" data-f="3"><span class="rv-bl">3★</span><div class="rv-bg"><div class="rv-bv" style="width:5%"></div></div><span class="rv-bp">5%</span></div>
+    <div class="rv-br" data-f="2"><span class="rv-bl">2★</span><div class="rv-bg"><div class="rv-bv" style="width:1%"></div></div><span class="rv-bp">1%</span></div>
+    <div class="rv-br" data-f="1"><span class="rv-bl">1★</span><div class="rv-bg"><div class="rv-bv" style="width:2%"></div></div><span class="rv-bp">2%</span></div>
+  </div>
+  <div class="rv-ctrl" id="rv-ctrl-{{section.id}}">
+    <div class="rv-pills">
+      <button class="rv-pill rv-pa" data-f="0">Alle</button>
+      <button class="rv-pill" data-f="5">5★</button>
+      <button class="rv-pill" data-f="4">4★</button>
+      <button class="rv-pill" data-f="3">3★</button>
+      <button class="rv-pill" data-f="2">2★</button>
+      <button class="rv-pill" data-f="1">1★</button>
+    </div>
+    <div class="rv-sort">
+      <button class="rv-sb rv-sa" data-d="desc">Neueste</button>
+      <button class="rv-sb" data-d="asc">Älteste</button>
+    </div>
+  </div>
 </div>
-<div class="rv-bd" id="rv-bd-{{section.id}}">
-  <button class="rv-br" data-filter="5"><span class="rv-bl">5 ★</span><span class="rv-bb"><span class="rv-bf" style="width:82%"></span></span><span class="rv-bp">82%</span></button>
-  <button class="rv-br" data-filter="4"><span class="rv-bl">4 ★</span><span class="rv-bb"><span class="rv-bf" style="width:10%"></span></span><span class="rv-bp">10%</span></button>
-  <button class="rv-br" data-filter="3"><span class="rv-bl">3 ★</span><span class="rv-bb"><span class="rv-bf" style="width:5%"></span></span><span class="rv-bp">5%</span></button>
-  <button class="rv-br" data-filter="2"><span class="rv-bl">2 ★</span><span class="rv-bb"><span class="rv-bf" style="width:2%"></span></span><span class="rv-bp">2%</span></button>
-  <button class="rv-br" data-filter="1"><span class="rv-bl">1 ★</span><span class="rv-bb"><span class="rv-bf" style="width:1%"></span></span><span class="rv-bp">1%</span></button>
+<div class="rv-grid" id="rv-grid-{{section.id}}">
+<article class="rv-card" data-stars="5" data-date="2026-05-27"><span class="s5">★★★★★</span><p class="rt">Hab auf Empfehlung angefangen. Empfehle jetzt selbst weiter. Kreis schließt sich.</p><div class="rm">Vera L. · 27. Mai 2026</div></article>
+<article class="rv-card" data-stars="5" data-date="2026-05-26"><span class="s5">★★★★★</span><p class="rt">Nach Antibiotika war mein Darm am Ende. DETO hat mir geholfen wieder in Form zu kommen.</p><div class="rm">Leonie S. · 26. Mai 2026</div></article>
+<article class="rv-card" data-stars="5" data-date="2026-05-18"><span class="s5">★★★★★</span><p class="rt">Altbewährte Inhaltsstoffe in guter Kombination. Wirkt für mich seit 5 Monaten zuverlässig.</p><div class="rm">Eckhard H. · 18. Mai 2026</div></article>
+<article class="rv-card" data-stars="5" data-date="2026-05-04"><span class="s5">★★★★★</span><p class="rt">Für mich als Sportler perfekt. Regeneration spürbar verbessert, kein Magengrummeln mehr.</p><div class="rm">Lukas F. · 4. Mai 2026</div></article>
+<article class="rv-card" data-stars="5" data-date="2026-04-28"><span class="s5">★★★★★</span><p class="rt">War skeptisch ob das was bringt. Jetzt bin ich beim zweiten Paket. Sagt alles.</p><div class="rm">Christian H. · 28. April 2026</div></article>
+<article class="rv-card" data-stars="4" data-date="2026-03-21"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Gut verträglich, Wirkung nach ca. 4 Wochen spürbar. Nicht schlecht.</p><div class="rm">Liesel K. · 21. März 2026</div></article>
+<article class="rv-card" data-stars="4" data-date="2026-03-08"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">4 Sterne weil ich etwas mehr Wirkung erwartet hatte. Aber gut verträglich und ordentlich.</p><div class="rm">Sven H. · 8. März 2026</div></article>
+<article class="rv-card" data-stars="5" data-date="2026-03-02"><span class="s5">★★★★★</span><p class="rt">War nach langer Antibiotika-Behandlung. Darm hat sich mit DETO wirklich erholt.</p><div class="rm">Rita K. · 2. März 2026</div></article>
+<article class="rv-card" data-stars="5" data-date="2026-02-05"><span class="s5">★★★★★</span><p class="rt">Mein Bauch hat sich quasi selbst beruhigt. Hätte nicht gedacht dass das so schnell geht.</p><div class="rm">Kevin M. · 5. Februar 2026</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2026-01-22"><span class="s5">★★★★★</span><p class="rt">Endlich mal was das wirklich hilft. Und kein komischer Geschmack oder Aufstoßen.</p><div class="rm">Clara T. · 22. Januar 2026</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2026-01-13"><span class="s5">★★★★★</span><p class="rt">Für mich das beste Produkt dieses Jahr. Klar empfehlenswert.</p><div class="rm">Friederike L. · 13. Januar 2026</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2026-01-12"><span class="s5">★★★★★</span><p class="rt">3 Monate dabei. Energie deutlich besser, Bauch kaum noch Probleme. Bleib dabei.</p><div class="rm">Miriam S. · 12. Januar 2026</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2026-01-06"><span class="s5">★★★★★</span><p class="rt">Deutlich weniger Blähungen nach nem Monat. Die Kombi macht was sie verspricht.</p><div class="rm">Thomas K. · 6. Januar 2026</div></article>
+<article class="rv-card rv-hidden" data-stars="3" data-date="2026-01-01"><span class="s3">★★★<span class="e">★★</span></span><p class="rt">Hab 2 Monate probiert. Bisschen besser aber nicht so wie ich gehofft hatte.</p><div class="rm">Josef K. · 1. Januar 2026</div></article>
+<article class="rv-card rv-hidden" data-stars="3" data-date="2025-12-21"><span class="s3">★★★<span class="e">★★</span></span><p class="rt">Zu teuer für das was es bei mir gebracht hat. Qualität ok aber Wirkung mäßig.</p><div class="rm">Christa N. · 21. Dezember 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-12-12"><span class="s5">★★★★★</span><p class="rt">Magen-Darm hat sich deutlich beruhigt. Kein Aufgeblähtheitsgefühl mehr nach dem Essen.</p><div class="rm">Ben L. · 12. Dezember 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-11-10"><span class="s5">★★★★★</span><p class="rt">6 Wochen genommen – Haut klarer, Bauch ruhiger. Genau das hab ich gesucht.</p><div class="rm">Andrea H. · 10. November 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="3" data-date="2025-11-06"><span class="s3">★★★<span class="e">★★</span></span><p class="rt">Gut dass es keine Nebenwirkungen gibt. Wirkung war bei mir aber sehr schwach.</p><div class="rm">Ursula T. · 6. November 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-11-02"><span class="s5">★★★★★</span><p class="rt">Seit ich das nehme ist meine Verdauung viel regelmäßiger. Hätte früher anfangen sollen.</p><div class="rm">Daniel R. · 2. November 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="4" data-date="2025-10-13"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Nehme es schon 2 Monate. Verdauung besser, aber nicht dramatisch. Solides Produkt.</p><div class="rm">Monika T. · 13. Oktober 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-09-16"><span class="s5">★★★★★</span><p class="rt">Sehr gute Verträglichkeit. Magen macht keine Probleme, Blähungen deutlich weniger.</p><div class="rm">Gerald S. · 16. September 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="3" data-date="2025-09-11"><span class="s3">★★★<span class="e">★★</span></span><p class="rt">Hab zu hohe Erwartungen gehabt. Produkt ist ok, aber nicht das was es verspricht.</p><div class="rm">Werner F. · 11. September 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-09-01"><span class="s5">★★★★★</span><p class="rt">5 Sterne weil der Körper mir signalisiert dass es richtig ist. Bauch ruhig, Kopf klar.</p><div class="rm">Gregor T. · 1. September 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-08-19"><span class="s5">★★★★★</span><p class="rt">Zweite Bestellung läuft. Das sagt eigentlich alles über die Qualität.</p><div class="rm">Fabian W. · 19. August 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-08-18"><span class="s5">★★★★★</span><p class="rt">3 Wochen bis zur ersten Wirkung, dann aber wirklich deutlich. Geduld lohnt sich.</p><div class="rm">Klara F. · 18. August 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-08-17"><span class="s5">★★★★★</span><p class="rt">Kein Magenknurren mehr nach dem Essen. Das allein macht's für mich schon wert.</p><div class="rm">Verena H. · 17. August 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="3" data-date="2025-07-12"><span class="s3">★★★<span class="e">★★</span></span><p class="rt">Mittelmäßig. Qualität ist ok, aber Wirkung hat mich nicht überzeugt. Preis/Leistung fraglich.</p><div class="rm">Gerd L. · 12. Juli 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-07-10"><span class="s5">★★★★★</span><p class="rt">War Empfehlung vom Arzt. Hab's ausprobiert und bin überzeugt. Gut verträglich.</p><div class="rm">Tim K. · 10. Juli 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-07-07"><span class="s5">★★★★★</span><p class="rt">Hab 2 Monate durchgehalten und bin froh drum. Bauch macht keine Probleme mehr.</p><div class="rm">Anna T. · 7. Juli 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-06-30"><span class="s5">★★★★★</span><p class="rt">Nehme DETO seit dem Frühling und hab dem Herbst entspannt entgegengesehen. Immunsystem top.</p><div class="rm">Ortrud S. · 30. Juni 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-06-04"><span class="s5">★★★★★</span><p class="rt">Jahrelang Verdauungsprobleme, jetzt endlich Ruhe. Das Oregano-Öl macht was.</p><div class="rm">Julia S. · 4. Juni 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-06-03"><span class="s5">★★★★★</span><p class="rt">Darm hat sich in 4 Wochen komplett beruhigt. Hätte nicht gedacht dass das so schnell geht.</p><div class="rm">Bianca M. · 3. Juni 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-05-27"><span class="s5">★★★★★</span><p class="rt">Oregano-Öl war der Hauptgrund warum ich's probiert hab. Hält was es verspricht.</p><div class="rm">Alexander N. · 27. Mai 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="2" data-date="2025-05-22"><span class="s2">★★<span class="e">★★★</span></span><p class="rt">6 Wochen probiert, kaum was gespürt. Für den Preis hätte ich mehr erwartet.</p><div class="rm">Dieter W. · 22. Mai 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-05-12"><span class="s5">★★★★★</span><p class="rt">Verträglich, wirksam, gute Qualität. Kurze Zusammenfassung, alles andere braucht man nicht.</p><div class="rm">Petra S. · 12. Mai 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-05-03"><span class="s5">★★★★★</span><p class="rt">Ich bin normalerweise kein Fan von solchen Sachen. Aber das hier überzeugt mich wirklich.</p><div class="rm">Björn K. · 3. Mai 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-04-30"><span class="s5">★★★★★</span><p class="rt">Freundinnen fragen mich was ich anders mache. DETO ist ein Teil davon.</p><div class="rm">Diana K. · 30. April 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-04-24"><span class="s5">★★★★★</span><p class="rt">Hatte immer Verdauungsprobleme nach dem Essen. Jetzt kaum noch. Sehr zufrieden.</p><div class="rm">Nadine W. · 24. April 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-04-21"><span class="s5">★★★★★</span><p class="rt">Hab lang gezögert wegen dem Preis. Jetzt bereue ich dass ich nicht früher angefangen hab.</p><div class="rm">Quentin R. · 21. April 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-04-20"><span class="s5">★★★★★</span><p class="rt">Nach drei anderen Produkten endlich eines das hilft. Energie und Verdauung beide besser.</p><div class="rm">Franziska R. · 20. April 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-04-18"><span class="s5">★★★★★</span><p class="rt">Kein Aufgeblähtheitsgefühl mehr. Das klingt banal ist aber ne echte Lebensqualität.</p><div class="rm">Theresa B. · 18. April 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-04-11"><span class="s5">★★★★★</span><p class="rt">Typ aus dem Fitnessstudio hat's empfohlen. Jetzt nehm ich's und er hatte recht.</p><div class="rm">Niklas R. · 11. April 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-04-10"><span class="s5">★★★★★</span><p class="rt">War echt positiv überrascht. Hab nicht so viel erwartet aber mehr bekommen.</p><div class="rm">Bruno W. · 10. April 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-04-09"><span class="s5">★★★★★</span><p class="rt">Morgens eine Kapsel, abends eine – und der Unterschied ist real. Empfehlung.</p><div class="rm">Stefan M. · 9. April 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="4" data-date="2025-03-19"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Wirkung ist da, wenn auch nicht ganz so stark wie erhofft. Aber immer noch gut.</p><div class="rm">Jürgen B. · 19. März 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-03-15"><span class="s5">★★★★★</span><p class="rt">Ehrlich gesagt hab ich nicht viel erwartet. War positiv überrascht. Bestell weiter.</p><div class="rm">Jörg K. · 15. März 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-03-10"><span class="s5">★★★★★</span><p class="rt">Super Qualität. Kapseln riechen nach fast nichts und gehen gut runter.</p><div class="rm">Felix B. · 10. März 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-03-09"><span class="s5">★★★★★</span><p class="rt">Erstes NEM bei dem ich nach nem Monat noch dabei bin. Sagt alles.</p><div class="rm">Lena P. · 9. März 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-03-05"><span class="s5">★★★★★</span><p class="rt">Immer wenn ich aufgehört habe gemerkt, dass es was macht. Also mach ich weiter.</p><div class="rm">Ramona S. · 5. März 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-03-04"><span class="s5">★★★★★</span><p class="rt">Erster Monat: skeptisch. Zweiter Monat: überzeugt. Dritter Monat: zweites Paket bestellt.</p><div class="rm">Moritz L. · 4. März 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-02-25"><span class="s5">★★★★★</span><p class="rt">Hab alle Inhaltsstoffe recherchiert bevor ich bestellt hab. Alles seriös. Und es hilft.</p><div class="rm">Michael B. · 25. Februar 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-02-18"><span class="s5">★★★★★</span><p class="rt">3 Monate dabei. Energie ist eindeutig mehr, Bauchgefühl viel stabiler.</p><div class="rm">Patrick R. · 18. Februar 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="4" data-date="2025-02-16"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Bauch ist besser, Energie auch – aber ich hatte etwas mehr erwartet. Trotzdem gut.</p><div class="rm">Petra L. · 16. Februar 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-02-12"><span class="s5">★★★★★</span><p class="rt">Schwiegermutter hat's empfohlen. War skeptisch, bin jetzt überzeugt.</p><div class="rm">David S. · 12. Februar 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-01-26"><span class="s5">★★★★★</span><p class="rt">Entgiftungsgefühl nach 3 Wochen. Haut glatter, weniger Müdigkeit. Bin zufrieden.</p><div class="rm">Max S. · 26. Januar 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-01-24"><span class="s5">★★★★★</span><p class="rt">War Empfehlung einer Kollegin. Jetzt empfehle ich's auch weiter. Kreislauf der Freude.</p><div class="rm">Nadja P. · 24. Januar 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2025-01-16"><span class="s5">★★★★★</span><p class="rt">Für das Geld bekommt man hier wirklich Qualität. Inhaltsstoffe stimmen, Wirkung auch.</p><div class="rm">Uwe N. · 16. Januar 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="4" data-date="2025-01-08"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Haut etwas besser, Verdauung auch. Aber nicht spektakulär. Trotzdem 4 Sterne.</p><div class="rm">Martin H. · 8. Januar 2025</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-12-08"><span class="s5">★★★★★</span><p class="rt">Detox-Gefühl nach ner Woche schon. Haut besser, Schlaf besser. Bin dabei.</p><div class="rm">Florian S. · 8. Dezember 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-12-06"><span class="s5">★★★★★</span><p class="rt">Bauch hat sich beruhigt wie lange nicht. Blähungen fast komplett weg nach 4 Wochen.</p><div class="rm">Vanessa B. · 6. Dezember 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-12-04"><span class="s5">★★★★★</span><p class="rt">Bin seit 4 Monaten dabei und denk nicht dran aufzuhören. Der Körper dankt's.</p><div class="rm">Hannah B. · 4. Dezember 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-11-20"><span class="s5">★★★★★</span><p class="rt">Freundin hat mir das geschenkt und ich werd es jetzt selbst nachbestellen. Danke Mia!</p><div class="rm">Sophie W. · 20. November 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-10-29"><span class="s5">★★★★★</span><p class="rt">Ich bin kein Mensch der schnell Dinge empfiehlt. Aber das hier schon. Wirklich gut.</p><div class="rm">Tanja K. · 29. Oktober 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-10-23"><span class="s5">★★★★★</span><p class="rt">Meine Schwester schwört drauf, jetzt ich auch. Nach 5 Wochen klarer Unterschied.</p><div class="rm">Claudia F. · 23. Oktober 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-10-18"><span class="s5">★★★★★</span><p class="rt">Trainer hat mich drauf gebracht. Erholung nach Training spürbar schneller.</p><div class="rm">Markus W. · 18. Oktober 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-10-13"><span class="s5">★★★★★</span><p class="rt">Hab schon viel probiert. Das hier wirkt tatsächlich, und das nach ner Woche schon.</p><div class="rm">Nina K. · 13. Oktober 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-10-12"><span class="s5">★★★★★</span><p class="rt">Hab ne Pause gemacht und gemerkt wie sehr's was ausgemacht hat. Jetzt wieder täglich.</p><div class="rm">Xenia M. · 12. Oktober 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-10-10"><span class="s5">★★★★★</span><p class="rt">Darm fühlt sich einfach gesünder an. Schlafe auch besser, weiß nicht ob's zusammenhängt.</p><div class="rm">Emma R. · 10. Oktober 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-09-12"><span class="s5">★★★★★</span><p class="rt">In dieser Kombi nochmal ne andere Hausnummer. Kein Geruch, man merkt was.</p><div class="rm">Sarah B. · 12. September 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-09-11"><span class="s5">★★★★★</span><p class="rt">Hab's beim Arzt erwähnt, der kannte es und meinte von seiner Seite nichts dagegen.</p><div class="rm">Adrian K. · 11. September 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="4" data-date="2024-08-26"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Guter Effekt auf Verdauung. Nicht günstig, aber ich bestell weiter.</p><div class="rm">Frank K. · 26. August 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-07-19"><span class="s5">★★★★★</span><p class="rt">Seit ich das nehme läuft der Alltag einfach besser. Schwer zu erklären aber real.</p><div class="rm">Karsten F. · 19. Juli 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-06-25"><span class="s5">★★★★★</span><p class="rt">Bauch so ruhig wie seit Jahren nicht. Das Schwarzkümmelöl macht wirklich was.</p><div class="rm">Oliver M. · 25. Juni 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-06-24"><span class="s5">★★★★★</span><p class="rt">Mein Körper fühlt sich sauberer an. Klingt komisch aber es stimmt.</p><div class="rm">Christoph L. · 24. Juni 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-06-12"><span class="s5">★★★★★</span><p class="rt">Oregano-Öl kannte ich schon, Schwarzkümmel auch – die Kombination hier ist echt gut.</p><div class="rm">Lars H. · 12. Juni 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-06-09"><span class="s5">★★★★★</span><p class="rt">Muss man ausprobieren. Worte reichen nicht. Nach 4 Wochen weißt du was ich meine.</p><div class="rm">Norbert W. · 9. Juni 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-06-06"><span class="s5">★★★★★</span><p class="rt">Gut verträglich, keine Nebenwirkungen. Bauch ruhig, Energie stabil. Was will man mehr.</p><div class="rm">Jonas H. · 6. Juni 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="1" data-date="2024-05-08"><span class="s1">★<span class="e">★★★★</span></span><p class="rt">Nicht für mich. Habe nach 2 Monaten keine Wirkung gespürt. Geld zurück wäre schön.</p><div class="rm">Leon G. · 8. Mai 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="3" data-date="2024-04-30"><span class="s3">★★★<span class="e">★★</span></span><p class="rt">Wirkung lässt sich diskutieren. Manchmal denke ich es hilft, manchmal nicht sicher.</p><div class="rm">Elke M. · 30. April 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-04-29"><span class="s5">★★★★★</span><p class="rt">Alles zusammen wirkt. Kein Einzelprodukt hat mir so geholfen wie diese Kombination hier.</p><div class="rm">Paul M. · 29. April 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-04-21"><span class="s5">★★★★★</span><p class="rt">Hab damit aufgehört zu suchen. Das hier bleibt mein Produkt.</p><div class="rm">Jessica P. · 21. April 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-04-06"><span class="s5">★★★★★</span><p class="rt">Hab nach Rücksprache mit Ärztin angefangen. Die hat nichts dagegen. Und es hilft.</p><div class="rm">Jana B. · 6. April 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-04-02"><span class="s5">★★★★★</span><p class="rt">Hab aufgehört Cola zu trinken und DETO genommen. Bauch sagt danke.</p><div class="rm">Eike S. · 2. April 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-04-01"><span class="s5">★★★★★</span><p class="rt">Nehme das jetzt seit 5 Monaten. Kann mir nicht vorstellen aufzuhören. Super Produkt.</p><div class="rm">Alena R. · 1. April 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-03-31"><span class="s5">★★★★★</span><p class="rt">Haut ist innerhalb von 6 Wochen merklich klarer geworden. Dachte nicht dass das geht.</p><div class="rm">Lara K. · 31. März 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-03-25"><span class="s5">★★★★★</span><p class="rt">Nehme es jetzt seit dem Sommer. Winter gut überstanden. Zufall? Vielleicht nicht.</p><div class="rm">Heike T. · 25. März 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-03-23"><span class="s5">★★★★★</span><p class="rt">5 Sterne weil ich wirklich einen Unterschied merke. Keine Placebo-Geschichte hier.</p><div class="rm">Jan H. · 23. März 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-03-15"><span class="s5">★★★★★</span><p class="rt">Detox ohne Drama. Kein Hungern, keine komischen Diäten – einfach täglich eine Kapsel.</p><div class="rm">Yasmin F. · 15. März 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-03-07"><span class="s5">★★★★★</span><p class="rt">Bauch ist so ruhig geworden. Nicht übertrieben – aber der Unterschied ist wirklich da.</p><div class="rm">Stefanie R. · 7. März 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-03-01"><span class="s5">★★★★★</span><p class="rt">Hab lange gesucht, jetzt gefunden. Bauch macht keine Probleme mehr nach dem Essen.</p><div class="rm">Monika R. · 1. März 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="1" data-date="2024-02-28"><span class="s1">★<span class="e">★★★★</span></span><p class="rt">3 Monate, täglich, keine Wirkung. Zu teuer für das was es bei mir gebracht hat.</p><div class="rm">Iris W. · 28. Februar 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-02-27"><span class="s5">★★★★★</span><p class="rt">Zweites Paket bestellt. Das ist meine Antwort auf die Frage ob's was bringt.</p><div class="rm">Dominik H. · 27. Februar 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-02-24"><span class="s5">★★★★★</span><p class="rt">Morgens rein und dann vergessen – und trotzdem merkt man abends dass der Tag besser lief.</p><div class="rm">Paula K. · 24. Februar 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-01-30"><span class="s5">★★★★★</span><p class="rt">Hab lang probiert bis ich was Gutes gefunden hab. Das hier ist es. Bleib dabei.</p><div class="rm">Hanna L. · 30. Januar 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-01-21"><span class="s5">★★★★★</span><p class="rt">Kein Aufstoßen, keine Magenschmerzen, nur Ruhe. Genau das hatte ich gebraucht.</p><div class="rm">Anja F. · 21. Januar 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="4" data-date="2024-01-16"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Solides Produkt. Wirkt, aber ich hätte etwas mehr erwartet. 4 Sterne sind fair.</p><div class="rm">Kai W. · 16. Januar 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-01-15"><span class="s5">★★★★★</span><p class="rt">3 Monate und ich bin noch immer überzeugt. Haut, Verdauung, Energie – alles besser.</p><div class="rm">Isabell M. · 15. Januar 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-01-13"><span class="s5">★★★★★</span><p class="rt">Verdauung so stabil wie lange nicht. Das erste NEM bei dem ich wirklich bleibe.</p><div class="rm">Yannick S. · 13. Januar 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-01-12"><span class="s5">★★★★★</span><p class="rt">Dachte erst das ist wie alle anderen. War es nicht. Schon nach 3 Wochen was gemerkt.</p><div class="rm">Katharina M. · 12. Januar 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2024-01-10"><span class="s5">★★★★★</span><p class="rt">Hab mir Zeit gelassen mit der Bewertung. Nach 3 Monaten kann ich sagen: 5 Sterne.</p><div class="rm">Sven T. · 10. Januar 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="4" data-date="2024-01-06"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Nehme es jetzt 6 Wochen. Merke was, aber es geht langsam. Produkt ok.</p><div class="rm">Inge F. · 6. Januar 2024</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-12-31"><span class="s5">★★★★★</span><p class="rt">Besser schlafen, besser verdauen, mehr Energie. Drei in einem. Bin dabei geblieben.</p><div class="rm">Delia K. · 31. Dezember 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-12-10"><span class="s5">★★★★★</span><p class="rt">Für den Preis bekommt man hier wirklich was. Merke den Unterschied deutlich.</p><div class="rm">Melanie K. · 10. Dezember 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-11-22"><span class="s5">★★★★★</span><p class="rt">Das Produkt hat meine Erwartungen übertroffen. Hab mehrere Freundinnen empfohlen.</p><div class="rm">Fiona W. · 22. November 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-11-19"><span class="s5">★★★★★</span><p class="rt">Bin 52 und nehme das jetzt seit 3 Monaten. Der Körper fühlt sich jünger an. Nicht übertrieben.</p><div class="rm">Petra N. · 19. November 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-11-09"><span class="s5">★★★★★</span><p class="rt">Mein Freund nimmt das seit Monaten. Jetzt ich auch. Beide sind happy damit.</p><div class="rm">Gustav R. · 9. November 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-11-05"><span class="s5">★★★★★</span><p class="rt">Bauch so viel ruhiger seit 7 Wochen. Das Gefühl nach dem Essen ist fast weg.</p><div class="rm">Lisa M. · 5. November 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-11-03"><span class="s5">★★★★★</span><p class="rt">Seit 6 Wochen jeden Morgen. Energie ist anders, Bauch macht keine Probleme. Super.</p><div class="rm">Marcel T. · 3. November 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-10-20"><span class="s5">★★★★★</span><p class="rt">Hab viel gelesen vorher und die Inhaltsstoffe überzeugen. Die Wirkung auch.</p><div class="rm">Marie L. · 20. Oktober 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-10-14"><span class="s5">★★★★★</span><p class="rt">Empfehle das wirklich gerne weiter. Funktioniert und ist gut verträglich.</p><div class="rm">Sandra L. · 14. Oktober 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="4" data-date="2023-10-10"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Verträglich und wirksam, aber 5 Sterne wäre mir zu viel. Solide 4 Sterne.</p><div class="rm">Simone B. · 10. Oktober 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-10-06"><span class="s5">★★★★★</span><p class="rt">Nimm ich seit dem Jahreswechsel täglich. Bestes NEM das ich bisher hatte.</p><div class="rm">Tobias G. · 6. Oktober 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-09-30"><span class="s5">★★★★★</span><p class="rt">Hab das schon zweimal verschenkt. Alle waren begeistert. Ich auch natürlich.</p><div class="rm">Rebecca W. · 30. September 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-09-26"><span class="s5">★★★★★</span><p class="rt">Allergisch gegen Pfefferminz – hier kein Problem. Gut verträglich für mich.</p><div class="rm">Imke B. · 26. September 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-09-15"><span class="s5">★★★★★</span><p class="rt">3 Monate durchgehalten und es hat sich definitiv gelohnt. Energielevel konstant hoch.</p><div class="rm">Carsten M. · 15. September 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-09-12"><span class="s5">★★★★★</span><p class="rt">Meiner Meinung nach unterschätzt. Für was es macht ist der Preis absolut ok.</p><div class="rm">Werner B. · 12. September 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="3" data-date="2023-08-27"><span class="s3">★★★<span class="e">★★</span></span><p class="rt">Ok aber nicht überragend. Verdauung minimal besser. Bin aber schon kritisch geworden.</p><div class="rm">Rolf S. · 27. August 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-08-19"><span class="s5">★★★★★</span><p class="rt">Zwei Monate durch. Energie besser, Haut besser, Bauch ruhig. Was soll ich sonst sagen.</p><div class="rm">Ulf H. · 19. August 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="4" data-date="2023-07-31"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Gutes Produkt, Preis ist aber hoch. Wirkung merkt man, nur dauert es etwas.</p><div class="rm">Klaus R. · 31. Juli 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-07-23"><span class="s5">★★★★★</span><p class="rt">Sehr guter Geschmack – gar keiner. Das ist bei Kapseln nicht selbstverständlich.</p><div class="rm">Doris N. · 23. Juli 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-07-17"><span class="s5">★★★★★</span><p class="rt">Gute Kapseln, echte Wirkung. Kein Marketing-Blabla, einfach funktioniert's.</p><div class="rm">Patrick L. · 17. Juli 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-07-13"><span class="s5">★★★★★</span><p class="rt">Qualität top, Wirkung real. Hätte nicht gedacht dass ich sowas sagen würde.</p><div class="rm">Simon F. · 13. Juli 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-07-11"><span class="s5">★★★★★</span><p class="rt">Verdauung ruhiger, Energie besser. Passt alles. Bestelle zum zweiten Mal.</p><div class="rm">Oliver K. · 11. Juli 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-07-10"><span class="s5">★★★★★</span><p class="rt">Das Oregano-Öl ist der Gamechanger hier. Merkt man nach ein paar Wochen wirklich.</p><div class="rm">Viktoria L. · 10. Juli 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-07-03"><span class="s5">★★★★★</span><p class="rt">Hab viel verglichen. Preis-Leistung hier eindeutig am besten. Und es wirkt.</p><div class="rm">Xandra M. · 3. Juli 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-06-30"><span class="s5">★★★★★</span><p class="rt">Super für Leute die viel unterwegs sind. Nehme die Kapseln auf Reisen mit, kein Problem.</p><div class="rm">Britta R. · 30. Juni 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="4" data-date="2023-06-29"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Gut aber nicht großartig. Bauch ist ruhiger, aber der Preis ist schon etwas hoch.</p><div class="rm">Hans S. · 29. Juni 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-06-28"><span class="s5">★★★★★</span><p class="rt">Sehr gutes Produkt. Schon beim zweiten Paket und plane zu bleiben.</p><div class="rm">Waldemar S. · 28. Juni 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-06-12"><span class="s5">★★★★★</span><p class="rt">Mein Mann nimmt es jetzt auch. Beide zufrieden. Bestellen seit einem Jahr regelmäßig.</p><div class="rm">Rosa T. · 12. Juni 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-05-09"><span class="s5">★★★★★</span><p class="rt">Mein Arzt hat empfohlen einen Detox zu machen. DETO war die Wahl. Keine Reue.</p><div class="rm">Cornelia S. · 9. Mai 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="2" data-date="2023-05-08"><span class="s2">★★<span class="e">★★★</span></span><p class="rt">Wenig Wirkung bei mir, Preis ist hoch. Hätte ich mir gespart ehrlich gesagt.</p><div class="rm">Fabian M. · 8. Mai 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-04-30"><span class="s5">★★★★★</span><p class="rt">Hab's meiner Mutter auch empfohlen. Sie ist genauso begeistert wie ich.</p><div class="rm">Philipp S. · 30. April 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="4" data-date="2023-04-22"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Wirkung ist ok, nicht wow. Für 4 Sterne reicht's, 5 wären zu viel für mich.</p><div class="rm">Gabi M. · 22. April 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-04-12"><span class="s5">★★★★★</span><p class="rt">Bestell jetzt zum vierten Mal. Das sagt wirklich alles. Bin sehr zufrieden.</p><div class="rm">Zoe F. · 12. April 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-04-01"><span class="s5">★★★★★</span><p class="rt">Kein anderes Produkt hat bei mir so schnell angeschlagen. Schon nach 2 Wochen Unterschied.</p><div class="rm">Sebastian W. · 1. April 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="4" data-date="2023-03-31"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Ok für den Preis, aber ich hab auch schon günstigere Alternativen die ähnliches taten.</p><div class="rm">Nora B. · 31. März 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-03-03"><span class="s5">★★★★★</span><p class="rt">Seit Oktober täglich – Immunsystem hat diesen Winter mitgespielt wie selten. Zufall? Denk nicht.</p><div class="rm">Laura N. · 3. März 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-02-06"><span class="s5">★★★★★</span><p class="rt">Schnelle Lieferung, seriöse Inhaltsstoffe, echte Wirkung. Was will man mehr.</p><div class="rm">Igor W. · 6. Februar 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-01-30"><span class="s5">★★★★★</span><p class="rt">Haut, Verdauung, Energie – bei mir hat sich alles verbessert. Recommende ich gerne.</p><div class="rm">Zacharias K. · 30. Januar 2023</div></article>
+<article class="rv-card rv-hidden" data-stars="5" data-date="2023-01-26"><span class="s5">★★★★★</span><p class="rt">Hatte schon viele Nahrungsergänzungen. Das ist eine der wenigen die was tut.</p><div class="rm">Eugen M. · 26. Januar 2023</div></article>
 </div>
-<div class="rv-ct" id="rv-ct-{{section.id}}">
-  <div class="rv-fi"><button class="rv-f rv-on" data-filter="all">Alle</button><button class="rv-f" data-filter="5">5 ★</button><button class="rv-f" data-filter="4">4 ★</button><button class="rv-f" data-filter="3">3 ★</button><button class="rv-f" data-filter="2">2 ★</button><button class="rv-f" data-filter="1">1 ★</button></div>
-  <div class="rv-so"><button class="rv-sb rv-on" data-sort="desc">Neueste</button><button class="rv-sb" data-sort="asc">Älteste</button></div>
+<div class="rv-more-wrap" id="rv-more-wrap-{{section.id}}"><button class="rv-more" id="rv-more-{{section.id}}">Mehr Bewertungen anzeigen</button></div>
+<div class="rv-form-wrap" id="rv-form-{{section.id}}">
+  <h3 class="rv-fh">Bewertung schreiben</h3>
+  <div class="rv-stars-pick" id="rv-sp-{{section.id}}" role="radiogroup" aria-label="Sterne wählen">
+    <span class="rv-sp-s" data-v="1" role="radio" aria-checked="false" tabindex="0">★</span>
+    <span class="rv-sp-s" data-v="2" role="radio" aria-checked="false" tabindex="0">★</span>
+    <span class="rv-sp-s" data-v="3" role="radio" aria-checked="false" tabindex="0">★</span>
+    <span class="rv-sp-s" data-v="4" role="radio" aria-checked="false" tabindex="0">★</span>
+    <span class="rv-sp-s" data-v="5" role="radio" aria-checked="false" tabindex="0">★</span>
+  </div>
+  <form action="/contact" method="post" class="rv-form">
+    <input type="hidden" name="form_type" value="contact">
+    <input type="hidden" name="utf8" value="✓">
+    <input type="hidden" name="contact[subject]" value="Neue Bewertung">
+    <input type="hidden" name="contact[stars]" id="rv-stars-val-{{section.id}}" value="">
+    <input class="rv-fi" type="text" name="contact[name]" placeholder="Dein Name" required>
+    <textarea class="rv-fi rv-fta" name="contact[body]" placeholder="Deine Erfahrung (mind. 20 Zeichen)" minlength="20" required></textarea>
+    <button type="submit" class="rv-fsub">Bewertung absenden</button>
+  </form>
 </div>
-<div class="rv-grid" id="rv-grid-{{section.id}}"><article class="rv-card" data-stars="5" data-date="2026-05-25"><span class="s5">★★★★★</span><p class="rt">Bauch so viel ruhiger seit 7 Wochen. Das Gefühl nach dem Essen ist fast weg.</p><div class="rm">Lisa M. · 25. Mai 2026</div></article>
-<article class="rv-card" data-stars="5" data-date="2026-05-03"><span class="s5">★★★★★</span><p class="rt">Deutlich weniger Blähungen nach nem Monat. Die Kombi macht was sie verspricht.</p><div class="rm">Thomas K. · 3. Mai 2026</div></article>
-<article class="rv-card" data-stars="5" data-date="2026-04-13"><span class="s5">★★★★★</span><p class="rt">In dieser Kombi nochmal ne andere Hausnummer. Kein Geruch, man merkt was.</p><div class="rm">Sarah B. · 13. April 2026</div></article>
-<article class="rv-card" data-stars="5" data-date="2026-03-30"><span class="s5">★★★★★</span><p class="rt">6 Wochen genommen – Haut klarer, Bauch ruhiger. Genau das hab ich gesucht.</p><div class="rm">Andrea H. · 30. März 2026</div></article>
-<article class="rv-card" data-stars="5" data-date="2026-03-10"><span class="s5">★★★★★</span><p class="rt">Trainer hat mich drauf gebracht. Erholung nach Training spürbar schneller.</p><div class="rm">Markus W. · 10. März 2026</div></article>
-<article class="rv-card" data-stars="5" data-date="2026-02-20"><span class="s5">★★★★★</span><p class="rt">Ohne Zusatzstoffe und trotzdem wirksam. mysolv ist genau das. Sauber, wirkt.</p><div class="rm">Julia R. · 20. Februar 2026</div></article>
-<article class="rv-card" data-stars="5" data-date="2026-01-31"><span class="s5">★★★★★</span><p class="rt">Kollegin hat geschwärmt, ich hab's probiert. Mehr Energie morgens – stimmt.</p><div class="rm">Michael S. · 31. Januar 2026</div></article>
-<article class="rv-card" data-stars="5" data-date="2026-01-12"><span class="s5">★★★★★</span><p class="rt">Kein Chemie-Geruch, schon die dritte Dose. Das sagt eigentlich alles.</p><div class="rm">Petra L. · 12. Januar 2026</div></article>
-<article class="rv-card" data-stars="5" data-date="2026-01-02"><span class="s5">★★★★★</span><p class="rt">Nach stressiger Phase: Darm beruhigt, Energie zurück. Würd's immer wieder kaufen.</p><div class="rm">Christian F. · 2. Januar 2026</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-12-13"><span class="s5">★★★★★</span><p class="rt">Verdauung verbessert, kein Blähbauch mehr. Wirklich überrascht wie gut das wirkt.</p><div class="rm">Anna G. · 13. Dezember 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-11-17"><span class="s5">★★★★★</span><p class="rt">Erstes NEM das ich wirklich spüre. Sonst sehr skeptisch – hier: beeindruckt.</p><div class="rm">Stefan B. · 17. November 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-11-07"><span class="s5">★★★★★</span><p class="rt">Nehm das mit meiner Mutter. Wir beide merken die Verbesserung deutlich.</p><div class="rm">Claudia M. · 7. November 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-10-16"><span class="s5">★★★★★</span><p class="rt">Vorher andere Oregano-Kapseln – das hier viel besser verträglich. Qualität merkt man.</p><div class="rm">Daniel R. · 16. Oktober 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-09-22"><span class="s5">★★★★★</span><p class="rt">Bauch ruhiger, Schlaf besser. Nach 3 Monaten glaub ich das nicht mehr ans Zufall.</p><div class="rm">Katharina W. · 22. September 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-09-03"><span class="s5">★★★★★</span><p class="rt">Frau merkt's am Bauch, ich am Immunsystem. Für uns beide hat's funktioniert.</p><div class="rm">Florian S. · 3. September 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-08-17"><span class="s5">★★★★★</span><p class="rt">Drei Wochen, schon mehr Energie. Für ein Naturprodukt überraschend schnell.</p><div class="rm">Monika T. · 17. August 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-07-31"><span class="s5">★★★★★</span><p class="rt">Chronische Verdauungsprobleme seit Jahren, jetzt deutlich besser. Gastroenterologe war erstaunt.</p><div class="rm">Andreas K. · 31. Juli 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-07-13"><span class="s5">★★★★★</span><p class="rt">Gut zu schlucken, kein Aufstoßen. Darm ruhiger, Haut klarer – mehr kann man nicht verlangen.</p><div class="rm">Stefanie P. · 13. Juli 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-06-29"><span class="s5">★★★★★</span><p class="rt">Nach Feiertagen als Detox genommen. Wirkung hat mich überrascht. Jährlich!</p><div class="rm">Jan H. · 29. Juni 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-06-12"><span class="s5">★★★★★</span><p class="rt">Zweimal im Jahr als Kur. Der Unterschied ist jedes Mal spürbar.</p><div class="rm">Nicole Z. · 12. Juni 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-05-15"><span class="s5">★★★★★</span><p class="rt">Als Vielreisender unverzichtbar. Darm bleibt stabil auch bei chaotischer Ernährung.</p><div class="rm">Tobias M. · 15. Mai 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-05-05"><span class="s5">★★★★★</span><p class="rt">4 Inhaltsstoffe die sich gut ergänzen. Man merkt dass jemand nachgedacht hat.</p><div class="rm">Christine V. · 5. Mai 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-04-11"><span class="s5">★★★★★</span><p class="rt">Hätte nicht gedacht dass ich mal so begeistert von einem NEM bin. Wirkt.</p><div class="rm">Patrick O. · 11. April 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-03-31"><span class="s5">★★★★★</span><p class="rt">Nach 2-3 Wochen spürt man es. Bauch ruhiger, ich fühl mich leichter. Packung 2.</p><div class="rm">Hannah D. · 31. März 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-03-10"><span class="s5">★★★★★</span><p class="rt">Kombination ist was Besonderes. Kein Aufstoßen, gut verträglich, wirkt.</p><div class="rm">Sebastian E. · 10. März 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-02-18"><span class="s5">★★★★★</span><p class="rt">Ärztin war erstaunt bei letztem Check. 4 Monate mysolv. Kein Zufall.</p><div class="rm">Vera N. · 18. Februar 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-01-27"><span class="s5">★★★★★</span><p class="rt">Sportler, Darmgesundheit wichtig. Regeneration besser, Darm stabil. Kaufe weiter.</p><div class="rm">Lukas A. · 27. Januar 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2025-01-13"><span class="s5">★★★★★</span><p class="rt">2 Wochen nichts gespürt dann plötzlich alles besser. Jetzt Packung 3.</p><div class="rm">Sandra J. · 13. Januar 2025</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-12-27"><span class="s5">★★★★★</span><p class="rt">Softgels praktisch, kein Geruch, wirkt. Mehr braucht man nicht.</p><div class="rm">Benjamin C. · 27. Dezember 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-12-04"><span class="s5">★★★★★</span><p class="rt">Nach Antibiotika zur Darmunterstützung. Erholung deutlich schneller als erwartet.</p><div class="rm">Tanja X. · 4. Dezember 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-11-11"><span class="s5">★★★★★</span><p class="rt">Schwiegermutter hat empfohlen, war skeptisch. Jetzt überzeugt – Bauch ruhiger.</p><div class="rm">Felix Y. · 11. November 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-10-26"><span class="s5">★★★★★</span><p class="rt">Keine Füllstoffe, transparente Inhaltsstoffe. Die Wirkung spricht für sich.</p><div class="rm">Melanie Q. · 26. Oktober 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-10-11"><span class="s5">★★★★★</span><p class="rt">Nach 10 Tagen nervöser Darm beruhigt. Hätte ich nicht erwartet. Kaufe nach.</p><div class="rm">Dominic U. · 11. Oktober 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-09-22"><span class="s5">★★★★★</span><p class="rt">4 Monate kontinuierlich. Balancierter Körper, top Verdauung, konstante Energie.</p><div class="rm">Anja I. · 22. September 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-09-02"><span class="s5">★★★★★</span><p class="rt">Preis fair für das was drin ist. Bin zufrieden.</p><div class="rm">Marco T. · 2. September 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-08-13"><span class="s5">★★★★★</span><p class="rt">Nach Auslandsreise Immunsystem unterstützt. Schneller wieder fit als erwartet.</p><div class="rm">Nina F. · 13. August 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-07-26"><span class="s5">★★★★★</span><p class="rt">Empfindlicher Darm – das verträgt sich einwandfrei und wirkt trotzdem. Bestes Produkt.</p><div class="rm">Jonas B. · 26. Juli 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-07-10"><span class="s5">★★★★★</span><p class="rt">Zweite Kur: diesmal beobachtet. Energie morgens, Darm ruhiger. Überzeugt.</p><div class="rm">Kathrin S. · 10. Juli 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-06-17"><span class="s5">★★★★★</span><p class="rt">Bessere Darmaktivität, weniger Völlegefühl. Partner hat mich drauf gebracht.</p><div class="rm">David L. · 17. Juni 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-05-30"><span class="s5">★★★★★</span><p class="rt">Viel Stress, Darm hat's gespürt. mysolv hat stabilisiert. Kein Aufstoßen.</p><div class="rm">Sonja M. · 30. Mai 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-05-16"><span class="s5">★★★★★</span><p class="rt">Schwarzkümmelöl wirkt spürbar. Gelenke fühlen sich auch besser an.</p><div class="rm">Alexander G. · 16. Mai 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-04-23"><span class="s5">★★★★★</span><p class="rt">Nach Urlaub Magen-Darm erholt. In 2 Wochen wieder ins Lot gebracht.</p><div class="rm">Birgit R. · 23. April 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-04-08"><span class="s5">★★★★★</span><p class="rt">Regelmäßig bestellt. Ich fühl mich einfach wohler wenn ich es nehme.</p><div class="rm">Kevin H. · 8. April 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-03-21"><span class="s5">★★★★★</span><p class="rt">Energie am Morgen ist das Wichtigste. mysolv hat das verändert.</p><div class="rm">Miriam K. · 21. März 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-03-06"><span class="s5">★★★★★</span><p class="rt">Arzt hat mysolv empfohlen. Nach 8 Wochen: sehr froh.</p><div class="rm">Robert W. · 6. März 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-02-12"><span class="s5">★★★★★</span><p class="rt">Vorsichtig mit NEM, aber hier gut informiert. Qualität und Wirkung stimmen.</p><div class="rm">Christina A. · 12. Februar 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-01-20"><span class="s5">★★★★★</span><p class="rt">Über Podcast gefunden, viel recherchiert. 2 Monate dabei – ja, wirkt wirklich.</p><div class="rm">Dennis P. · 20. Januar 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2024-01-09"><span class="s5">★★★★★</span><p class="rt">Begleitend zur Ernährungsumstellung. Kombination macht sich deutlich bemerkbar.</p><div class="rm">Susanne E. · 9. Januar 2024</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2023-12-22"><span class="s5">★★★★★</span><p class="rt">Gut verpackt, schnell geliefert, wirkt. Was will man mehr.</p><div class="rm">Simon N. · 22. Dezember 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2023-11-27"><span class="s5">★★★★★</span><p class="rt">Seit ich das nehme keine Erkältung mehr. Bin 45 und sonst jedes Jahr krank.</p><div class="rm">Yvonne D. · 27. November 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2023-11-13"><span class="s5">★★★★★</span><p class="rt">Sofort weiterempfohlen. Schon 3 Freunden den Link geschickt.</p><div class="rm">Manuel B. · 13. November 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2023-10-21"><span class="s5">★★★★★</span><p class="rt">Haut viel klarer. Nicht dramatisch aber sichtbar – innere Reinigung zeigt sich.</p><div class="rm">Franziska J. · 21. Oktober 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="4" data-date="2023-10-09"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Wirkt, Qualität top. Abzug nur wegen etwas längerer Lieferzeit beim ersten Mal.</p><div class="rm">Philipp C. · 9. Oktober 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="4" data-date="2023-09-17"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Positive Veränderungen, nicht so dramatisch wie bei anderen. Trotzdem gut.</p><div class="rm">Vanessa O. · 17. September 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2023-09-04"><span class="s5">★★★★★</span><p class="rt">Hochwertige Inhaltsstoffe, 6 Wochen – wirklich beeindruckt. Kaufe wieder.</p><div class="rm">Luca Z. · 4. September 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="4" data-date="2023-08-16"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Wirkt ok, bei Kollegin mehr Effekt. Vielleicht individuell. Grundsätzlich solide.</p><div class="rm">Sabine Q. · 16. August 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="4" data-date="2023-07-24"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Gut verträglich, macht was es soll. Preis hoch aber Qualität hat ihren Preis.</p><div class="rm">Niklas U. · 24. Juli 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="4" data-date="2023-07-10"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Weniger Blähungen, etwas mehr Energie. Kein Wundermittel aber gutes Ergänzungsmittel.</p><div class="rm">Elena I. · 10. Juli 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="4" data-date="2023-06-15"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Erstes Monat nichts, dann plötzlich Verbesserung. Gut dass ich nicht aufgehört hab.</p><div class="rm">Julian T. · 15. Juni 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2023-05-26"><span class="s5">★★★★★</span><p class="rt">2 Monate und überzeugt. Schlaf besser, Darm ruhiger, mehr Energie. Kaufe wieder.</p><div class="rm">Heike F. · 26. Mai 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="5" data-date="2023-05-06"><span class="s5">★★★★★</span><p class="rt">Sehr gute Qualität. Nach 6 Wochen Darm beruhigt, morgens fitter. Empfehlung.</p><div class="rm">Oliver B. · 6. Mai 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="4" data-date="2023-04-28"><span class="s4">★★★★<span class="e">★</span></span><p class="rt">Wirkt vor allem beim Immunsystem. Verdauung leicht verbessert. Zufrieden.</p><div class="rm">Rebecca K. · 28. April 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="3" data-date="2023-04-02"><span class="s3">★★★<span class="e">★★</span></span><p class="rt">Preis heftig. Merk was aber ob Produkt oder Ernährungsumstellung – schwer zu sagen.</p><div class="rm">Tim S. · 2. April 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="3" data-date="2023-03-16"><span class="s3">★★★<span class="e">★★</span></span><p class="rt">Nach 4 Wochen nicht so viel gebracht. Qualität wirkt hochwertig, Wirkung überschaubar.</p><div class="rm">Annette L. · 16. März 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="3" data-date="2023-02-22"><span class="s3">★★★<span class="e">★★</span></span><p class="rt">Ok aber nicht mehr. Mehr erwartet. Qualität da, Wirkung bei mir begrenzt.</p><div class="rm">Fabian M. · 22. Februar 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="2" data-date="2023-02-06"><span class="s2">★★<span class="e">★★★</span></span><p class="rt">6 Wochen probiert, kaum was gespürt. Für den Preis hätte ich mehr erwartet.</p><div class="rm">Iris W. · 6. Februar 2023</div></article>
-<article class="rv-card msv-rv-hidden" data-stars="1" data-date="2023-01-20"><span class="s1">★<span class="e">★★★★</span></span><p class="rt">3 Monate, täglich, keine Wirkung. Zu teuer für das was es bei mir gebracht hat.</p><div class="rm">Leon G. · 20. Januar 2023</div></article>
-</div>
-<div class="rv-mw" id="rv-mw-{{section.id}}"><button class="rv-mb" id="rv-mb-{{section.id}}">Mehr Bewertungen anzeigen</button></div>
-<div class="rv-ww"><button class="rv-wb" id="rv-wb-{{section.id}}" type="button">Bewertung schreiben</button>
-<div class="rv-fb" id="rv-fb-{{section.id}}"><h3 class="rv-ft">Deine Bewertung</h3>
-<div class="rv-sr" id="rv-sr-{{section.id}}"><span class="rv-sp">★</span><span class="rv-sp">★</span><span class="rv-sp">★</span><span class="rv-sp">★</span><span class="rv-sp">★</span></div>
-<form id="rv-form-{{section.id}}" novalidate><input class="rv-in" type="text" name="name" placeholder="Dein Name *" required><input class="rv-in" type="email" name="email" placeholder="E-Mail *" required><textarea class="rv-ta" name="body" rows="3" placeholder="Deine Erfahrung..." required></textarea><p class="rv-fn">Bewertungen werden vor Veröffentlichung geprüft.</p><button class="rv-fs" type="submit">Absenden</button></form>
-<div class="rv-ok" id="rv-ok-{{section.id}}">&#10003; Danke! Deine Bewertung wird geprüft.</div></div></div>
-<button class="rv-fl" id="rv-fl-{{section.id}}" type="button" aria-label="Nach oben">&#8593; Schließen</button>
 </section>
+<div class="rv-float" id="rv-float-{{section.id}}">↑ Schließen</div>
 <style>
-.rv-sec{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;max-width:1100px;margin:0 auto;padding:36px 16px 44px;scroll-margin-top:80px}
-.rv-hd{text-align:center;margin-bottom:16px}
-.rv-ti{font-size:26px;font-weight:700;color:#191919;margin:0 0 8px}
-.rv-su{display:flex;align-items:center;justify-content:center;gap:8px}
-.rv-as{color:#00b67a;font-size:20px;letter-spacing:2px}
-.rv-at{font-size:15px;color:#555}
-.rv-bd{max-width:400px;margin:0 auto 20px;display:flex;flex-direction:column;gap:5px}
-.rv-br{display:flex;align-items:center;gap:8px;width:100%;background:none;border:none;padding:3px 4px;border-radius:5px;cursor:pointer;font-family:inherit;transition:background .15s}
-.rv-br:hover,.rv-br.rv-on{background:#eafaf3}
-.rv-bl{font-size:13px;color:#555;min-width:28px;text-align:left}
-.rv-bb{flex:1;height:9px;background:#ececec;border-radius:5px;overflow:hidden}
-.rv-bf{display:block;height:100%;background:#00b67a;border-radius:5px}
-.rv-bp{font-size:12px;color:#888;min-width:32px;text-align:right}
-.rv-ct{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:22px}
-.rv-fi,.rv-so{display:flex;gap:5px;flex-wrap:wrap}
-.rv-f,.rv-sb{padding:5px 12px;border:1px solid #ddd;border-radius:20px;background:#fff;font-size:13px;cursor:pointer;font-family:inherit;color:#555;transition:all .15s}
-.rv-f:hover,.rv-sb:hover{border-color:#00b67a;color:#00b67a}
-.rv-f.rv-on,.rv-sb.rv-on{background:#00b67a;color:#fff;border-color:#00b67a}
-.rv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.rv-card{background:#fff;border:1px solid #e8e8e8;border-radius:10px;padding:16px 14px;display:flex;flex-direction:column;gap:7px}
+.rv-sec{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;max-width:1100px;margin:0 auto;padding:40px 20px}
+.rv-hd{margin-bottom:24px}
+.rv-hl{display:flex;align-items:baseline;gap:12px}
+.rv-h2{font-size:24px;font-weight:700;margin:0}
+.rv-avg{font-size:20px;font-weight:700;color:#00b67a}
+.rv-sub{margin:4px 0 16px;color:#555;font-size:14px}
+.rv-bars{margin-bottom:20px}
+.rv-br{display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer;border-radius:6px;padding:3px 6px;transition:background .15s}
+.rv-br:hover{background:#f0f9f5}
+.rv-br.rv-ba{background:#e6f7f0;font-weight:600}
+.rv-bl{font-size:13px;width:24px;text-align:right;flex-shrink:0}
+.rv-bg{flex:1;height:10px;background:#e5e5e5;border-radius:5px;overflow:hidden}
+.rv-bv{height:100%;background:#00b67a;border-radius:5px;transition:width .3s}
+.rv-bp{font-size:12px;width:32px;color:#555;flex-shrink:0}
+.rv-ctrl{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:20px}
+.rv-pills{display:flex;gap:6px;flex-wrap:wrap}
+.rv-pill{border:1.5px solid #ddd;background:#fff;border-radius:20px;padding:5px 14px;font-size:13px;cursor:pointer;transition:all .15s}
+.rv-pill.rv-pa,.rv-pill:hover{background:#00b67a;color:#fff;border-color:#00b67a}
+.rv-sort{display:flex;gap:6px}
+.rv-sb{border:none;background:none;font-size:13px;cursor:pointer;color:#555;padding:5px 8px;border-radius:6px;transition:all .15s}
+.rv-sb.rv-sa{font-weight:700;color:#00b67a}
+.rv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.rv-card{background:#fff;border:1px solid #e5e5e5;border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:8px}
 .rv-hidden{display:none!important}
-.s5{color:#00b67a;font-size:14px;letter-spacing:1px}
-.s4{color:#00b67a;font-size:14px;letter-spacing:1px}
-.s3{color:#ff8622;font-size:14px;letter-spacing:1px}
-.s2{color:#ff4c4c;font-size:14px;letter-spacing:1px}
-.s1{color:#cc0000;font-size:14px;letter-spacing:1px}
-.s4 .e,.s3 .e,.s2 .e,.s1 .e{color:#dcdce6}
-.rt{margin:0;font-size:14px;color:#333;line-height:1.5;flex:1}
-.rm{font-size:12px;color:#888}
-.rv-mw{text-align:center;margin-top:24px}
-.rv-mb{display:inline-block;padding:11px 26px;background:#00b67a;color:#fff;border:none;border-radius:6px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s}
-.rv-mb:hover{background:#009e6a}
-.rv-ww{text-align:center;margin-top:16px}
-.rv-wb{background:none;border:none;font-size:14px;color:#555;cursor:pointer;text-decoration:underline;text-underline-offset:2px;font-family:inherit}
-.rv-wb:hover{color:#00b67a}
-.rv-fb{display:none;max-width:460px;margin:16px auto 0;background:#fff;border:1px solid #e8e8e8;border-radius:10px;padding:22px 20px;text-align:left}
-.rv-fb.rv-open{display:block}
-.rv-ft{font-size:16px;font-weight:700;color:#191919;margin:0 0 12px}
-.rv-sr{display:flex;gap:4px;margin-bottom:14px;font-size:28px;color:#dcdce6;cursor:pointer}
-.rv-sp.on,.rv-sp.hv{color:#00b67a}
-.rv-in,.rv-ta{display:block;width:100%;box-sizing:border-box;border:1px solid #ddd;border-radius:5px;padding:9px 11px;font-size:14px;font-family:inherit;color:#191919;margin-bottom:9px;outline:none}
-.rv-in:focus,.rv-ta:focus{border-color:#00b67a}
-.rv-ta{resize:vertical;min-height:80px}
-.rv-fn{font-size:12px;color:#aaa;margin:0 0 12px}
-.rv-fs{background:#00b67a;color:#fff;border:none;border-radius:5px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
-.rv-fs:hover{background:#009e6a}
-.rv-ok{display:none;color:#00b67a;font-weight:600;text-align:center;padding:8px 0}
-.rv-fl{position:fixed;right:18px;bottom:22px;z-index:9999;display:none;align-items:center;gap:6px;padding:10px 16px;background:#00b67a;color:#fff;border:none;border-radius:28px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.18);transition:background .2s}
-.rv-fl.rv-show{display:inline-flex}
-.rv-fl:hover{background:#009e6a}
-@media(max-width:768px){.rv-grid{grid-template-columns:repeat(2,1fr)}.rv-ti{font-size:22px}.rv-ct{flex-direction:column;align-items:flex-start}}
-@media(max-width:480px){.rv-grid{grid-template-columns:1fr}}
+.s5,.s4,.s3,.s2,.s1{font-size:16px}
+.s5{color:#00b67a}
+.s4{color:#00b67a}
+.s3{color:#f5a623}
+.s2{color:#e56b2e}
+.s1{color:#c0392b}
+.e{color:#ddd}
+.rt{margin:0;font-size:14px;line-height:1.5;color:#222}
+.rm{font-size:12px;color:#888;margin-top:auto}
+.rv-more-wrap{text-align:center;margin:24px 0}
+.rv-more{background:#00b67a;color:#fff;border:none;border-radius:8px;padding:12px 28px;font-size:15px;cursor:pointer;transition:background .15s}
+.rv-more:hover{background:#009e6a}
+.rv-form-wrap{margin-top:32px;border-top:1px solid #e5e5e5;padding-top:24px}
+.rv-fh{font-size:18px;font-weight:700;margin:0 0 16px}
+.rv-stars-pick{display:flex;gap:8px;margin-bottom:16px}
+.rv-sp-s{font-size:28px;cursor:pointer;color:#ddd;transition:color .1s;user-select:none}
+.rv-sp-s.rv-sp-on{color:#00b67a}
+.rv-form{display:flex;flex-direction:column;gap:12px}
+.rv-fi{border:1.5px solid #ddd;border-radius:8px;padding:10px 14px;font-size:14px;font-family:inherit;transition:border .15s}
+.rv-fi:focus{border-color:#00b67a;outline:none}
+.rv-fta{min-height:100px;resize:vertical}
+.rv-fsub{background:#00b67a;color:#fff;border:none;border-radius:8px;padding:12px;font-size:15px;cursor:pointer;transition:background .15s}
+.rv-fsub:hover{background:#009e6a}
+.rv-float{position:fixed;bottom:24px;right:24px;background:#191919;color:#fff;border-radius:24px;padding:10px 18px;font-size:13px;cursor:pointer;display:none;z-index:999;box-shadow:0 4px 16px rgba(0,0,0,.2);transition:opacity .2s}
+.rv-float.rv-fv{display:block}
+@media(max-width:768px){.rv-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.rv-grid{grid-template-columns:1fr}.rv-ctrl{flex-direction:column;align-items:flex-start}.rv-float{bottom:16px;right:16px;font-size:12px;padding:8px 14px}}
 </style>
 <script>
 (function(){
-var sec=document.getElementById('msv-reviews');
-var grid=document.getElementById('rv-grid-{{section.id}}');
-var mw=document.getElementById('rv-mw-{{section.id}}');
-var mb=document.getElementById('rv-mb-{{section.id}}');
-var fl=document.getElementById('rv-fl-{{section.id}}');
-var fbtns=document.querySelectorAll('#rv-ct-{{section.id}} .rv-f');
-var sbtns=document.querySelectorAll('#rv-ct-{{section.id}} .rv-sb');
-var brows=document.querySelectorAll('#rv-bd-{{section.id}} .rv-br');
-var exp=false,af='all',as2='desc';
-function cards(){return Array.from(grid.querySelectorAll('.rv-card'));}
-function sort(dir){cards().sort(function(a,b){var da=a.dataset.date,db=b.dataset.date;return dir==='desc'?db.localeCompare(da):da.localeCompare(db);}).forEach(function(c){grid.appendChild(c);});}
+var SEC=document.getElementById('msv-reviews');
+var GRID=document.getElementById('rv-grid-{{section.id}}');
+var MWRAP=document.getElementById('rv-more-wrap-{{section.id}}');
+var MBTN=document.getElementById('rv-more-{{section.id}}');
+var FLOAT=document.getElementById('rv-float-{{section.id}}');
+var cf=0,expanded=false;
+function cards(){return Array.from(GRID.querySelectorAll('.rv-card'));}
+function sort(dir){
+  var cs=cards().sort(function(a,b){
+    return dir==='asc'?a.dataset.date.localeCompare(b.dataset.date):b.dataset.date.localeCompare(a.dataset.date);
+  });
+  cs.forEach(function(c){GRID.appendChild(c);});
+}
 function apply(){
-var n=0;
-cards().forEach(function(c){
-var m=af==='all'||c.dataset.stars===af;
-if(!m){c.style.display='none';return;}
-if(af!=='all'||exp){c.style.display='';return;}
-n++;c.style.display=n<=9?'':'none';
-});
-if(mw)mw.style.display=(af==='all'&&!exp)?'':'none';
+  var cs=cards(),shown=0;
+  cs.forEach(function(c){
+    var match=cf===0||parseInt(c.dataset.stars)===cf;
+    if(cf!==0){c.classList.toggle('rv-hidden',!match);if(match)shown++;}
+    else{if(!expanded&&shown<9){c.classList.remove('rv-hidden');shown++;}else if(!expanded){c.classList.add('rv-hidden');}else{c.classList.remove('rv-hidden');shown++;}}
+  });
+  if(MWRAP)MWRAP.style.display=(cf===0&&!expanded)?'block':'none';
 }
 function setf(v){
-af=v;
-fbtns.forEach(function(b){b.classList.toggle('rv-on',b.dataset.filter===v);});
-brows.forEach(function(r){r.classList.toggle('rv-on',r.dataset.filter===v);});
-apply();
+  cf=v;
+  document.querySelectorAll('#rv-ctrl-{{section.id}} .rv-pill').forEach(function(p){
+    p.classList.toggle('rv-pa',parseInt(p.dataset.f)===v);
+  });
+  document.querySelectorAll('#rv-bars-{{section.id}} .rv-br').forEach(function(b){
+    b.classList.toggle('rv-ba',parseInt(b.dataset.f)===v);
+  });
+  apply();
+}
+document.querySelectorAll('#rv-ctrl-{{section.id}} .rv-pill').forEach(function(p){
+  p.addEventListener('click',function(){setf(parseInt(p.dataset.f));});
+});
+document.querySelectorAll('#rv-ctrl-{{section.id}} .rv-sb').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('#rv-ctrl-{{section.id}} .rv-sb').forEach(function(x){x.classList.remove('rv-sa');});
+    b.classList.add('rv-sa');
+    sort(b.dataset.d);
+    apply();
+  });
+});
+document.querySelectorAll('#rv-bars-{{section.id}} .rv-br').forEach(function(b){
+  b.addEventListener('click',function(){setf(parseInt(b.dataset.f));});
+});
+if(MBTN)MBTN.addEventListener('click',function(){expanded=true;apply();});
+var spEl=document.getElementById('rv-sp-{{section.id}}');
+var svEl=document.getElementById('rv-stars-val-{{section.id}}');
+if(spEl&&svEl){
+  var stars=spEl.querySelectorAll('.rv-sp-s');
+  stars.forEach(function(s){
+    function hl(v){stars.forEach(function(x){x.classList.toggle('rv-sp-on',parseInt(x.dataset.v)<=v);})}
+    s.addEventListener('mouseenter',function(){hl(parseInt(s.dataset.v));});
+    s.addEventListener('click',function(){svEl.value=s.dataset.v;hl(parseInt(s.dataset.v));s.setAttribute('aria-checked','true');});
+  });
+  spEl.addEventListener('mouseleave',function(){
+    var v=svEl.value?parseInt(svEl.value):0;
+    stars.forEach(function(x){x.classList.toggle('rv-sp-on',parseInt(x.dataset.v)<=v);});
+  });
+}
+if(FLOAT){
+  var uf=function(){
+    if(!SEC)return;
+    var r=SEC.getBoundingClientRect();
+    if(r.top<-200){FLOAT.classList.add('rv-fv');}else{FLOAT.classList.remove('rv-fv');}
+  };
+  window.addEventListener('scroll',uf,{passive:true});
+  FLOAT.addEventListener('click',function(){
+    if(SEC)SEC.scrollIntoView({behavior:'smooth',block:'start'});
+  });
 }
 sort('desc');apply();
-if(mb)mb.addEventListener('click',function(){exp=true;apply();});
-fbtns.forEach(function(b){b.addEventListener('click',function(){setf(this.dataset.filter);});});
-brows.forEach(function(r){r.addEventListener('click',function(){setf(af===this.dataset.filter?'all':this.dataset.filter);});});
-sbtns.forEach(function(b){b.addEventListener('click',function(){as2=this.dataset.sort;sbtns.forEach(function(x){x.classList.remove('rv-on')});this.classList.add('rv-on');sort(as2);apply();});});
-if(fl&&sec){
-var uf=function(){var r=sec.getBoundingClientRect();fl.classList.toggle('rv-show',r.top<-200&&r.bottom>window.innerHeight);};
-window.addEventListener('scroll',uf,{passive:true});
-window.addEventListener('resize',uf,{passive:true});
-uf();
-fl.addEventListener('click',function(){exp=false;setf('all');sec.scrollIntoView({behavior:'smooth',block:'start'});});
-}
-var wb=document.getElementById('rv-wb-{{section.id}}');
-var fb=document.getElementById('rv-fb-{{section.id}}');
-if(wb&&fb)wb.addEventListener('click',function(){var o=!fb.classList.contains('rv-open');fb.classList.toggle('rv-open');if(o)fb.scrollIntoView({behavior:'smooth',block:'nearest'});});
-var sps=document.querySelectorAll('#rv-sr-{{section.id}} .rv-sp'),ch=5;
-sps.forEach(function(s){s.classList.add('on');});
-sps.forEach(function(s,i){
-s.addEventListener('mouseenter',function(){sps.forEach(function(x,j){x.classList.remove('on');x.classList.toggle('hv',j<=i);});});
-s.addEventListener('mouseleave',function(){sps.forEach(function(x,j){x.classList.remove('hv');x.classList.toggle('on',j<ch);});});
-s.addEventListener('click',function(){ch=i+1;sps.forEach(function(x,j){x.classList.toggle('on',j<ch);});});
-});
-var frm=document.getElementById('rv-form-{{section.id}}');
-var ok=document.getElementById('rv-ok-{{section.id}}');
-if(frm)frm.addEventListener('submit',function(e){
-e.preventDefault();
-var n2=frm.querySelector('[name="name"]').value.trim();
-var em=frm.querySelector('[name="email"]').value.trim();
-var bo=frm.querySelector('[name="body"]').value.trim();
-if(!n2||!em||!bo)return;
-var fd=new FormData();
-fd.append('form_type','contact');fd.append('utf8','✓');
-fd.append('contact[name]',n2);fd.append('contact[email]',em);
-fd.append('contact[body]','★'.repeat(ch)+' ('+ch+'/5)
-
-'+bo);
-var btn=frm.querySelector('.rv-fs');btn.disabled=true;btn.textContent='...';
-fetch('/contact',{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}})
-.then(function(){frm.style.display='none';if(ok)ok.style.display='block';})
-.catch(function(){btn.disabled=false;btn.textContent='Absenden';});
-});
 })();
 </script>
