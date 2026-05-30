@@ -12,6 +12,34 @@
     </div>
   </div>
 
+  <div class="msv-rv-breakdown" id="msv-rv-bd-{{ section.id }}">
+    <button class="msv-rv-bd-row" data-filter="5">
+      <span class="msv-rv-bd-label">5 ★</span>
+      <span class="msv-rv-bd-bar"><span class="msv-rv-bd-fill" style="width:81%;"></span></span>
+      <span class="msv-rv-bd-pct">81%</span>
+    </button>
+    <button class="msv-rv-bd-row" data-filter="4">
+      <span class="msv-rv-bd-label">4 ★</span>
+      <span class="msv-rv-bd-bar"><span class="msv-rv-bd-fill" style="width:11%;"></span></span>
+      <span class="msv-rv-bd-pct">11%</span>
+    </button>
+    <button class="msv-rv-bd-row" data-filter="3">
+      <span class="msv-rv-bd-label">3 ★</span>
+      <span class="msv-rv-bd-bar"><span class="msv-rv-bd-fill" style="width:5%;"></span></span>
+      <span class="msv-rv-bd-pct">5%</span>
+    </button>
+    <button class="msv-rv-bd-row" data-filter="2">
+      <span class="msv-rv-bd-label">2 ★</span>
+      <span class="msv-rv-bd-bar"><span class="msv-rv-bd-fill" style="width:2%;"></span></span>
+      <span class="msv-rv-bd-pct">2%</span>
+    </button>
+    <button class="msv-rv-bd-row" data-filter="1">
+      <span class="msv-rv-bd-label">1 ★</span>
+      <span class="msv-rv-bd-bar"><span class="msv-rv-bd-fill" style="width:1%;"></span></span>
+      <span class="msv-rv-bd-pct">1%</span>
+    </button>
+  </div>
+
   <div class="msv-rv-controls" id="msv-rv-ctrl-{{ section.id }}">
     <div class="msv-rv-filters">
       <button class="msv-rv-f msv-rv-f-on" data-filter="all">Alle</button>
@@ -2395,6 +2423,11 @@
       </div>
     </div>
   </div>
+
+  <button class="msv-rv-float" id="msv-rv-float-{{ section.id }}" type="button" aria-label="Bewertungen schließen und nach oben">
+    <span class="msv-rv-float-icon" aria-hidden="true">&#8593;</span>
+    <span class="msv-rv-float-text">Schließen</span>
+  </button>
 </section>
 
 <style>
@@ -2410,6 +2443,41 @@
   .msv-rv-summary { display: flex; align-items: center; justify-content: center; gap: 8px; }
   .msv-rv-avg { color: #00b67a; font-size: 20px; letter-spacing: 2px; }
   .msv-rv-avg-text { font-size: 15px; color: #555; }
+  /* Sternverteilung */
+  .msv-rv-breakdown {
+    max-width: 420px;
+    margin: 0 auto 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .msv-rv-bd-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 3px 4px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s;
+  }
+  .msv-rv-bd-row:hover { background: #f3f3f3; }
+  .msv-rv-bd-row.msv-rv-bd-on { background: #eafaf3; }
+  .msv-rv-bd-label {
+    font-size: 13px; color: #555; white-space: nowrap; min-width: 30px; text-align: left;
+  }
+  .msv-rv-bd-bar {
+    flex: 1; height: 10px; background: #ececec; border-radius: 5px; overflow: hidden;
+  }
+  .msv-rv-bd-fill {
+    display: block; height: 100%; background: #00b67a; border-radius: 5px;
+  }
+  .msv-rv-bd-pct {
+    font-size: 12px; color: #888; min-width: 34px; text-align: right;
+  }
   .msv-rv-controls {
     display: flex; align-items: center; justify-content: space-between;
     flex-wrap: wrap; gap: 10px; margin-bottom: 24px;
@@ -2490,6 +2558,37 @@
     display: none; color: #00b67a; font-weight: 600; font-size: 15px;
     text-align: center; padding: 10px 0 2px;
   }
+  /* Schwimmender Schließen-Button */
+  .msv-rv-float {
+    position: fixed;
+    right: 20px;
+    bottom: 24px;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 18px;
+    background: #00b67a;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    transition: background 0.2s, transform 0.15s, opacity 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .msv-rv-float.msv-rv-float-show { display: inline-flex; }
+  .msv-rv-float:hover { background: #009e6a; transform: translateY(-2px); }
+  .msv-rv-float:active { transform: scale(0.96); }
+  .msv-rv-float-icon { font-size: 16px; line-height: 1; }
+  @media (max-width: 480px) {
+    .msv-rv-float { right: 14px; bottom: 16px; padding: 10px 15px; font-size: 13px; }
+    .msv-rv-float-text { display: none; }
+    .msv-rv-float-icon { font-size: 18px; }
+  }
   @media (max-width: 768px) {
     .msv-rv-grid { grid-template-columns: repeat(2,1fr); }
     .msv-rv-title { font-size: 22px; }
@@ -2500,11 +2599,14 @@
 
 <script>
   (function(){
+    var section  = document.getElementById('msv-reviews');
     var grid     = document.getElementById('msv-rv-grid-{{ section.id }}');
     var moreBtn  = document.getElementById('msv-rv-btn-{{ section.id }}');
     var moreWrap = document.getElementById('msv-rv-more-wrap-{{ section.id }}');
     var filterBtns = document.querySelectorAll('#msv-rv-ctrl-{{ section.id }} .msv-rv-f');
     var sortBtns   = document.querySelectorAll('#msv-rv-ctrl-{{ section.id }} .msv-rv-sb');
+    var bdRows     = document.querySelectorAll('#msv-rv-bd-{{ section.id }} .msv-rv-bd-row');
+    var floatBtn   = document.getElementById('msv-rv-float-{{ section.id }}');
     var expanded = false, activeFilter = 'all', activeSort = 'desc';
 
     function allCards(){ return Array.from(grid.querySelectorAll('.msv-rv-card')); }
@@ -2534,12 +2636,22 @@
       expanded=true; applyState();
     });
 
+    function setFilter(val){
+      activeFilter = val;
+      filterBtns.forEach(function(b){ b.classList.toggle('msv-rv-f-on', b.dataset.filter===val); });
+      bdRows.forEach(function(r){ r.classList.toggle('msv-rv-bd-on', r.dataset.filter===val); });
+      applyState();
+    }
+
     filterBtns.forEach(function(btn){
-      btn.addEventListener('click', function(){
-        activeFilter=this.dataset.filter;
-        filterBtns.forEach(function(b){b.classList.remove('msv-rv-f-on');});
-        this.classList.add('msv-rv-f-on');
-        applyState();
+      btn.addEventListener('click', function(){ setFilter(this.dataset.filter); });
+    });
+
+    bdRows.forEach(function(row){
+      row.addEventListener('click', function(){
+        var val = this.dataset.filter;
+        // Klick auf bereits aktive Verteilung = zurück zu "Alle"
+        setFilter(activeFilter===val ? 'all' : val);
       });
     });
 
@@ -2551,6 +2663,25 @@
         sortCards(activeSort); applyState();
       });
     });
+
+    // Schwimmender Schließen-/Hoch-Button
+    if(floatBtn && section){
+      function updateFloat(){
+        var r = section.getBoundingClientRect();
+        // Sichtbar wenn Sektion den Viewport überspannt (man tief drin scrollt)
+        var deep = r.top < -200 && r.bottom > window.innerHeight;
+        floatBtn.classList.toggle('msv-rv-float-show', deep);
+      }
+      window.addEventListener('scroll', updateFloat, { passive: true });
+      window.addEventListener('resize', updateFloat, { passive: true });
+      updateFloat();
+      floatBtn.addEventListener('click', function(){
+        // Alle wieder einklappen und nach oben zur Sektion
+        expanded = false;
+        setFilter('all');
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
 
     var writeBtn = document.getElementById('msv-rv-write-btn-{{ section.id }}');
     var formBox  = document.getElementById('msv-rv-form-box-{{ section.id }}');
