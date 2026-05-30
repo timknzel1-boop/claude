@@ -3,110 +3,99 @@
   Datei: sections/msv-trustpilot-badge.liquid
 {%- endcomment -%}
 
-<div class="msv-tp-section" id="msv-tp-{{ section.id }}">
-  <a href="#msv-reviews" class="msv-tp-badge" aria-label="Zu den Kundenbewertungen">
-    <div class="msv-tp-header">
-      <span class="msv-tp-logo-star" aria-hidden="true">★</span>
-      <span class="msv-tp-wordmark">Trustpilot</span>
-    </div>
-    <div class="msv-tp-stars" aria-label="4,8 von 5 Sternen">
-      <span class="msv-tp-s" aria-hidden="true">★</span>
-      <span class="msv-tp-s" aria-hidden="true">★</span>
-      <span class="msv-tp-s" aria-hidden="true">★</span>
-      <span class="msv-tp-s" aria-hidden="true">★</span>
-      <span class="msv-tp-s" aria-hidden="true">★</span>
-    </div>
-    <p class="msv-tp-rating"><strong>4,8/5 – Über 22.341 Bewertungen</strong></p>
-  </a>
+<div id="msv-tp-{{ section.id }}" class="msv-tp-wrap">
+  <div class="msv-tp-stars" id="msv-tp-stars-{{ section.id }}" role="img" aria-label="4,8 von 5 Sternen">
+    <span class="msv-tp-s">
+      <svg width="18" height="17" viewBox="0 0 100 95" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="50,3 61.8,36.7 98.1,36.7 69.1,59.1 79.4,93.6 50,72.7 20.6,93.6 30.9,59.1 1.9,36.7 38.2,36.7"/></svg>
+    </span>
+    <span class="msv-tp-s">
+      <svg width="18" height="17" viewBox="0 0 100 95" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="50,3 61.8,36.7 98.1,36.7 69.1,59.1 79.4,93.6 50,72.7 20.6,93.6 30.9,59.1 1.9,36.7 38.2,36.7"/></svg>
+    </span>
+    <span class="msv-tp-s">
+      <svg width="18" height="17" viewBox="0 0 100 95" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="50,3 61.8,36.7 98.1,36.7 69.1,59.1 79.4,93.6 50,72.7 20.6,93.6 30.9,59.1 1.9,36.7 38.2,36.7"/></svg>
+    </span>
+    <span class="msv-tp-s">
+      <svg width="18" height="17" viewBox="0 0 100 95" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="50,3 61.8,36.7 98.1,36.7 69.1,59.1 79.4,93.6 50,72.7 20.6,93.6 30.9,59.1 1.9,36.7 38.2,36.7"/></svg>
+    </span>
+    <span class="msv-tp-s">
+      <svg width="18" height="17" viewBox="0 0 100 95" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="50,3 61.8,36.7 98.1,36.7 69.1,59.1 79.4,93.6 50,72.7 20.6,93.6 30.9,59.1 1.9,36.7 38.2,36.7"/></svg>
+    </span>
+  </div>
+  <span class="msv-tp-score">4,8/5 – Über 398 Bewertungen</span>
+  <a class="msv-tp-more" href="#msv-reviews" id="msv-tp-more-{{ section.id }}">mehr erfahren</a>
 </div>
 
 <style>
   #msv-tp-{{ section.id }} {
-    text-align: center;
-    padding: 20px 16px;
-  }
-  #msv-tp-{{ section.id }} .msv-tp-badge {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-    transition: transform 0.22s ease;
-    -webkit-tap-highlight-color: transparent;
-    outline: none;
-  }
-  #msv-tp-{{ section.id }} .msv-tp-badge:hover,
-  #msv-tp-{{ section.id }} .msv-tp-badge:focus,
-  #msv-tp-{{ section.id }} .msv-tp-badge:active {
-    transform: scale(1.07);
-  }
-  #msv-tp-{{ section.id }} .msv-tp-header {
     display: flex;
     align-items: center;
-    gap: 7px;
-  }
-  #msv-tp-{{ section.id }} .msv-tp-logo-star {
-    display: inline-flex;
-    align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
-    background: #00b67a;
-    border-radius: 2px;
-    color: #fff;
-    font-size: 17px;
-    line-height: 1;
-    flex-shrink: 0;
-  }
-  #msv-tp-{{ section.id }} .msv-tp-wordmark {
-    font-size: 22px;
-    font-weight: 700;
-    color: #191919;
-    letter-spacing: -0.3px;
-    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    gap: 14px;
+    padding: 14px 16px;
+    flex-wrap: wrap;
   }
   #msv-tp-{{ section.id }} .msv-tp-stars {
     display: flex;
-    gap: 4px;
+    gap: 3px;
+    cursor: pointer;
+    transition: transform 0.22s ease, gap 0.22s ease;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+  }
+  #msv-tp-{{ section.id }} .msv-tp-stars:hover,
+  #msv-tp-{{ section.id }} .msv-tp-stars:active {
+    transform: scale(1.14);
+    gap: 5px;
   }
   #msv-tp-{{ section.id }} .msv-tp-s {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     background: #00b67a;
-    border-radius: 3px;
-    color: #fff;
-    font-size: 24px;
-    line-height: 1;
+    border-radius: 2px;
+    flex-shrink: 0;
   }
-  #msv-tp-{{ section.id }} .msv-tp-rating {
-    margin: 0;
-    font-size: 15px;
+  #msv-tp-{{ section.id }} .msv-tp-score {
+    font-size: 14px;
+    font-weight: 600;
     color: #191919;
     font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    white-space: nowrap;
   }
-  #msv-tp-{{ section.id }} .msv-tp-rating strong {
-    font-weight: 700;
+  #msv-tp-{{ section.id }} .msv-tp-more {
+    font-size: 14px;
+    color: #191919;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    white-space: nowrap;
+    transition: color 0.15s ease;
+  }
+  #msv-tp-{{ section.id }} .msv-tp-more:hover {
+    color: #00b67a;
   }
   @media (max-width: 480px) {
-    #msv-tp-{{ section.id }} .msv-tp-s { width: 36px; height: 36px; font-size: 21px; }
-    #msv-tp-{{ section.id }} .msv-tp-wordmark { font-size: 20px; }
+    #msv-tp-{{ section.id }} { gap: 10px; }
+    #msv-tp-{{ section.id }} .msv-tp-s { width: 26px; height: 26px; }
+    #msv-tp-{{ section.id }} .msv-tp-s svg { width: 15px; height: 14px; }
+    #msv-tp-{{ section.id }} .msv-tp-score { font-size: 12px; }
+    #msv-tp-{{ section.id }} .msv-tp-more { font-size: 12px; }
   }
 </style>
 
 <script>
   (function(){
-    var badge = document.querySelector('#msv-tp-{{ section.id }} .msv-tp-badge');
-    if(!badge) return;
-    badge.addEventListener('click', function(e){
+    var starsEl = document.getElementById('msv-tp-stars-{{ section.id }}');
+    var moreEl = document.getElementById('msv-tp-more-{{ section.id }}');
+    function scrollToReviews(e) {
       var target = document.getElementById('msv-reviews');
       if(!target) return;
       e.preventDefault();
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+    }
+    if(starsEl) starsEl.addEventListener('click', scrollToReviews);
+    if(moreEl) moreEl.addEventListener('click', scrollToReviews);
   })();
 </script>
