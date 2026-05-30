@@ -29,10 +29,10 @@
   #msv-tp-{{ section.id }} {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 14px;
-    padding: 14px 16px;
-    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    flex-wrap: nowrap;
   }
   #msv-tp-{{ section.id }} .msv-tp-stars {
     display: flex;
@@ -77,7 +77,7 @@
     color: #00b67a;
   }
   @media (max-width: 480px) {
-    #msv-tp-{{ section.id }} { gap: 10px; }
+    #msv-tp-{{ section.id }} { gap: 8px; flex-wrap: wrap; }
     #msv-tp-{{ section.id }} .msv-tp-s { width: 26px; height: 26px; }
     #msv-tp-{{ section.id }} .msv-tp-s svg { width: 15px; height: 14px; }
     #msv-tp-{{ section.id }} .msv-tp-score { font-size: 12px; }
