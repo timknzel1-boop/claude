@@ -431,6 +431,32 @@
       Mehr Bewertungen anzeigen
     </button>
   </div>
+
+  <div class="msv-rv-write-wrap">
+    <button class="msv-rv-write-btn" id="msv-rv-write-btn-{{ section.id }}" type="button">
+      Bewertung schreiben
+    </button>
+    <div class="msv-rv-form-box" id="msv-rv-form-box-{{ section.id }}">
+      <h3 class="msv-rv-form-title">Deine Bewertung hinterlassen</h3>
+      <div class="msv-rv-star-row" id="msv-rv-stars-{{ section.id }}" role="group" aria-label="Sterne wählen">
+        <span class="msv-rv-sp" data-v="1">★</span>
+        <span class="msv-rv-sp" data-v="2">★</span>
+        <span class="msv-rv-sp" data-v="3">★</span>
+        <span class="msv-rv-sp" data-v="4">★</span>
+        <span class="msv-rv-sp" data-v="5">★</span>
+      </div>
+      <form id="msv-rv-contactform-{{ section.id }}" novalidate>
+        <input class="msv-rv-fi" type="text" name="name" placeholder="Dein Name *" required>
+        <input class="msv-rv-fi" type="email" name="email" placeholder="E-Mail (wird nicht veröffentlicht) *" required>
+        <textarea class="msv-rv-ft" name="body" placeholder="Deine Erfahrung mit mysolv..." rows="4" required></textarea>
+        <p class="msv-rv-form-note">Bewertungen werden vor der Veröffentlichung geprüft.</p>
+        <button class="msv-rv-fsubmit" type="submit">Absenden</button>
+      </form>
+      <div class="msv-rv-success" id="msv-rv-success-{{ section.id }}">
+        ✓ Danke! Deine Bewertung wurde eingereicht und wird geprüft.
+      </div>
+    </div>
+  </div>
 </section>
 
 <style>
@@ -529,6 +555,90 @@
   @media (max-width: 480px) {
     .msv-rv-grid { grid-template-columns: 1fr; }
   }
+  .msv-rv-write-wrap {
+    text-align: center;
+    margin-top: 18px;
+  }
+  .msv-rv-write-btn {
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-family: inherit;
+    padding: 4px 0;
+    transition: color 0.15s;
+  }
+  .msv-rv-write-btn:hover { color: #00b67a; }
+  .msv-rv-form-box {
+    display: none;
+    max-width: 480px;
+    margin: 18px auto 0;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 26px 24px 22px;
+    text-align: left;
+  }
+  .msv-rv-form-box.msv-open { display: block; }
+  .msv-rv-form-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #191919;
+    margin: 0 0 14px;
+  }
+  .msv-rv-star-row {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    font-size: 30px;
+    color: #dcdce6;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .msv-rv-sp { transition: color 0.1s; }
+  .msv-rv-sp.on, .msv-rv-sp.hov { color: #00b67a; }
+  .msv-rv-fi, .msv-rv-ft {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #191919;
+    margin-bottom: 10px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .msv-rv-fi:focus, .msv-rv-ft:focus { border-color: #00b67a; }
+  .msv-rv-ft { resize: vertical; min-height: 90px; }
+  .msv-rv-form-note { font-size: 12px; color: #aaa; margin: 0 0 14px; }
+  .msv-rv-fsubmit {
+    background: #00b67a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 11px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+  }
+  .msv-rv-fsubmit:hover { background: #009e6a; }
+  .msv-rv-fsubmit:disabled { opacity: 0.6; cursor: default; }
+  .msv-rv-success {
+    display: none;
+    color: #00b67a;
+    font-weight: 600;
+    font-size: 15px;
+    text-align: center;
+    padding: 10px 0 2px;
+  }
 </style>
 
 <script>
@@ -540,6 +650,61 @@
       var hidden = document.querySelectorAll('#msv-rv-grid-{{ section.id }} .msv-rv-hidden');
       hidden.forEach(function(el){ el.classList.remove('msv-rv-hidden'); });
       wrap.style.display = 'none';
+    });
+  })();
+
+  (function(){
+    // Toggle form
+    var writeBtn = document.getElementById('msv-rv-write-btn-{{ section.id }}');
+    var formBox  = document.getElementById('msv-rv-form-box-{{ section.id }}');
+    if(writeBtn && formBox) {
+      writeBtn.addEventListener('click', function(){
+        var opening = !formBox.classList.contains('msv-open');
+        formBox.classList.toggle('msv-open');
+        if(opening) formBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    }
+
+    // Star picker
+    var picks = document.querySelectorAll('#msv-rv-stars-{{ section.id }} .msv-rv-sp');
+    var chosen = 5;
+    picks.forEach(function(s){ s.classList.add('on'); });
+    picks.forEach(function(star, idx){
+      star.addEventListener('mouseenter', function(){
+        picks.forEach(function(s, i){ s.classList.remove('on'); s.classList.toggle('hov', i <= idx); });
+      });
+      star.addEventListener('mouseleave', function(){
+        picks.forEach(function(s, i){ s.classList.remove('hov'); s.classList.toggle('on', i < chosen); });
+      });
+      star.addEventListener('click', function(){
+        chosen = idx + 1;
+        picks.forEach(function(s, i){ s.classList.toggle('on', i < chosen); });
+      });
+    });
+
+    // Submit via fetch
+    var form    = document.getElementById('msv-rv-contactform-{{ section.id }}');
+    var success = document.getElementById('msv-rv-success-{{ section.id }}');
+    if(!form) return;
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var name  = form.querySelector('[name="name"]').value.trim();
+      var email = form.querySelector('[name="email"]').value.trim();
+      var body  = form.querySelector('[name="body"]').value.trim();
+      if(!name || !email || !body) return;
+      var stars = '★'.repeat(chosen) + '☆'.repeat(5 - chosen);
+      var msg   = 'Neue Bewertung – mysolv\n\nName: ' + name + '\nSterne: ' + stars + ' (' + chosen + '/5)\n\nBewertungstext:\n' + body;
+      var fd = new FormData();
+      fd.append('form_type', 'contact');
+      fd.append('utf8', '✓');
+      fd.append('contact[name]', name);
+      fd.append('contact[email]', email);
+      fd.append('contact[body]', msg);
+      var btn = form.querySelector('.msv-rv-fsubmit');
+      btn.disabled = true; btn.textContent = '...';
+      fetch('/contact', { method: 'POST', body: fd, headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        .then(function(){ form.style.display = 'none'; if(success) success.style.display = 'block'; })
+        .catch(function(){ btn.disabled = false; btn.textContent = 'Absenden'; });
     });
   })();
 </script>
