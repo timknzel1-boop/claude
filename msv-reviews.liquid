@@ -9,11 +9,11 @@
   </div>
   <p class="rv-sub">Über 140 verifizierte Bewertungen</p>
   <div class="rv-bars" id="rv-bars-{{section.id}}">
-    <div class="rv-br" data-f="5"><span class="rv-bl">5★</span><div class="rv-bg" style="background:linear-gradient(to right,#00b67a 82%,#e0e0e0 82%)"></div><span class="rv-bp">115</span></div>
-    <div class="rv-br" data-f="4"><span class="rv-bl">4★</span><div class="rv-bg" style="background:linear-gradient(to right,#00b67a 10%,#e0e0e0 10%)"></div><span class="rv-bp">14</span></div>
-    <div class="rv-br" data-f="3"><span class="rv-bl">3★</span><div class="rv-bg" style="background:linear-gradient(to right,#00b67a 5%,#e0e0e0 5%)"></div><span class="rv-bp">7</span></div>
-    <div class="rv-br" data-f="2"><span class="rv-bl">2★</span><div class="rv-bg" style="background:linear-gradient(to right,#00b67a 1%,#e0e0e0 1%)"></div><span class="rv-bp">2</span></div>
-    <div class="rv-br" data-f="1"><span class="rv-bl">1★</span><div class="rv-bg" style="background:linear-gradient(to right,#00b67a 2%,#e0e0e0 2%)"></div><span class="rv-bp">2</span></div>
+    <div class="rv-br" data-f="5"><span class="rv-bl">5★</span><div class="rv-bg" style="background:linear-gradient(to right,#00b67a 82%,#e0e0e0 82%)"></div><span class="rv-bp">82%</span></div>
+    <div class="rv-br" data-f="4"><span class="rv-bl">4★</span><div class="rv-bg" style="background:linear-gradient(to right,#00b67a 10%,#e0e0e0 10%)"></div><span class="rv-bp">10%</span></div>
+    <div class="rv-br" data-f="3"><span class="rv-bl">3★</span><div class="rv-bg" style="background:linear-gradient(to right,#00b67a 5%,#e0e0e0 5%)"></div><span class="rv-bp">5%</span></div>
+    <div class="rv-br" data-f="2"><span class="rv-bl">2★</span><div class="rv-bg" style="background:linear-gradient(to right,#00b67a 1%,#e0e0e0 1%)"></div><span class="rv-bp">1%</span></div>
+    <div class="rv-br" data-f="1"><span class="rv-bl">1★</span><div class="rv-bg" style="background:linear-gradient(to right,#00b67a 2%,#e0e0e0 2%)"></div><span class="rv-bp">2%</span></div>
   </div>
   <div class="rv-ctrl" id="rv-ctrl-{{section.id}}">
     <div class="rv-pills">
@@ -173,24 +173,28 @@
 <article class="rv-card rv-hidden" data-stars="5" data-date="2023-01-26"><span class="s5">★★★★★</span><p class="rt">Hatte schon viele Nahrungsergänzungen. Das ist eine der wenigen die was tut.</p><div class="rm">Eugen M. · 26. Januar 2023</div></article>
 </div>
 <div class="rv-more-wrap" id="rv-more-wrap-{{section.id}}"><button class="rv-more" id="rv-more-{{section.id}}">Mehr Bewertungen anzeigen</button></div>
-<div class="rv-form-wrap" id="rv-form-{{section.id}}">
-  <h3 class="rv-fh">Bewertung schreiben</h3>
-  <div class="rv-stars-pick" id="rv-sp-{{section.id}}" role="radiogroup" aria-label="Sterne wählen">
-    <span class="rv-sp-s" data-v="1" role="radio" aria-checked="false" tabindex="0">★</span>
-    <span class="rv-sp-s" data-v="2" role="radio" aria-checked="false" tabindex="0">★</span>
-    <span class="rv-sp-s" data-v="3" role="radio" aria-checked="false" tabindex="0">★</span>
-    <span class="rv-sp-s" data-v="4" role="radio" aria-checked="false" tabindex="0">★</span>
-    <span class="rv-sp-s" data-v="5" role="radio" aria-checked="false" tabindex="0">★</span>
+<div class="rv-wbwrap">
+  <button class="rv-wbbtn" id="rv-wbbtn-{{section.id}}">Bewertung absenden</button>
+  <div class="rv-wbpanel" id="rv-wbpanel-{{section.id}}">
+    <div class="rv-wbinner">
+      <div class="rv-stars-pick" id="rv-sp-{{section.id}}">
+        <span class="rv-sp-s" data-v="1" tabindex="0">★</span>
+        <span class="rv-sp-s" data-v="2" tabindex="0">★</span>
+        <span class="rv-sp-s" data-v="3" tabindex="0">★</span>
+        <span class="rv-sp-s" data-v="4" tabindex="0">★</span>
+        <span class="rv-sp-s" data-v="5" tabindex="0">★</span>
+      </div>
+      <form action="/contact" method="post" class="rv-form">
+        <input type="hidden" name="form_type" value="contact">
+        <input type="hidden" name="utf8" value="✓">
+        <input type="hidden" name="contact[subject]" value="Neue Bewertung">
+        <input type="hidden" name="contact[stars]" id="rv-stars-val-{{section.id}}" value="">
+        <input class="rv-fi" type="text" name="contact[name]" placeholder="Dein Name" required>
+        <textarea class="rv-fi rv-fta" name="contact[body]" placeholder="Deine Erfahrung (mind. 20 Zeichen)" minlength="20" required></textarea>
+        <button type="submit" class="rv-fsub">Absenden</button>
+      </form>
+    </div>
   </div>
-  <form action="/contact" method="post" class="rv-form">
-    <input type="hidden" name="form_type" value="contact">
-    <input type="hidden" name="utf8" value="✓">
-    <input type="hidden" name="contact[subject]" value="Neue Bewertung">
-    <input type="hidden" name="contact[stars]" id="rv-stars-val-{{section.id}}" value="">
-    <input class="rv-fi" type="text" name="contact[name]" placeholder="Dein Name" required>
-    <textarea class="rv-fi rv-fta" name="contact[body]" placeholder="Deine Erfahrung (mind. 20 Zeichen)" minlength="20" required></textarea>
-    <button type="submit" class="rv-fsub">Bewertung absenden</button>
-  </form>
 </div>
 </section>
 <div class="rv-float" id="rv-float-{{section.id}}">↑ Schließen</div>
@@ -230,8 +234,12 @@
 .rv-more-wrap{text-align:center;margin:24px 0}
 .rv-more{background:#00b67a;color:#fff;border:none;border-radius:8px;padding:12px 28px;font-size:15px;cursor:pointer;transition:background .15s}
 .rv-more:hover{background:#009e6a}
-.rv-form-wrap{margin-top:40px;background:#f5fdf9;border:1.5px solid #c3ead9;border-radius:12px;padding:24px 28px}
-.rv-fh{font-size:18px;font-weight:700;margin:0 0 16px}
+.rv-wbwrap{text-align:center;margin-top:16px}
+.rv-wbbtn{background:#fff;color:#00b67a;border:2px solid #00b67a;border-radius:8px;padding:11px 28px;font-size:15px;font-weight:600;cursor:pointer;transition:all .15s}
+.rv-wbbtn:hover,.rv-wbbtn.rv-wbo{background:#00b67a;color:#fff}
+.rv-wbpanel{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.rv-wbpanel.rv-wpo{max-height:500px}
+.rv-wbinner{background:#f5fdf9;border:1.5px solid #c3ead9;border-radius:12px;padding:24px;margin-top:12px;text-align:left}
 .rv-stars-pick{display:flex;gap:8px;margin-bottom:16px}
 .rv-sp-s{font-size:28px;cursor:pointer;color:#ddd;transition:color .1s;user-select:none}
 .rv-sp-s.rv-sp-on{color:#00b67a}
@@ -295,18 +303,27 @@ document.querySelectorAll('#rv-bars-{{section.id}} .rv-br').forEach(function(b){
   b.addEventListener('click',function(){setf(parseInt(b.dataset.f));});
 });
 if(MBTN)MBTN.addEventListener('click',function(){expanded=true;apply();});
+// collapsible write-review panel
+var wbBtn=document.getElementById('rv-wbbtn-{{section.id}}');
+var wbPanel=document.getElementById('rv-wbpanel-{{section.id}}');
+if(wbBtn&&wbPanel){
+  wbBtn.addEventListener('click',function(){
+    var open=wbPanel.classList.toggle('rv-wpo');
+    wbBtn.classList.toggle('rv-wbo',open);
+    wbBtn.textContent=open?'Schließen':'Bewertung absenden';
+  });
+}
 var spEl=document.getElementById('rv-sp-{{section.id}}');
 var svEl=document.getElementById('rv-stars-val-{{section.id}}');
 if(spEl&&svEl){
   var stars=spEl.querySelectorAll('.rv-sp-s');
+  function hl(v){stars.forEach(function(x){x.classList.toggle('rv-sp-on',parseInt(x.dataset.v)<=v);});}
   stars.forEach(function(s){
-    function hl(v){stars.forEach(function(x){x.classList.toggle('rv-sp-on',parseInt(x.dataset.v)<=v);})}
     s.addEventListener('mouseenter',function(){hl(parseInt(s.dataset.v));});
-    s.addEventListener('click',function(){svEl.value=s.dataset.v;hl(parseInt(s.dataset.v));s.setAttribute('aria-checked','true');});
+    s.addEventListener('click',function(){svEl.value=s.dataset.v;hl(parseInt(s.dataset.v));});
   });
   spEl.addEventListener('mouseleave',function(){
-    var v=svEl.value?parseInt(svEl.value):0;
-    stars.forEach(function(x){x.classList.toggle('rv-sp-on',parseInt(x.dataset.v)<=v);});
+    var v=svEl.value?parseInt(svEl.value):0;hl(v);
   });
 }
 if(FLOAT){
