@@ -206,8 +206,8 @@
 .rv-br:hover{background:#f0f9f5}
 .rv-br.rv-ba{background:#e6f7f0;font-weight:600}
 .rv-bl{font-size:13px;width:24px;text-align:right;flex-shrink:0}
-.rv-bg{flex:1;height:10px;background:#e5e5e5;border-radius:5px;overflow:hidden}
-.rv-bv{height:100%;background:#00b67a;border-radius:5px;transition:width .3s}
+.rv-bg{flex:1;height:6px;background:#e5e5e5;border-radius:3px;overflow:hidden;display:flex;align-items:stretch}
+.rv-bv{display:block;height:6px;background:#00b67a;border-radius:3px;flex-shrink:0;transition:width .3s}
 .rv-bp{font-size:12px;width:32px;color:#555;flex-shrink:0}
 .rv-ctrl{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:20px}
 .rv-pills{display:flex;gap:6px;flex-wrap:wrap}
@@ -231,7 +231,7 @@
 .rv-more-wrap{text-align:center;margin:24px 0}
 .rv-more{background:#00b67a;color:#fff;border:none;border-radius:8px;padding:12px 28px;font-size:15px;cursor:pointer;transition:background .15s}
 .rv-more:hover{background:#009e6a}
-.rv-form-wrap{margin-top:32px;border-top:1px solid #e5e5e5;padding-top:24px}
+.rv-form-wrap{margin-top:40px;background:#f5fdf9;border:1.5px solid #c3ead9;border-radius:12px;padding:24px 28px}
 .rv-fh{font-size:18px;font-weight:700;margin:0 0 16px}
 .rv-stars-pick{display:flex;gap:8px;margin-bottom:16px}
 .rv-sp-s{font-size:28px;cursor:pointer;color:#ddd;transition:color .1s;user-select:none}
@@ -318,9 +318,19 @@ if(FLOAT){
   };
   window.addEventListener('scroll',uf,{passive:true});
   FLOAT.addEventListener('click',function(){
+    expanded=false;setf(0);
     if(SEC)SEC.scrollIntoView({behavior:'smooth',block:'start'});
   });
 }
 sort('desc');apply();
+// Trustpilot-style boxes for review card stars
+var sm={s5:5,s4:4,s3:3,s2:2,s1:1};
+document.querySelectorAll('.rv-card [class^="s"]').forEach(function(el){
+  var n=sm[el.className]||sm[el.className.split(' ')[0]];
+  if(!n)return;
+  var h='';
+  for(var i=1;i<=5;i++){h+='<i style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:'+(i<=n?'#00b67a':'#e0e0e0')+';border-radius:3px;color:#fff;font-size:12px;font-style:normal;flex-shrink:0">★</i>';}
+  el.innerHTML=h;el.style.display='inline-flex';el.style.gap='3px';
+});
 })();
 </script>
