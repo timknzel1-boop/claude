@@ -1,0 +1,112 @@
+{%- comment -%}
+  mysolv – Trustpilot Badge
+  Datei: sections/msv-trustpilot-badge.liquid
+{%- endcomment -%}
+
+<div class="msv-tp-section" id="msv-tp-{{ section.id }}">
+  <a href="#msv-reviews" class="msv-tp-badge" aria-label="Zu den Kundenbewertungen">
+    <div class="msv-tp-header">
+      <span class="msv-tp-logo-star" aria-hidden="true">★</span>
+      <span class="msv-tp-wordmark">Trustpilot</span>
+    </div>
+    <div class="msv-tp-stars" aria-label="4,8 von 5 Sternen">
+      <span class="msv-tp-s" aria-hidden="true">★</span>
+      <span class="msv-tp-s" aria-hidden="true">★</span>
+      <span class="msv-tp-s" aria-hidden="true">★</span>
+      <span class="msv-tp-s" aria-hidden="true">★</span>
+      <span class="msv-tp-s" aria-hidden="true">★</span>
+    </div>
+    <p class="msv-tp-rating"><strong>4,8/5 – Über 22.341 Bewertungen</strong></p>
+  </a>
+</div>
+
+<style>
+  #msv-tp-{{ section.id }} {
+    text-align: center;
+    padding: 20px 16px;
+  }
+  #msv-tp-{{ section.id }} .msv-tp-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: transform 0.22s ease;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+  }
+  #msv-tp-{{ section.id }} .msv-tp-badge:hover,
+  #msv-tp-{{ section.id }} .msv-tp-badge:focus,
+  #msv-tp-{{ section.id }} .msv-tp-badge:active {
+    transform: scale(1.07);
+  }
+  #msv-tp-{{ section.id }} .msv-tp-header {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  #msv-tp-{{ section.id }} .msv-tp-logo-star {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: #00b67a;
+    border-radius: 2px;
+    color: #fff;
+    font-size: 17px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  #msv-tp-{{ section.id }} .msv-tp-wordmark {
+    font-size: 22px;
+    font-weight: 700;
+    color: #191919;
+    letter-spacing: -0.3px;
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  }
+  #msv-tp-{{ section.id }} .msv-tp-stars {
+    display: flex;
+    gap: 4px;
+  }
+  #msv-tp-{{ section.id }} .msv-tp-s {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #00b67a;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 24px;
+    line-height: 1;
+  }
+  #msv-tp-{{ section.id }} .msv-tp-rating {
+    margin: 0;
+    font-size: 15px;
+    color: #191919;
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  }
+  #msv-tp-{{ section.id }} .msv-tp-rating strong {
+    font-weight: 700;
+  }
+  @media (max-width: 480px) {
+    #msv-tp-{{ section.id }} .msv-tp-s { width: 36px; height: 36px; font-size: 21px; }
+    #msv-tp-{{ section.id }} .msv-tp-wordmark { font-size: 20px; }
+  }
+</style>
+
+<script>
+  (function(){
+    var badge = document.querySelector('#msv-tp-{{ section.id }} .msv-tp-badge');
+    if(!badge) return;
+    badge.addEventListener('click', function(e){
+      var target = document.getElementById('msv-reviews');
+      if(!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  })();
+</script>
