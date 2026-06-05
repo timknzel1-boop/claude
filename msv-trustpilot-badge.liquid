@@ -4,24 +4,14 @@
 {%- endcomment -%}
 
 <div id="msv-tp-{{ section.id }}" class="msv-tp-wrap">
-  <div class="msv-tp-stars" id="msv-tp-stars-{{ section.id }}" role="img" aria-label="4,8 von 5 Sternen">
-    <span class="msv-tp-s">
-      <svg width="13" height="12" viewBox="0 0 100 95" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="50,3 61.8,36.7 98.1,36.7 69.1,59.1 79.4,93.6 50,72.7 20.6,93.6 30.9,59.1 1.9,36.7 38.2,36.7"/></svg>
-    </span>
-    <span class="msv-tp-s">
-      <svg width="13" height="12" viewBox="0 0 100 95" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="50,3 61.8,36.7 98.1,36.7 69.1,59.1 79.4,93.6 50,72.7 20.6,93.6 30.9,59.1 1.9,36.7 38.2,36.7"/></svg>
-    </span>
-    <span class="msv-tp-s">
-      <svg width="13" height="12" viewBox="0 0 100 95" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="50,3 61.8,36.7 98.1,36.7 69.1,59.1 79.4,93.6 50,72.7 20.6,93.6 30.9,59.1 1.9,36.7 38.2,36.7"/></svg>
-    </span>
-    <span class="msv-tp-s">
-      <svg width="13" height="12" viewBox="0 0 100 95" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="50,3 61.8,36.7 98.1,36.7 69.1,59.1 79.4,93.6 50,72.7 20.6,93.6 30.9,59.1 1.9,36.7 38.2,36.7"/></svg>
-    </span>
-    <span class="msv-tp-s">
-      <svg width="13" height="12" viewBox="0 0 100 95" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="50,3 61.8,36.7 98.1,36.7 69.1,59.1 79.4,93.6 50,72.7 20.6,93.6 30.9,59.1 1.9,36.7 38.2,36.7"/></svg>
-    </span>
+  <div class="msv-tp-stars" id="msv-tp-stars-{{ section.id }}" role="img" aria-label="4,7 von 5 Sternen">
+    <span class="msv-tp-s">★</span>
+    <span class="msv-tp-s">★</span>
+    <span class="msv-tp-s">★</span>
+    <span class="msv-tp-s">★</span>
+    <span class="msv-tp-s">★</span>
   </div>
-  <span class="msv-tp-score">4,8/5 – Kundenbewertungen</span>
+  <span class="msv-tp-score">4,7/5 – Basierend auf Kundenbewertungen</span>
   <a class="msv-tp-more" href="#msv-reviews" id="msv-tp-more-{{ section.id }}">mehr erfahren</a>
 </div>
 
@@ -36,26 +26,20 @@
   }
   #msv-tp-{{ section.id }} .msv-tp-stars {
     display: flex;
-    gap: 3px;
+    gap: 2px;
     cursor: pointer;
-    transition: transform 0.22s ease, gap 0.22s ease;
+    transition: transform 0.22s ease;
     -webkit-tap-highlight-color: transparent;
     outline: none;
   }
   #msv-tp-{{ section.id }} .msv-tp-stars:hover,
   #msv-tp-{{ section.id }} .msv-tp-stars:active {
     transform: scale(1.14);
-    gap: 5px;
   }
   #msv-tp-{{ section.id }} .msv-tp-s {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    background: #FF9900;
-    border-radius: 2px;
-    flex-shrink: 0;
+    font-size: 22px;
+    color: #222;
+    line-height: 1;
   }
   #msv-tp-{{ section.id }} .msv-tp-score {
     font-size: 14px;
@@ -78,8 +62,7 @@
   }
   @media (max-width: 480px) {
     #msv-tp-{{ section.id }} { gap: 8px; flex-wrap: wrap; }
-    #msv-tp-{{ section.id }} .msv-tp-s { width: 19px; height: 19px; }
-    #msv-tp-{{ section.id }} .msv-tp-s svg { width: 11px; height: 10px; }
+    #msv-tp-{{ section.id }} .msv-tp-s { font-size: 18px; }
     #msv-tp-{{ section.id }} .msv-tp-score { font-size: 12px; }
     #msv-tp-{{ section.id }} .msv-tp-more { font-size: 12px; }
   }
