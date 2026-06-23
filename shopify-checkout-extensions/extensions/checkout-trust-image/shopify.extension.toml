@@ -1,0 +1,25 @@
+api_version = "2025-01"
+
+[[extensions]]
+name = "Checkout Trust Image"
+handle = "checkout-trust-image"
+type = "ui_extension"
+
+  [[extensions.targeting]]
+  # Renders directly AFTER the "Meine Bestellung sichern" button.
+  module = "./src/TrustImage.tsx"
+  target = "purchase.checkout.actions.render-after"
+
+  [extensions.settings]
+
+    [[extensions.settings.fields]]
+    key = "image_url"
+    type = "single_line_text_field"
+    name = "Bild-URL (in Shopify › Einstellungen › Dateien hochladen)"
+    description = "Öffentliche URL des Trust-Bildes, z. B. https://cdn.shopify.com/s/files/.../bild.png"
+
+    [[extensions.settings.fields]]
+    key = "image_link"
+    type = "single_line_text_field"
+    name = "Optionaler Link (Klickziel)"
+    description = "Leer lassen, wenn das Bild nicht klickbar sein soll."

@@ -6,6 +6,7 @@ Zwei native **Shopify Checkout UI Extensions** für den Checkout von mysolv:
 |---|---|
 | `checkout-countdown-timer` | Roter Banner „Aufgrund hoher Nachfrage ist Ihre Bestellung reserviert für: m:ss Minuten". Standard **6 Minuten**, einstellbar im Checkout-Editor. Übersetzt: DE / EN / FR / IT. |
 | `checkout-guarantee` | Graue Zeile „30 Tage Geld-zurück-Garantie" mit Häkchen-Icon, gedacht für direkt unter dem Gesamtbetrag. Übersetzt: DE / EN / FR / IT. |
+| `checkout-trust-image` | Zeigt ein Bild **direkt unter dem Bestell-Button**. Bild-URL wird im Block eingestellt (kein Hardcoding). |
 
 DE ist die Standardsprache (`de.default.json`). Shopify wählt automatisch die Sprache des Kunden.
 
@@ -47,3 +48,13 @@ Im Checkout-Editor auf den Timer-Block klicken → Feld **„Reservierungsdauer 
 
 ## Texte / Übersetzungen ändern
 In den `locales/*.json` der jeweiligen Erweiterung.
+
+## Bild unter dem Button einsetzen
+1. Bild in Shopify hochladen: **Einstellungen → Dateien → Hochladen**, URL kopieren.
+2. Checkout-Editor → Block **„Checkout Trust Image"** → Feld **„Bild-URL"** einfügen.
+
+## Button-Text „Jetzt bestellen" → „Meine Bestellung sichern"
+Das ist **kein Code**, sondern eine Übersetzungs-Einstellung:
+**Einstellungen → Sprachen → (aktive Sprache) → Bearbeiten** → oben nach
+`Jetzt bestellen` suchen → in `Meine Bestellung sichern` ändern → Speichern.
+(Falls mehrere Sprachen aktiv sind, in jeder Sprache anpassen.)
