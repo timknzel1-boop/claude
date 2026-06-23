@@ -1,0 +1,11 @@
+api_version = "2025-01"
+
+[[extensions]]
+name = "Checkout 30-Day Guarantee"
+handle = "checkout-guarantee"
+type = "ui_extension"
+
+  [[extensions.targeting]]
+  # Place this block directly under the order total in the Checkout editor.
+  module = "./src/Guarantee.tsx"
+  target = "purchase.checkout.block.render"

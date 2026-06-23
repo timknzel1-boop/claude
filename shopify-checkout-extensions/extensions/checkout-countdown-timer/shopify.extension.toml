@@ -1,0 +1,20 @@
+api_version = "2025-01"
+
+[[extensions]]
+name = "Checkout Countdown Timer"
+handle = "checkout-countdown-timer"
+type = "ui_extension"
+
+  [[extensions.targeting]]
+  # "block.render" = the merchant drags this block to the desired spot
+  # (e.g. the very top of the checkout) in the Checkout editor.
+  module = "./src/CountdownTimer.tsx"
+  target = "purchase.checkout.block.render"
+
+  [extensions.settings]
+
+    [[extensions.settings.fields]]
+    key = "duration_minutes"
+    type = "number_integer"
+    name = "Reservierungsdauer in Minuten"
+    description = "Wie lange die Bestellung reserviert bleibt. Standard: 6."
