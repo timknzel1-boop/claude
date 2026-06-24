@@ -1,0 +1,84 @@
+{%- comment -%}
+  mysolv – Trustpilot Badge
+  Datei: sections/msv-trustpilot-badge.liquid
+{%- endcomment -%}
+
+<div id="msv-tp-{{ section.id }}" class="msv-tp-wrap">
+  <div class="msv-tp-stars" id="msv-tp-stars-{{ section.id }}" role="img" aria-label="4,7 von 5 Sternen">
+    <span class="msv-tp-s">★</span>
+    <span class="msv-tp-s">★</span>
+    <span class="msv-tp-s">★</span>
+    <span class="msv-tp-s">★</span>
+    <span class="msv-tp-s">★</span>
+  </div>
+  <span class="msv-tp-score">4,7/5 – Basierend auf 22.000+ Bewertungen</span>
+  <a class="msv-tp-more" href="#msv-reviews" id="msv-tp-more-{{ section.id }}">mehr erfahren</a>
+</div>
+
+<style>
+  #msv-tp-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    flex-wrap: nowrap;
+  }
+  #msv-tp-{{ section.id }} .msv-tp-stars {
+    display: flex;
+    gap: 2px;
+    cursor: pointer;
+    transition: transform 0.22s ease;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+  }
+  #msv-tp-{{ section.id }} .msv-tp-stars:hover,
+  #msv-tp-{{ section.id }} .msv-tp-stars:active {
+    transform: scale(1.14);
+  }
+  #msv-tp-{{ section.id }} .msv-tp-s {
+    font-size: 22px;
+    color: #FF9900;
+    line-height: 1;
+  }
+  #msv-tp-{{ section.id }} .msv-tp-score {
+    font-size: 14px;
+    font-weight: 600;
+    color: #191919;
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    white-space: nowrap;
+  }
+  #msv-tp-{{ section.id }} .msv-tp-more {
+    font-size: 14px;
+    color: #191919;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    white-space: nowrap;
+    transition: color 0.15s ease;
+  }
+  #msv-tp-{{ section.id }} .msv-tp-more:hover {
+    color: #00b67a;
+  }
+  @media (max-width: 480px) {
+    #msv-tp-{{ section.id }} { gap: 8px; flex-wrap: wrap; }
+    #msv-tp-{{ section.id }} .msv-tp-s { font-size: 18px; }
+    #msv-tp-{{ section.id }} .msv-tp-score { font-size: 12px; }
+    #msv-tp-{{ section.id }} .msv-tp-more { font-size: 12px; }
+  }
+</style>
+
+<script>
+  (function(){
+    var starsEl = document.getElementById('msv-tp-stars-{{ section.id }}');
+    var moreEl = document.getElementById('msv-tp-more-{{ section.id }}');
+    function scrollToReviews(e) {
+      var target = document.getElementById('msv-reviews');
+      if(!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    if(starsEl) starsEl.addEventListener('click', scrollToReviews);
+    if(moreEl) moreEl.addEventListener('click', scrollToReviews);
+  })();
+</script>
