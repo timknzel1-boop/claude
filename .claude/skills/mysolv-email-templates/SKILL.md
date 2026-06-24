@@ -179,11 +179,44 @@ time need only images from the user (or generate them with Higgsfield).
 - **If Gmail token is expired** (it was on 2026-06-24): ask the user to
   re-authorize the Gmail MCP, or to forward the `.eml`/screenshots. Don't block —
   offer both.
-- Two Resilia `.eml`s were the original inspiration (Oil of Oregano etc.):
-  hero-with-logo, half-circle product/ingredient images bleeding from the sides,
-  dark accent band, social proof low (not top), trust badges, rich footer.
-  **Record per-newsletter findings here as you analyze them** ↓
-  - _(append: date, subject, layout notes, what to adopt)_
+### Resilia structural truth (analyzed 2026-06-24, 3 real .eml newsletters)
+**Resilia's real newsletters are FULL-IMAGE "image-stack" emails**, not hybrid HTML:
+- **600px** container on a light-gray canvas `#f7f7f7` (rgb 247,247,247).
+- The body = a vertical **stack of full-width JPEG "sections"** (each section is a
+  professionally designed image with ALL text + layout baked in). Examples:
+  - *Oil of Oregano*: 3 stacked content images ("Shop Now & Save Big" /
+    "Transforms How You Feel" / "75,000+ Happy Customers") → logo → footer.
+  - *Grab Your Cart*: 5 stacked "We saved your cart" images → logo → footer.
+  - *Final Hours 70% OFF*: hero image → **image CTA button** "Shop Now →" →
+    benefit image → image CTA button "Try Resilia® Softgels →" → product image →
+    logo → footer.
+- **CTAs are images too** (e.g. an "Shop Now →" / "Try Resilia® Softgels →" JPEG
+  wrapped in an `<a>` link), not HTML buttons.
+- **Footer is image-based:** a menu of small image links — Blogs · Contact us ·
+  Track your order (row 1), Shipping & delivery · Returns policy · Terms of
+  service (row 2) — then "Find us on social media" + Facebook / Instagram /
+  TikTok icons, then the Resilia logo. Each is a clickable image (`klclick`
+  tracking links). Font where any live text exists: Ubuntu/Helvetica/Arial.
+- Images hosted on Klaviyo CDN (`d3k81ch9hvuctc.cloudfront.net/company/.../images/`).
+- **No live body copy, no personalization, no real text** — pure design images.
+
+**Implication / fork for mysolv:** Resilia's polish comes *entirely from designed
+images*. To truly clone the look you need designed section images (Canva / a
+designer / user-provided) — **NOT Higgsfield text** (bakes misspelled German).
+So there are two honest routes, and the user must pick per email:
+- **A — Full-image Resilia clone:** 600px image-stack + image CTA + image footer
+  menu + social icons. Max visual fidelity, Gmail-dark-mode-proof, but no live
+  text/personalization and you can't auto-generate the text images. Needs the
+  user to supply (or approve Canva-built) section graphics.
+- **B — Hybrid (our PP-01 system):** borrow Resilia's *structure & rhythm*
+  (stacked sections, low social proof, image-rich, rich footer) but keep live
+  HTML text + `{{ first_name }}`. What we already validated and the user liked.
+  Use photographic images (user/Higgsfield, no baked text).
+
+**Adopt into mysolv regardless of route:** stacked-section rhythm; image CTA
+*style* (pill "→" affordance); a richer footer menu (we can do it as HTML links
+mirroring Blogs/Contact/Track/Shipping/Returns/Terms + social row); 600px option;
+keep social proof a dedicated section, not the top.
 
 ## 7. Asset pipeline (images)
 
