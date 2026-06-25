@@ -110,6 +110,8 @@ any variant that fails — that re-roll loop is what makes output "Fließband-pe
 - `references/hooks-and-settings.md` — hooks & settings (setup items)
 - `references/batch-workflow.md` — the assembly-line variant matrix + parallel runs
 - `references/quality-checklist.md` — the pre-delivery QA gate
+- `references/german-dubbing-workflow.md` — natural German (or any-language) dubbing:
+  silent video + premium TTS voiceover + lip-sync merge
 
 ## Guardrails
 
