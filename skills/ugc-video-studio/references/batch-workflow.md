@@ -32,9 +32,11 @@ Before a large batch:
 ## 3. Generate in parallel
 
 - Import the product once (`media_import_url`) and reuse the `media_id` for all variants.
-- Submit ALL generation jobs first (collect job IDs), THEN poll `job_status` —
-  do not block on each video sequentially.
-- If a job fails, re-submit that one variant; don't abort the batch.
+- Kick off ALL generations first (each renders its own self-updating widget), then
+  collect results — do not block on each video sequentially. There is no
+  `job_status` tool; re-display any result with `job_display` or browse via
+  `show_marketing_studio_generations`.
+- If a generation fails, re-submit that one variant; don't abort the batch.
 
 ## 4. Rank by predicted performance
 

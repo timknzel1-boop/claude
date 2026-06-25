@@ -50,12 +50,18 @@ real person." Bake these into the generation prompt:
   gestures, a beat of hesitation before the punchline. Name these in the prompt.
 
 **Voice variation (Stimme verändert sich)**
-- 🔎 In `generate_audio` (ElevenLabs), vary delivery per beat: energetic on the
-  hook, calmer/credible on the explanation, warm on the CTA.
-- 🔎 Use voice settings (stability ↓ for more expressive, similarity/style as
-  available) and emphasis/pauses. Correct German pronunciation of brand/product
-  names — spell them phonetically in the text if needed.
-- Match VO length to the clip duration (~2.3 German words/sec) so lipsync fits.
+- The spoken voice comes from the video generation, then is refined with
+  `dubbing` (→ natural German, auto re-lipsync) or `voice_change` (swap timbre on
+  a voiced clip). See `german-dubbing-workflow.md`. There is **no** tool to
+  lip-sync a separate `generate_audio` track onto the video — don't design around
+  that.
+- Vary energy across beats via the spoken-line wording and delivery direction:
+  energetic on the hook, calmer/credible on the explanation, warm on the CTA.
+- Correct German pronunciation of brand/product names — spell them phonetically
+  in the script line if needed.
+- `generate_audio` (ElevenLabs `text2speech_v2_elevenlabs`, or `sonilo_music` /
+  `mirelo_text_to_audio`) is for **separate music/SFX beds**, not the talking track.
+- Match spoken-line length to clip duration (~2.3 German words/sec) so the dub fits.
 
 **Environment (Umgebung)**
 - Be specific and real: "kitchen counter, morning window light, coffee mug in
@@ -75,16 +81,19 @@ real person." Bake these into the generation prompt:
 
 1. **Import product** once → reuse `media_id` for all beats.
 2. **Pick/lock avatar** (`show_marketing_studio` / `show_characters`); reuse the
-   same one across the whole script for continuity.
-3. **Talking beats:** `generate_video` → `marketing_studio_video`, audio **off**
-   (`--generate-audio false`), with the realism direction above.
+   same one across the whole script for continuity. Pass avatar + product
+   **explicitly** to `generate_video` (not via an ad_reference link).
+3. **Talking beats:** `generate_video` → `marketing_studio_video` **with audio**
+   (let it speak), with the realism direction above. 🔎 If the tool exposes an
+   audio-off field in its JSON params, that's optional — but the German voice
+   comes from step 5, so generating with audio is the default.
 4. **B-roll beats:** `product_showcase` (no presenter needed).
-5. **German VO:** 🔎 `list_voices` → pick a German voice; 🔎 `generate_audio`
-   (ElevenLabs) per beat with per-beat delivery.
-6. **Lip-sync:** 🔎 `dubbing` to align the silent talking-beat video to its German
-   audio. (`voice_change` is NOT lipsync.)
-7. **Assemble** beats in order; **upscale** (`upscale_video`) the final.
-8. **Gate** with `quality-checklist.md` — re-roll only the beat that fails.
+5. **Natural German voice:** `dubbing` (video_id + target_language=German →
+   translate + auto re-lipsync) or `voice_change` (swap voice on a voiced clip).
+   Pick a voice via `list_voices`. See `german-dubbing-workflow.md`.
+6. **Assemble** beats in order; **upscale** (`upscale_video`) the final. Re-display
+   results with `job_display` (no `job_status`/`reveal_generation` exists).
+7. **Gate** with `quality-checklist.md` — re-roll only the beat that fails.
 
 ## 4. Deliver
 

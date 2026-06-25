@@ -1,77 +1,72 @@
-# German Premium Dubbing Workflow (2-stage: silent video + TTS + lipsync)
+# Natural German Voice Workflow (real Higgsfield tool paths)
 
 **Problem this solves:** the default in-model voice of `marketing_studio_video`
-can sound unnatural in German. Fix: generate the video **silent**, generate a
-**premium German voiceover separately**, then **lip-sync** the avatar to that
-audio.
+can sound unnatural in German. We make it sound natural using the tools that
+actually exist.
 
-> ⚠️ **Verify-live markers (🔎):** items below marked 🔎 must be confirmed against
-> the connected Higgsfield MCP tool schemas at runtime. The official skill docs
-> document only non-speech audio (`mirelo_text_to_audio`) and music
-> (`sonilo_music`); speech-TTS, voice selection, and the exact lipsync tool are
-> NOT in the public docs, so confirm them live before asserting them as fact.
-> Never fabricate a result — if a tool/param doesn't exist, tell the user.
+> ⚠️ **Reality check (corrected):** there is **no tool that lip-syncs an arbitrary
+> external audio file onto a video.** A previous draft proposed "silent video +
+> separate `generate_audio` TTS + lipsync merge" — that is **not buildable** with
+> the available tools. Use the two real paths below instead. 🔎 = still verify the
+> exact JSON params live.
 
-## Tools involved (Higgsfield MCP)
+## The tools, as they actually behave
 
-| Purpose | Tool | Notes |
-|---|---|---|
-| Import product image from URL | `media_import_url` | returns a `media_id` |
-| Generate silent branded video | `generate_video` (`marketing_studio_video`) | set audio generation **off** |
-| Generate German voiceover | `generate_audio` | 🔎 confirm it supports speech TTS + a `voice_id` |
-| List available voices | `list_voices` | 🔎 find a high-quality German voice id |
-| **Lip-sync video to audio** | `dubbing` | 🔎 **most likely the correct lipsync tool** |
-| Change voice timbre of audio | `voice_change` | ❌ NOT lipsync — do not use for merging |
-| Upload final file | `media_upload` + `media_confirm` | returns a shareable URL |
-| Poll / reveal | `job_status`, `reveal_generation` | |
+| Tool | What it really does |
+|---|---|
+| `generate_video` (`marketing_studio_video`) | Generates the ad clip. Avatar + product must be passed **explicitly** at generation time (linking them on an ad_reference does not auto-apply). |
+| `dubbing` | Input: **`video_id` + `target_language` only.** Translates the video's *own* spoken audio into the target language and **re-lip-syncs** automatically. Does **not** accept a separate audio track. |
+| `voice_change` | Swaps the **voice/timbre** on an **already-voiced** clip (same language). Keeps existing lip-sync. |
+| `generate_audio` | Real TTS (ElevenLabs = model `text2speech_v2_elevenlabs`) with `voice_id`/`voice_type`, plus `mirelo_text_to_audio` (SFX) and `sonilo_music` (music). Produces a **standalone** audio asset — it **cannot** be lip-synced onto a video. Use it for music/SFX beds, not for the talking track. |
+| `list_voices` | Lists available voices (incl. for `voice_change`). |
+| `media_import_url` | Import product image/photo from a URL → `media_id`. |
+| `show_marketing_studio_generations` / `job_display` | Re-display generation results (see polling note below). |
 
-## Step 1 — Capture product data
-- `media_import_url` with the product page or hero image URL.
-- Keep the returned `product`/`media_id`, title, description, hero images.
+> **Polling note:** there is **no `job_status` / `reveal_generation` tool.** The
+> `generate_*` tools render a **self-polling widget** that live-updates to a
+> terminal state. To re-show a result later: `job_display` (one job id per call).
+> To browse history: `show_generations` / `show_marketing_studio_generations`.
 
-## Step 2 — Generate the SILENT video
-- `generate_video` → model `marketing_studio_video`.
-- Pass the product id, chosen avatar/presenter, mode (`ugc` etc.), duration,
-  resolution 720p, aspect_ratio `9:16`.
-- **Disable audio:** the model supports a generate-audio flag — set it to
-  **false** (`--generate-audio false`). This yields a mute video whose lips can
-  be re-driven in step 4.
-- Poll `job_status`; keep the silent video's media reference.
+## Path A — Generate with audio, then dub to German (recommended)
 
-## Step 3 — Generate premium German audio
-- 🔎 `list_voices` → pick a high-quality **German** voice id.
-- 🔎 `generate_audio` with the German script (the spoken text) and that voice id.
-  - The user's brief named model `"elevenlabs"` and a `voice_id` — confirm the
-    real model name and voice catalog live before sending.
-- Keep the resulting audio media reference.
-- Tip: write the script for ~natural pacing at the video's duration (≈ 2.3
-  German words/second for 10–15s clips). Match script length to video length so
-  lipsync doesn't run out of mouth or video.
+Best when you want a guaranteed-natural German voice regardless of the source.
 
-## Step 4 — Merge via lipsync
-- 🔎 Use **`dubbing`** (the likely lipsync tool): input = the silent video from
-  step 2, plus the German audio from step 3 → output = lip-synced German video.
-- ❌ Do **not** use `voice_change` for this — it changes an audio clip's voice,
-  it does not align lips to audio.
-- If `dubbing` expects an *already-voiced* video, an alternative is to dub the
-  audio-on version of the video directly into German in one step — confirm the
-  tool's actual input contract live and pick the path that matches.
-- Poll `job_status` until the lip-synced video is ready.
+1. **Import product** — `media_import_url` → keep `media_id`.
+2. **Generate the talking video WITH audio** — `generate_video` →
+   `marketing_studio_video`, passing the avatar and product **explicitly**, mode,
+   duration, 720p, `9:16`. (Let it speak — any source language is fine.)
+3. **Dub to German** — `dubbing` with that `video_id` and `target_language`
+   = German. It translates and **re-lip-syncs** to natural German automatically.
+4. **Finish** — `upscale_video`; re-display with `job_display` if needed.
 
-## Step 5 — Deliver
-- `media_upload` + `media_confirm` (or `reveal_generation`) to get the final
-  CDN/share URL.
-- Present the URL plus a one-line summary: product, avatar, mode, German voice used.
-- Run the `quality-checklist.md` gate — especially **lip-sync accuracy** and
-  **German audio naturalness** — and re-roll the failing stage only.
+## Path B — Generate voiced, then swap the voice (same language)
+
+Best when the clip already speaks German but the voice timbre feels off.
+
+1. Import product, generate the voiced video (as above).
+2. **`voice_change`** on that clip → pick a better voice (`list_voices`). Lip-sync
+   is preserved; this only changes the voice/timbre.
+
+## Which path?
+- Want German guaranteed + automatic lip-sync → **Path A** (`dubbing`).
+- Already-German clip, just want a nicer voice → **Path B** (`voice_change`).
+- Need background music or SFX → add `generate_audio` (`sonilo_music` /
+  `mirelo_text_to_audio`) as a **separate bed** (not lip-synced).
+
+## Script length
+Write the spoken script for ~2.3 German words/second so the dialogue fits the
+clip duration (10–15s) and the dub doesn't run out of mouth or video.
+
+## Deliver
+Present the final video URL + a one-line spec (product, avatar, mode, path used).
+Gate with `quality-checklist.md` — especially **lip-sync accuracy** and **German
+naturalness** — and re-roll only the failing stage.
 
 ## Assembly-line note
-For batches, generate all silent videos in parallel (step 2), generate each
-German voiceover (step 3), then lipsync each pair (step 4). Reuse one imported
-product across variants. Rank with `virality_predictor` before upscaling winners.
+Generate all clips, then dub/voice-change each. Reuse one imported product across
+variants. Rank with `virality_predictor` before upscaling winners.
 
 ## Security
-Never hardcode API keys/secrets into files or prompts. The MCP connector
-authenticates via the user's Higgsfield account — raw `API key`/`secret` pairs
-are not needed and must never be committed. If a user pastes credentials, advise
-them to rotate those credentials.
+Never hardcode API keys/secrets. The MCP connector authenticates via the user's
+Higgsfield account — raw key/secret pairs are not needed and must never be
+committed. If a user pastes credentials, advise rotating them.

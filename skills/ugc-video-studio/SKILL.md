@@ -46,11 +46,18 @@ This skill orchestrates the Higgsfield MCP server. The key tools:
 | Import a product image/photo from a web URL | `media_import_url` |
 | Upload a local product/avatar image | `media_upload_widget` (Apps UI) or `media_upload` + `media_confirm` |
 | List trained creator identities | `show_characters` |
-| **Generate the video** | `generate_video` (model `marketing_studio_video`) |
-| Poll / show result | `job_status`, `job_display`, `reveal_generation` |
-| See past studio outputs | `show_marketing_studio_generations` |
+| **Generate the video** | `generate_video` (model `marketing_studio_video`) — pass avatar + product **explicitly** |
+| Re-display a result | `job_display` (one job id per call) |
+| Browse past outputs | `show_generations` / `show_marketing_studio_generations` |
+| German voice / dub | `dubbing` (translate+re-lipsync), `voice_change` (swap voice) — see `references/german-dubbing-workflow.md` |
 | Score before scaling spend | `virality_predictor` |
 | Finish (HD / reframe) | `upscale_video`, `reframe` |
+
+> **No polling tool exists.** `generate_*` tools render a **self-polling widget**
+> that live-updates to a terminal state — you do not call a status endpoint. To
+> re-show a result later use `job_display`; to browse history use
+> `show_generations` / `show_marketing_studio_generations`. There is no
+> `job_status` or `reveal_generation`.
 
 > If the Higgsfield MCP server is not connected, tell the user to connect it
 > (settings → MCP → Higgsfield, authenticate via their Higgsfield account) and
@@ -83,11 +90,16 @@ if a person is implied in the prompt.
 5. **Choose mode + hook + setting** (see `references/modes.md` and
    `references/hooks-and-settings.md`). Hook = opening angle; Setting =
    environment. Both optional, both boost quality.
-6. **Generate** with `generate_video` → `marketing_studio_video`, passing
-   `media_id`(s), avatars, mode, hook/setting, duration, resolution, aspect_ratio.
-7. **Poll** `job_status` until done; show with `reveal_generation` / `job_display`.
-8. **Finish** (optional): `upscale_video` to HD, `reframe` for other formats.
-9. **Deliver** the URL(s) + a one-line summary of the angle used.
+6. **Generate** with `generate_video` → `marketing_studio_video`, passing the
+   `media_id`(s), avatar, mode, hook/setting, duration, resolution, aspect_ratio
+   **explicitly** (avatar/product are not auto-pulled from an ad_reference).
+7. **Watch the result.** The generation tool renders a self-updating widget that
+   runs to a terminal state — no status call needed. Re-display later with
+   `job_display`; browse history with `show_marketing_studio_generations`.
+8. **German voice (optional):** dub or swap the voice — see
+   `references/german-dubbing-workflow.md` (`dubbing` / `voice_change`).
+9. **Finish** (optional): `upscale_video` to HD, `reframe` for other formats.
+10. **Deliver** the URL(s) + a one-line summary of the angle used.
 
 ## Assembly-line / "Fließband" mode
 
@@ -95,7 +107,7 @@ This is the headline feature. When the user wants many videos:
 
 1. Build a **variant matrix** — see `references/batch-workflow.md`. Typically:
    N hooks × M settings × K avatars, or one product across several modes.
-2. Generate variants **in parallel** (submit all jobs, then poll), not one by one.
+2. Generate variants **in parallel** (submit all generations), not one by one.
 3. After generation, run `virality_predictor` on each, **rank**, and surface the
    top performers first so the user funds winners, not guesses.
 4. Deliver as a labeled table: variant → angle → mode → score → URL.
@@ -118,8 +130,8 @@ any variant that fails — that re-roll loop is what makes output "Fließband-pe
 - `references/hooks-and-settings.md` — hooks & settings (setup items)
 - `references/batch-workflow.md` — the assembly-line variant matrix + parallel runs
 - `references/quality-checklist.md` — the pre-delivery QA gate
-- `references/german-dubbing-workflow.md` — natural German (or any-language) dubbing:
-  silent video + premium TTS voiceover + lip-sync merge
+- `references/german-dubbing-workflow.md` — natural German voice via the real
+  paths: `dubbing` (translate + auto re-lipsync) or `voice_change` (swap voice)
 - `references/script-to-video.md` — **turnkey "paste a script → great UGC" interface**
   + the anti-generic realism playbook (movement, micro-expressions, voice
   variation, environment, product detail)
@@ -127,5 +139,6 @@ any variant that fails — that re-roll loop is what makes output "Fließband-pe
 ## Guardrails
 
 - Don't invent avatar/hook/setting IDs — always discover them live first.
-- Don't claim a video exists until `job_status` reports success.
+- Don't claim a video exists until the generation widget reaches a success state
+  (re-check with `job_display`). There is no `job_status`/`reveal_generation`.
 - Respect credits: estimate first, confirm large batches, report what was skipped.
