@@ -11,9 +11,17 @@ license: MIT
 
 # UGC Video Studio (Higgsfield Marketing Studio)
 
-Turn a product (or a brief) into **finished, scroll-stopping UGC ad videos** —
-one at a time or a whole batch — using Higgsfield's `marketing_studio_video`
-model via the Higgsfield MCP tools.
+Turn a product, a brief, **or a full script/Drehbuch** into **finished,
+scroll-stopping, non-generic UGC ad videos** — one at a time or a whole batch —
+using Higgsfield's `marketing_studio_video` model via the Higgsfield MCP tools.
+
+> **Where this runs:** this skill needs the **Higgsfield MCP connector to be
+> reachable in the current environment**. That is the case in the claude.ai chat
+> with Higgsfield connected. It is NOT available in remote/headless sessions
+> (e.g. Claude Code on the web), where interactively-authenticated connectors are
+> not bridged in — there, only build/maintain the skill, don't try to generate.
+> If the Higgsfield tools aren't loadable, tell the user to run this in a chat
+> where Higgsfield is connected, and stop — never fabricate a result.
 
 This skill is built for **assembly-line ("Fließband") production**: give it a
 product and an angle, and it produces multiple polished variants you can A/B
@@ -112,6 +120,9 @@ any variant that fails — that re-roll loop is what makes output "Fließband-pe
 - `references/quality-checklist.md` — the pre-delivery QA gate
 - `references/german-dubbing-workflow.md` — natural German (or any-language) dubbing:
   silent video + premium TTS voiceover + lip-sync merge
+- `references/script-to-video.md` — **turnkey "paste a script → great UGC" interface**
+  + the anti-generic realism playbook (movement, micro-expressions, voice
+  variation, environment, product detail)
 
 ## Guardrails
 
