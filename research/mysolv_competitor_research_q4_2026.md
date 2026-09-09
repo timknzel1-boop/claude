@@ -2,6 +2,8 @@
 
 Stand: 09.09.2026 · Fokus: DACH (DE/AT/CH) · Produkt: DETOX COMPLEX (4-in-1 Darm-Komplex Softgel)
 
+Ergänzung USA (25 Brands, 10 US-Patterns, 6 weitere Testkonzepte K13–K18): `mysolv_us_competitor_research.md`
+
 ---
 
 ## 0. TL;DR
