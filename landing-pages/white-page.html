@@ -1,0 +1,776 @@
+<title>VitaPeptides — Premium Nahrungsergänzung</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap">
+<style>
+  :root {
+    --ground: #F7F9FB;
+    --surface: #FFFFFF;
+    --surface-alt: #EEF4F2;
+    --accent: #2A9D8F;
+    --accent-dark: #1F7A6F;
+    --accent-light: #E1F2EF;
+    --cta: #E76F51;
+    --cta-hover: #D45A3E;
+    --cta-text: #FFFFFF;
+    --text: #1D3557;
+    --text-secondary: #4A6274;
+    --text-tertiary: #8FA3B8;
+    --border: #D6DFE8;
+    --badge-bg: #E1F2EF;
+    --badge-text: #1F7A6F;
+    --hero-gradient: linear-gradient(135deg, #2A9D8F 0%, #1D3557 100%);
+    --card-shadow: 0 1px 3px rgba(29,53,87,0.06), 0 6px 16px rgba(29,53,87,0.04);
+    --font-display: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+    --font-body: 'Outfit', system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0E1A28;
+      --surface: #152232;
+      --surface-alt: #1A2E42;
+      --accent: #3DC9B8;
+      --accent-dark: #2EAFA0;
+      --accent-light: #132B28;
+      --cta: #F28B6D;
+      --cta-hover: #E76F51;
+      --cta-text: #0E1A28;
+      --text: #E2EAF2;
+      --text-secondary: #92A8BA;
+      --text-tertiary: #5B7A92;
+      --border: #223648;
+      --badge-bg: #132B28;
+      --badge-text: #3DC9B8;
+      --hero-gradient: linear-gradient(135deg, #1A5C54 0%, #0E1A28 100%);
+      --card-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 6px 16px rgba(0,0,0,0.15);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0E1A28;
+    --surface: #152232;
+    --surface-alt: #1A2E42;
+    --accent: #3DC9B8;
+    --accent-dark: #2EAFA0;
+    --accent-light: #132B28;
+    --cta: #F28B6D;
+    --cta-hover: #E76F51;
+    --cta-text: #0E1A28;
+    --text: #E2EAF2;
+    --text-secondary: #92A8BA;
+    --text-tertiary: #5B7A92;
+    --border: #223648;
+    --badge-bg: #132B28;
+    --badge-text: #3DC9B8;
+    --hero-gradient: linear-gradient(135deg, #1A5C54 0%, #0E1A28 100%);
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 6px 16px rgba(0,0,0,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.65;
+    padding: 0;
+  }
+
+  .wrapper {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding-inline: 20px;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    color: var(--accent);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .logo span { color: var(--text); }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--cta);
+    color: var(--cta-text) !important;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--cta-hover); }
+
+  /* HERO */
+  .hero {
+    background: var(--hero-gradient);
+    padding: 80px 20px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .hero-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.9);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: #FFFFFF;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    text-wrap: balance;
+  }
+  .hero p {
+    color: rgba(255,255,255,0.82);
+    font-size: 1.1rem;
+    max-width: 540px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--cta);
+    color: #FFFFFF;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    border: none;
+    cursor: pointer;
+  }
+  .hero-cta:hover { background: var(--cta-hover); transform: translateY(-1px); }
+
+  /* TRUST BAR */
+  .trust-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 20px;
+  }
+  .trust-bar-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+  .trust-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--accent-light);
+    color: var(--accent);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  /* SECTION */
+  section {
+    padding: 72px 0;
+  }
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    color: var(--text);
+    margin-bottom: 12px;
+    text-wrap: balance;
+  }
+  .section-sub {
+    color: var(--text-secondary);
+    font-size: 1.02rem;
+    max-width: 560px;
+    line-height: 1.7;
+  }
+  .section-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .section-header .section-sub {
+    margin: 0 auto;
+  }
+
+  /* BENEFITS */
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  .benefit-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 24px;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .benefit-card:hover {
+    box-shadow: var(--card-shadow);
+    border-color: var(--accent);
+  }
+  .benefit-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--accent-light);
+    color: var(--accent);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+  }
+  .benefit-card h3 {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .benefit-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* PRODUCTS */
+  .products-section {
+    background: var(--surface-alt);
+  }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .product-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.15s;
+  }
+  .product-card:hover {
+    box-shadow: var(--card-shadow);
+    transform: translateY(-2px);
+  }
+  .product-img {
+    height: 200px;
+    background: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .product-img-pattern {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 0.3;
+  }
+  .product-img-label {
+    position: relative;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--accent-dark);
+    z-index: 1;
+  }
+  .product-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--cta);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    z-index: 2;
+  }
+  .product-body {
+    padding: 24px;
+  }
+  .product-body h3 {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .product-body p {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .product-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .product-price small {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-tertiary);
+  }
+  .product-btn {
+    background: var(--accent);
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .product-btn:hover { background: var(--accent-dark); }
+
+  /* ABOUT / QUALITY */
+  .quality-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .quality-text .section-label,
+  .quality-text .section-title { text-align: left; }
+  .quality-text p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+  .quality-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .quality-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.92rem;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .quality-list .check {
+    color: var(--accent);
+    font-size: 1.1rem;
+    line-height: 1.5;
+    flex-shrink: 0;
+  }
+  .quality-visual {
+    background: var(--accent-light);
+    border-radius: 16px;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 16px;
+    min-height: 320px;
+  }
+  .quality-stat {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .quality-stat-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .quality-stats-row {
+    display: flex;
+    gap: 32px;
+    margin-top: 12px;
+  }
+  .quality-mini-stat {
+    text-align: center;
+  }
+  .quality-mini-stat .num {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    color: var(--accent-dark);
+    display: block;
+  }
+  .quality-mini-stat .lbl {
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+  }
+
+  /* FINAL CTA */
+  .final-cta {
+    background: var(--hero-gradient);
+    padding: 64px 20px;
+    text-align: center;
+    border-radius: 16px;
+    margin: 0 20px 48px;
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .final-cta h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: #FFFFFF;
+    margin-bottom: 12px;
+    text-wrap: balance;
+  }
+  .final-cta p {
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 28px;
+    font-size: 0.95rem;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 40px 20px;
+  }
+  .footer-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .footer-brand {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--accent);
+  }
+  .footer-brand span { color: var(--text); }
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+  .footer-links a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--text); }
+  .footer-copy {
+    width: 100%;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero { padding: 56px 20px 48px; }
+    .quality-grid { grid-template-columns: 1fr; gap: 32px; }
+    .quality-visual { min-height: 240px; padding: 32px; }
+    .products-grid { grid-template-columns: 1fr; }
+    .trust-bar-inner { gap: 20px; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+
+  @media (max-width: 480px) {
+    .benefits-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.8rem; }
+    .trust-bar-inner { flex-direction: column; align-items: center; gap: 16px; }
+    .quality-stats-row { flex-direction: column; gap: 16px; }
+  }
+</style>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">Vita<span>Peptides</span></a>
+    <ul class="nav-links">
+      <li><a href="#produkte">Produkte</a></li>
+      <li><a href="#qualitaet">Qualität</a></li>
+      <li><a href="#ueber">Über uns</a></li>
+      <li><a href="#" class="nav-cta">Shop</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">&#9670; Laborgeprüft &middot; Made in Germany</div>
+    <h1>Natürliche Peptide für dein Wohlbefinden</h1>
+    <p>Premium Kollagen und bioaktive Peptide aus nachhaltigen Quellen. Laborgeprüft, höchste Bioverfügbarkeit, entwickelt in Deutschland.</p>
+    <a href="#produkte" class="hero-cta">Produkte entdecken &#8594;</a>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <div class="trust-item">
+      <div class="trust-icon">&#9745;</div>
+      <span>Laborgeprüft</span>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">&#9733;</div>
+      <span>4.8/5 Bewertung</span>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">&#9992;</div>
+      <span>Kostenloser Versand ab 50&euro;</span>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">&#8635;</div>
+      <span>30 Tage Geld-zurück</span>
+    </div>
+  </div>
+</div>
+
+<!-- BENEFITS -->
+<section class="wrapper">
+  <div class="section-header">
+    <div class="section-label">Warum VitaPeptides</div>
+    <h2 class="section-title">Was bioaktive Peptide für dich tun</h2>
+    <p class="section-sub">Peptide sind kurze Aminosäureketten, die natürlich in Lebensmitteln vorkommen. Sie unterstützen körpereigene Prozesse gezielt und effektiv.</p>
+  </div>
+  <div class="benefits-grid">
+    <div class="benefit-card">
+      <div class="benefit-icon">&#10024;</div>
+      <h3>Haut &amp; Haare</h3>
+      <p>Kollagenpeptide fördern die Elastizität und Feuchtigkeit deiner Haut. Sichtbare Ergebnisse nach 4–8 Wochen regelmäßiger Einnahme.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">&#9889;</div>
+      <h3>Energie &amp; Vitalität</h3>
+      <p>Bioaktive Peptide unterstützen deinen Energiestoffwechsel und helfen dir, leistungsfähig durch den Tag zu kommen.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">&#9883;</div>
+      <h3>Gelenke &amp; Mobilität</h3>
+      <p>Spezifische Kollagen-Typen stärken Knorpel und Bindegewebe — ideal für aktive Menschen und Sportler.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">&#9878;</div>
+      <h3>Regeneration</h3>
+      <p>Nach dem Training oder im Alltag: Peptide unterstützen die natürliche Erholung und Zellregeneration deines Körpers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products-section" id="produkte">
+  <div class="wrapper">
+    <div class="section-header">
+      <div class="section-label">Unsere Bestseller</div>
+      <h2 class="section-title">Premium Peptid-Produkte</h2>
+      <p class="section-sub">Jedes Produkt wird in deutschen Laboren auf Reinheit und Wirksamkeit getestet. Frei von Zusatzstoffen.</p>
+    </div>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-img">
+          <svg class="product-img-pattern" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="200" cy="100" r="80" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.15"/>
+            <circle cx="200" cy="100" r="120" fill="none" stroke="currentColor" stroke-width="0.3" opacity="0.1"/>
+            <circle cx="200" cy="100" r="160" fill="none" stroke="currentColor" stroke-width="0.2" opacity="0.06"/>
+          </svg>
+          <span class="product-img-label">Kollagen</span>
+          <span class="product-badge">Bestseller</span>
+        </div>
+        <div class="product-body">
+          <h3>Kollagen Peptide Complex</h3>
+          <p>Hydrolysiertes Kollagen Typ I &amp; III — 10.000 mg pro Portion. Aus Weidehaltung, enzymatisch aufgespalten für maximale Bioverfügbarkeit.</p>
+          <div class="product-footer">
+            <div class="product-price">39,90&euro; <small>/ 300g</small></div>
+            <button class="product-btn">In den Warenkorb</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">
+          <svg class="product-img-pattern" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100,100 Q200,20 300,100 Q200,180 100,100" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.15"/>
+            <path d="M80,100 Q200,0 320,100 Q200,200 80,100" fill="none" stroke="currentColor" stroke-width="0.3" opacity="0.1"/>
+          </svg>
+          <span class="product-img-label">Marine</span>
+        </div>
+        <div class="product-body">
+          <h3>Marine Peptide Kapseln</h3>
+          <p>Fischkollagen aus nachhaltigem Wildfang. Kleine Peptidketten für schnelle Aufnahme. 60 Kapseln, hochdosiert mit 1.200 mg pro Kapsel.</p>
+          <div class="product-footer">
+            <div class="product-price">34,90&euro; <small>/ 60 Kapseln</small></div>
+            <button class="product-btn">In den Warenkorb</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">
+          <svg class="product-img-pattern" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+            <rect x="160" y="60" width="80" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.15" transform="rotate(15 200 100)"/>
+            <rect x="140" y="40" width="120" height="120" rx="12" fill="none" stroke="currentColor" stroke-width="0.3" opacity="0.1" transform="rotate(15 200 100)"/>
+          </svg>
+          <span class="product-img-label">Vital Mix</span>
+          <span class="product-badge">Neu</span>
+        </div>
+        <div class="product-body">
+          <h3>Peptid Vital Komplex</h3>
+          <p>Kollagenpeptide kombiniert mit Hyaluronsäure, Vitamin C und Zink. Das Rundum-Paket für Haut, Haare und Gelenke in einem Produkt.</p>
+          <div class="product-footer">
+            <div class="product-price">44,90&euro; <small>/ 30 Portionen</small></div>
+            <button class="product-btn">In den Warenkorb</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUALITY -->
+<section class="wrapper" id="qualitaet">
+  <div class="quality-grid">
+    <div class="quality-text">
+      <div class="section-label">Qualitätsversprechen</div>
+      <h2 class="section-title">Warum unsere Kunden uns vertrauen</h2>
+      <p>Jedes VitaPeptides-Produkt durchläuft strenge Qualitätskontrollen in unabhängigen deutschen Laboren. Von der Rohstoffauswahl bis zur Verpackung — wir kontrollieren jeden Schritt.</p>
+      <p>Unsere Peptide werden enzymatisch aus natürlichen Quellen gewonnen und schonend verarbeitet, um die bioaktive Struktur zu erhalten.</p>
+      <ul class="quality-list">
+        <li><span class="check">&#10003;</span> Unabhängige Laboranalyse jeder Charge</li>
+        <li><span class="check">&#10003;</span> Frei von Gentechnik, Gluten und Laktose</li>
+        <li><span class="check">&#10003;</span> Nachhaltige Rohstoffquellen</li>
+        <li><span class="check">&#10003;</span> Hergestellt nach HACCP-Standards</li>
+        <li><span class="check">&#10003;</span> Analyse-Zertifikat auf Anfrage</li>
+      </ul>
+    </div>
+    <div class="quality-visual">
+      <div class="quality-stat">100%</div>
+      <div class="quality-stat-label">Jede Charge laborgeprüft</div>
+      <div class="quality-stats-row">
+        <div class="quality-mini-stat">
+          <span class="num">12k+</span>
+          <span class="lbl">Kunden</span>
+        </div>
+        <div class="quality-mini-stat">
+          <span class="num">98%</span>
+          <span class="lbl">Zufriedenheit</span>
+        </div>
+        <div class="quality-mini-stat">
+          <span class="num">3 J.</span>
+          <span class="lbl">Erfahrung</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="final-cta">
+  <h2>Bereit für das nächste Level?</h2>
+  <p>Entdecke unsere Premium Peptid-Produkte und spüre den Unterschied.</p>
+  <a href="#produkte" class="hero-cta">Jetzt bestellen &#8594;</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">Vita<span>Peptides</span></div>
+    <ul class="footer-links">
+      <li><a href="#">Impressum</a></li>
+      <li><a href="#">Datenschutz</a></li>
+      <li><a href="#">AGB</a></li>
+      <li><a href="#">Widerrufsrecht</a></li>
+      <li><a href="#">Kontakt</a></li>
+    </ul>
+    <div class="footer-copy">&copy; 2024 VitaPeptides. Alle Rechte vorbehalten. Nahrungsergänzungsmittel sind kein Ersatz für eine ausgewogene Ernährung und gesunde Lebensweise.</div>
+  </div>
+</footer>
