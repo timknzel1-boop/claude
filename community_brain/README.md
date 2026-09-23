@@ -22,7 +22,21 @@ Jeder Eintrag hat: **Kategorie** (Meta Ads, Creatives, Funnel, Offer, Retention 
 **Evidenz** (mit Zahlen belegt / Erfahrungswert / Meinung), **wer es geteilt hat** und **Links zu den Originalnachrichten**.
 Themen, die schon erfasst sind, werden nur als „(Update)“ neu angelegt, wenn es neue Details gibt.
 
-## Einrichtung (einmalig, ca. 15 Minuten)
+## Schnellstart im Terminal (Mac/Linux)
+
+```bash
+git clone https://github.com/timknzel1-boop/claude.git && cd claude
+git checkout claude/telegram-community-integration-53zzj2   # bis der PR gemergt ist
+bash scripts/setup.sh      # führt Schritt für Schritt durch alles unten
+bash scripts/start.sh      # startet den Betrieb alle 90 Minuten im Hintergrund
+tail -f logs/community_brain.log   # zuschauen
+bash scripts/stop.sh       # stoppen
+```
+
+Das Setup-Skript fragt alle Zugangsdaten ab (Secrets verdeckt) und speichert sie in `.env` (nur für dich lesbar).
+Beim Login wählst du deine Community per Nummer aus. Du kannst es jederzeit erneut ausführen.
+
+## Einrichtung von Hand (was das Setup-Skript macht)
 
 1. **Telegram-API-Zugang:** Auf https://my.telegram.org einloggen → *API development tools* → App anlegen.
    `api_id` und `api_hash` in `.env` eintragen (Vorlage: `.env.example`).
@@ -31,13 +45,13 @@ Themen, die schon erfasst sind, werden nur als „(Update)“ neu angelegt, wenn
    ```bash
    python -m community_brain login
    ```
-   Telegram schickt dir einen Code. Danach bekommst du den `TELEGRAM_SESSION`-String und die IDs
-   deiner Gruppen. Beides in `.env` eintragen.
+   Telegram schickt dir einen Code. Danach wählst du deine Community per Nummer aus.
+   Session und Gruppe werden automatisch in `.env` gespeichert.
    ⚠️ Der Session-String ist wie ein Passwort für deinen Telegram-Account. Nie teilen, nie committen.
 4. **Notion (optional, empfohlen):**
    - Auf https://www.notion.so/my-integrations eine Integration anlegen → Token als `NOTION_TOKEN` eintragen.
    - Eine Notion-Seite anlegen (z.B. „mysolv Wissen“) und über *⋯ → Connections* mit der Integration teilen.
-   - `python -m community_brain setup-notion <ID-der-Seite>` → die ausgegebene `NOTION_DATABASE_ID` eintragen.
+   - `python -m community_brain setup-notion <ID-der-Seite>` → legt die Datenbank an und speichert die ID in `.env`.
 5. **Anthropic-API-Key** als `ANTHROPIC_API_KEY` eintragen.
 6. **Testlauf:** `python -m community_brain run --dry-run` → schreibt nur `output/<datum>.md`.
    Beim ersten Lauf werden die letzten `BACKFILL_DAYS` Tage (Standard 30) nachgeholt.

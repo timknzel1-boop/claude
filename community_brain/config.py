@@ -23,6 +23,24 @@ def _load_dotenv() -> None:
 
 _load_dotenv()
 
+
+def set_env(key: str, value: str) -> None:
+    """Setzt/ersetzt KEY=VALUE in der .env-Datei (legt sie aus .env.example an, falls nötig)."""
+    env_file = ROOT / ".env"
+    if not env_file.exists():
+        example = ROOT / ".env.example"
+        env_file.write_text(example.read_text(encoding="utf-8") if example.exists() else "", encoding="utf-8")
+    lines = env_file.read_text(encoding="utf-8").splitlines()
+    for i, line in enumerate(lines):
+        if line.split("=", 1)[0].strip() == key:
+            lines[i] = f"{key}={value}"
+            break
+    else:
+        lines.append(f"{key}={value}")
+    env_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    env_file.chmod(0o600)
+    os.environ[key] = value
+
 TIMEZONE = os.environ.get("TIMEZONE") or "Europe/Zurich"
 
 
