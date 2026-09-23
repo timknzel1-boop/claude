@@ -1,0 +1,54 @@
+name: Community Brain
+
+on:
+  # Alle 90 Minuten rund um die Uhr (UTC): 00:00, 01:30, 03:00, 04:30 … 22:30
+  # GitHub startet geplante Läufe bei hoher Last teils einige Minuten später.
+  schedule:
+    - cron: "0 0-21/3 * * *"
+    - cron: "30 1-22/3 * * *"
+  workflow_dispatch:
+
+concurrency: community-brain
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      # Nur Nachrichten-IDs und Themen-Titel – keine Community-Inhalte
+      - uses: actions/cache/restore@v4
+        with:
+          path: state
+          key: community-brain-state-${{ github.run_id }}
+          restore-keys: community-brain-state-
+
+      - run: python -m community_brain run
+        env:
+          TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
+          TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
+          TELEGRAM_SESSION: ${{ secrets.TELEGRAM_SESSION }}
+          TELEGRAM_GROUP: ${{ secrets.TELEGRAM_GROUP }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+
+      - uses: actions/cache/save@v4
+        if: success()
+        with:
+          path: state
+          key: community-brain-state-${{ github.run_id }}
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: digest-${{ github.run_id }}
+          path: output/
+          retention-days: 30
+          if-no-files-found: ignore

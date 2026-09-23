@@ -1,0 +1,6 @@
+telethon>=1.36
+anthropic>=1.8
+pydantic>=2.7
+requests>=2.31
+# Optional: nur für Call-Replays / Sprachnachrichten (lokale Transkription)
+# faster-whisper>=1.0

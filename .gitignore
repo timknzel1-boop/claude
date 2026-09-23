@@ -141,3 +141,13 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# community_brain – niemals Community-Inhalte oder Zugangsdaten committen
+.env
+*.session
+state/
+output/
+recordings/
+__pycache__/
+*.pyc
+.venv/
