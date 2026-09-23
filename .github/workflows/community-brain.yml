@@ -1,8 +1,11 @@
 name: Community Brain
 
 on:
+  # Alle 90 Minuten rund um die Uhr (UTC): 00:00, 01:30, 03:00, 04:30 … 22:30
+  # GitHub startet geplante Läufe bei hoher Last teils einige Minuten später.
   schedule:
-    - cron: "0 18 * * *" # täglich 20:00 Uhr (Sommerzeit) / 19:00 Uhr (Winterzeit)
+    - cron: "0 0-21/3 * * *"
+    - cron: "30 1-22/3 * * *"
   workflow_dispatch:
 
 concurrency: community-brain
@@ -10,7 +13,7 @@ concurrency: community-brain
 jobs:
   digest:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

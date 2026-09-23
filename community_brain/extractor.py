@@ -40,7 +40,7 @@ class Wissen(BaseModel):
 
 
 class Auswertung(BaseModel):
-    zusammenfassung: str = Field(description="3-5 Sätze: Was war heute in der Community los?")
+    zusammenfassung: str = Field(description="1-5 Sätze: Was war in diesem Zeitraum in der Community los?")
     top_todos: list[str] = Field(description="Die maximal 5 wichtigsten Dinge, die mysolv jetzt umsetzen sollte")
     wissen: list[Wissen]
 
@@ -98,8 +98,15 @@ def _chunks(messages: list[dict]) -> list[list[dict]]:
     return chunks
 
 
-def _extract_chunk(client: anthropic.Anthropic, cfg: Config, body: str, source: str, known_titles: list[str]) -> Auswertung:
+def _extract_chunk(
+    client: anthropic.Anthropic, cfg: Config, body: str, source: str, known_titles: list[str], context: str
+) -> Auswertung:
     known = "\n".join(f"- {t}" for t in known_titles[-300:]) or "(noch nichts)"
+    if context:
+        context = (
+            "<kontext>\nBereits im letzten Lauf ausgewertet. Nur zum Verständnis von Antworten nutzen, "
+            f"nicht erneut auswerten.\n{context}\n</kontext>\n\n"
+        )
     response = client.beta.messages.parse(
         model=cfg.model,
         max_tokens=16000,
@@ -112,7 +119,7 @@ def _extract_chunk(client: anthropic.Anthropic, cfg: Config, body: str, source: 
         messages=[
             {
                 "role": "user",
-                "content": f"Quelle: {source}\n\nBereits erfasst:\n{known}\n\n<inhalt>\n{body}\n</inhalt>",
+                "content": f"Quelle: {source}\n\nBereits erfasst:\n{known}\n\n{context}<inhalt>\n{body}\n</inhalt>",
             }
         ],
         output_format=Auswertung,
@@ -124,13 +131,17 @@ def _extract_chunk(client: anthropic.Anthropic, cfg: Config, body: str, source: 
     return response.parsed_output
 
 
-def extract(cfg: Config, messages: list[dict], source: str, known_titles: list[str]) -> Auswertung:
+def extract(
+    cfg: Config, messages: list[dict], source: str, known_titles: list[str], context: list[dict] | None = None
+) -> Auswertung:
     """Wertet Nachrichten aus. Große Mengen werden in mehrere Anfragen aufgeteilt und zusammengeführt."""
     client = anthropic.Anthropic()
     results = []
     known = list(known_titles)
+    ctx = format_messages(context or [])
     for chunk in _chunks(messages):
-        result = _extract_chunk(client, cfg, format_messages(chunk), source, known)
+        result = _extract_chunk(client, cfg, format_messages(chunk), source, known, ctx)
+        ctx = ""  # Kontext nur für den ersten Block
         known += [w.titel for w in result.wissen]
         results.append(result)
 

@@ -3,17 +3,18 @@
 Macht aus der Ecom-Community auf Telegram ein Playbook für mysolv, das man direkt umsetzen kann.
 
 ```
-Telegram-Gruppe ──► Collector (dein Account, nur lesen)
+Telegram-Gruppe ──► Collector (dein Account, nur lesen) – alle 90 Minuten
                          │  neue Nachrichten seit dem letzten Lauf
+                         │  + die letzten 40 als Kontext (Frage 12:00, Antworten 13:40)
                          ▼
                     Claude filtert die Sauce:
                     Taktik · Zahlen · Setup · „So setzt mysolv das um“
                          │
              ┌───────────┴───────────┐
              ▼                       ▼
-   Notion „Community Playbook“   output/JJJJ-MM-TT.md
-   (1 Eintrag pro Learning,       (Daily Digest mit
-    Status Neu→Testen→Umgesetzt)   Top-To-dos)
+   Notion „Community Playbook“   Daily Digest (Notion + output/JJJJ-MM-TT.md)
+   (1 Eintrag pro Learning,       jeder Lauf hängt einen Abschnitt
+    Status Neu→Testen→Umgesetzt)   mit Uhrzeit + Top-To-dos an
 ```
 
 Jeder Eintrag hat: **Kategorie** (Meta Ads, Creatives, Funnel, Offer, Retention …), **Kernaussage**,
@@ -41,17 +42,30 @@ Themen, die schon erfasst sind, werden nur als „(Update)“ neu angelegt, wenn
 6. **Testlauf:** `python -m community_brain run --dry-run` → schreibt nur `output/<datum>.md`.
    Beim ersten Lauf werden die letzten `BACKFILL_DAYS` Tage (Standard 30) nachgeholt.
 
-## Täglich automatisch laufen lassen
+## Alle 90 Minuten automatisch laufen lassen
 
-Der Workflow `.github/workflows/community-brain.yml` läuft jeden Abend um 20 Uhr (Sommerzeit).
+Läufe ohne neue Nachrichten oder ohne echte Learnings (nur Smalltalk) erzeugen keinen Eintrag und kosten
+praktisch nichts. Zwei Varianten:
+
+**A) Eigener Rechner oder kleiner VPS (empfohlen):**
+```bash
+python -m community_brain watch            # alle 90 Minuten, läuft dauerhaft
+python -m community_brain watch --every 60 # anderes Intervall
+```
+Bei Telegram meldet sich immer dieselbe Maschine an. Das ist am unauffälligsten für deinen Account.
+Dauerhaft betreiben z.B. mit `tmux`, `systemd` oder `pm2`.
+
+**B) GitHub Actions (ohne eigenen Server):**
+Der Workflow `.github/workflows/community-brain.yml` läuft alle 90 Minuten rund um die Uhr. GitHub startet
+geplante Läufe unter Last teils einige Minuten später.
 Dafür die Werte aus `.env` als **Repository Secrets** anlegen (GitHub → Settings → Secrets and variables → Actions):
 `TELEGRAM_API_ID`, `TELEGRAM_API_HASH`, `TELEGRAM_SESSION`, `TELEGRAM_GROUP`, `ANTHROPIC_API_KEY`,
 `NOTION_TOKEN`, `NOTION_DATABASE_ID`.
 
 - Das Repo sollte **privat** sein. Die Digests landen nur in Notion und als Workflow-Artefakt (30 Tage),
   nie im Git-Verlauf.
-- Telegram kann beim ersten Zugriff von einem GitHub-Server eine Login-Benachrichtigung schicken. Das ist normal.
-  Wer das nicht will, lässt `python -m community_brain run` per Cron auf einem eigenen Rechner oder kleinen VPS laufen.
+- Bei GitHub Actions kommt jeder Lauf von einem anderen Server. Telegram kann dann Login-Hinweise schicken.
+  Wenn das häufiger passiert, auf Variante A wechseln.
 
 ## Sauce Calls
 
@@ -69,8 +83,9 @@ Das Replay wird lokal transkribiert (das Transkript liegt als `.txt` daneben) un
 
 ## Kosten
 
-Das Tool nutzt `claude-opus-5` (über `CLAUDE_MODEL` änderbar). Ein normaler Tag mit ein paar hundert Nachrichten
-liegt grob im Cent- bis niedrigen Euro-Bereich. Das erste Nachholen von 30 Tagen kostet einmalig mehr.
+Das Tool nutzt `claude-opus-5` (über `CLAUDE_MODEL` änderbar). 16 Läufe pro Tag mit zusammen ein paar hundert
+Nachrichten liegen grob im niedrigen Euro-Bereich pro Tag. Läufe ohne neue Nachrichten rufen Claude gar nicht erst auf.
+Das erste Nachholen von 30 Tagen kostet einmalig mehr.
 Falls Claude eine Anfrage ablehnt, springt automatisch ein Fallback-Modell ein (`fallbacks="default"`).
 
 ## Fair Use

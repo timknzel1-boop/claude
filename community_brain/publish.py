@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from datetime import date
+from datetime import date, datetime
 
 import requests
 
@@ -13,6 +13,7 @@ from .extractor import Auswertung, Kategorie, Wissen
 NOTION_API = "https://api.notion.com/v1"
 NOTION_VERSION = "2022-06-28"
 KNOWN_TITLES_FILE = STATE_DIR / "known_titles.json"
+DIGEST_PAGES_FILE = STATE_DIR / "digest_pages.json"
 
 
 # ---------- bekannte Themen (gegen Duplikate) ----------
@@ -34,14 +35,14 @@ def _links(w: Wissen, links: dict[int, str]) -> list[str]:
     return [links[i] for i in w.quellen if links.get(i)]
 
 
-def to_markdown(result: Auswertung, source: str, day: date, links: dict[int, str]) -> str:
-    out = [f"# Community-Digest {day.isoformat()} ({source})", "", result.zusammenfassung, "", "## Top To-dos für mysolv", ""]
+def to_markdown(result: Auswertung, source: str, when: datetime, links: dict[int, str]) -> str:
+    out = [f"## {when:%H:%M} Uhr · {source} · {len(result.wissen)} neue Learnings", "", result.zusammenfassung, "", "**Top To-dos:**", ""]
     out += [f"- [ ] {t}" for t in result.top_todos]
     order = {"Hoch": 0, "Mittel": 1, "Niedrig": 2}
     for w in sorted(result.wissen, key=lambda w: order[w.prioritaet]):
         out += [
             "",
-            f"## {w.titel}",
+            f"### {w.titel}",
             f"**{w.kategorie}** · Priorität: {w.prioritaet} · {w.aufwand} · {w.evidenz}"
             + (f" · {w.zahlen}" if w.zahlen else ""),
             "",
@@ -59,11 +60,13 @@ def to_markdown(result: Auswertung, source: str, day: date, links: dict[int, str
     return "\n".join(out) + "\n"
 
 
-def write_markdown(result: Auswertung, source: str, day: date, links: dict[int, str]) -> str:
+def write_markdown(result: Auswertung, source: str, when: datetime, links: dict[int, str]) -> str:
+    """Hängt den Lauf an die Tagesdatei output/JJJJ-MM-TT.md an."""
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    suffix = "" if source == "Chat" else f"-{source.lower()}"
-    path = OUTPUT_DIR / f"{day.isoformat()}{suffix}.md"
-    path.write_text(to_markdown(result, source, day, links), encoding="utf-8")
+    path = OUTPUT_DIR / f"{when.date().isoformat()}.md"
+    header = "" if path.exists() else f"# Community-Digest {when.date().isoformat()}\n\n"
+    with path.open("a", encoding="utf-8") as f:
+        f.write(header + to_markdown(result, source, when, links) + "\n")
     return str(path)
 
 
@@ -114,17 +117,19 @@ def create_database(cfg: Config, parent_page_id: str) -> str:
     return r.json()["id"]
 
 
-def _create_page(cfg: Config, properties: dict, children: list[dict]) -> None:
+def _create_page(cfg: Config, properties: dict, children: list[dict]) -> dict:
     body = {"parent": {"database_id": cfg.notion_database_id}, "properties": properties, "children": children[:100]}
     r = requests.post(f"{NOTION_API}/pages", headers=_headers(cfg), json=body, timeout=30)
     r.raise_for_status()
+    return r.json()
 
 
 def _block(kind: str, text: str, **extra) -> dict:
     return {"object": "block", "type": kind, kind: {"rich_text": _text(text), **extra}}
 
 
-def push_to_notion(cfg: Config, result: Auswertung, source: str, day: date, links: dict[int, str]) -> None:
+def push_to_notion(cfg: Config, result: Auswertung, source: str, when: datetime, links: dict[int, str]) -> None:
+    day = when.date()
     for w in result.wissen:
         children = [_block("paragraph", w.details), _block("heading_3", "Umsetzung für mysolv")]
         children += [_block("to_do", s, checked=False) for s in w.umsetzung_mysolv]
@@ -151,18 +156,31 @@ def push_to_notion(cfg: Config, result: Auswertung, source: str, day: date, link
             children,
         )
 
-    digest_children = [_block("paragraph", result.zusammenfassung), _block("heading_2", "Top To-dos")]
-    digest_children += [_block("to_do", t, checked=False) for t in result.top_todos]
-    digest_children.append(_block("heading_2", f"{len(result.wissen)} neue Einträge"))
-    digest_children += [_block("bulleted_list_item", f"[{w.prioritaet}] {w.titel}") for w in result.wissen]
-    _create_page(
-        cfg,
-        {
-            "Titel": {"title": _text(f"Digest {day.isoformat()} ({source})")},
-            "Typ": _select("Daily Digest"),
-            "Quelle": _select(source),
-            "Datum": {"date": {"start": day.isoformat()}},
-            "Kernaussage": {"rich_text": _text(result.zusammenfassung)},
-        },
-        digest_children,
+    # Ein Daily-Digest pro Tag, jeder Lauf hängt einen Abschnitt an
+    section = [_block("heading_2", f"{when:%H:%M} Uhr · {source} · {len(result.wissen)} neue Learnings")]
+    section.append(_block("paragraph", result.zusammenfassung))
+    section += [_block("to_do", t, checked=False) for t in result.top_todos]
+    section += [_block("bulleted_list_item", f"[{w.prioritaet}] {w.titel}") for w in result.wissen]
+    page_id = _digest_page(cfg, day)
+    r = requests.patch(
+        f"{NOTION_API}/blocks/{page_id}/children", headers=_headers(cfg), json={"children": section[:100]}, timeout=30
     )
+    r.raise_for_status()
+
+
+def _digest_page(cfg: Config, day: date) -> str:
+    pages = json.loads(DIGEST_PAGES_FILE.read_text(encoding="utf-8")) if DIGEST_PAGES_FILE.exists() else {}
+    if day.isoformat() not in pages:
+        page = _create_page(
+            cfg,
+            {
+                "Titel": {"title": _text(f"Daily Digest {day:%d.%m.%Y}")},
+                "Typ": _select("Daily Digest"),
+                "Datum": {"date": {"start": day.isoformat()}},
+            },
+            [],
+        )
+        pages = {day.isoformat(): page["id"]}  # nur der aktuelle Tag wird gebraucht
+        STATE_DIR.mkdir(parents=True, exist_ok=True)
+        DIGEST_PAGES_FILE.write_text(json.dumps(pages), encoding="utf-8")
+    return pages[day.isoformat()]

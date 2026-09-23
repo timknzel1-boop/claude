@@ -23,6 +23,8 @@ def _load_dotenv() -> None:
 
 _load_dotenv()
 
+TIMEZONE = os.environ.get("TIMEZONE") or "Europe/Zurich"
+
 
 @dataclass(frozen=True)
 class Config:

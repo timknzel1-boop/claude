@@ -16,6 +16,7 @@ from .config import STATE_DIR, Config
 STATE_FILE = STATE_DIR / "collector.json"
 # Obergrenze pro Lauf, damit der Account nicht wie ein Scraper aussieht
 MAX_MESSAGES_PER_RUN = 5000
+CONTEXT_MESSAGES = 40
 
 
 @dataclass
@@ -67,11 +68,12 @@ def _kind(msg) -> str:
     return "text"
 
 
-async def collect(cfg: Config | None = None) -> tuple[list[ChatMessage], dict]:
-    """Gibt alle Nachrichten seit dem letzten Lauf zurück (plus neuen State, noch nicht gespeichert)."""
+async def collect(cfg: Config | None = None) -> tuple[list[ChatMessage], list[ChatMessage], dict]:
+    """Gibt (neue Nachrichten, Kontext aus dem letzten Lauf, neuer State – noch nicht gespeichert) zurück."""
     cfg = cfg or config.load()
     state = _load_state()
     messages: list[ChatMessage] = []
+    context: list[ChatMessage] = []
     topic_titles: dict[int, str] = {}
 
     client = make_client(cfg)
@@ -82,7 +84,6 @@ async def collect(cfg: Config | None = None) -> tuple[list[ChatMessage], dict]:
         group = await resolve_group(client, cfg.group)
         key = str(group.id)
         last_id = state.get(key, {}).get("last_id", 0)
-        is_channel = isinstance(group, Channel)
 
         kwargs = {"reverse": True, "limit": MAX_MESSAGES_PER_RUN, "wait_time": 1}
         if last_id:
@@ -90,46 +91,57 @@ async def collect(cfg: Config | None = None) -> tuple[list[ChatMessage], dict]:
         else:
             kwargs["offset_date"] = datetime.now(timezone.utc) - timedelta(days=cfg.backfill_days)
 
+        # Die letzten bereits verarbeiteten Nachrichten als Kontext mitgeben, damit Antworten
+        # auf eine Frage aus dem vorigen Lauf richtig zugeordnet werden
+        if last_id:
+            previous = await client.get_messages(group, limit=CONTEXT_MESSAGES, max_id=last_id + 1)
+            for msg in reversed(previous):
+                if m := await _to_chat_message(client, group, msg, cfg, topic_titles, transcribe=False):
+                    context.append(m)
+
         async for msg in client.iter_messages(group, **kwargs):
-            if msg.action is not None:  # Service-Nachrichten (Beitritte etc.)
-                continue
-            kind = _kind(msg)
-            text = msg.message or ""
-            if kind == "voice" and cfg.transcribe_voice:
-                text = await _transcribe_voice(msg) or text
-            if not text.strip():
-                continue
-
-            topic = None
-            reply_to = None
-            if msg.reply_to:
-                reply_to = msg.reply_to.reply_to_msg_id
-                if getattr(msg.reply_to, "forum_topic", False):
-                    topic_id = msg.reply_to.reply_to_top_id or msg.reply_to.reply_to_msg_id
-                    topic = await _topic_title(client, group, topic_id, topic_titles)
-                    if not msg.reply_to.reply_to_top_id:  # direkt im Topic, keine echte Antwort
-                        reply_to = None
-
-            sender = await msg.get_sender()
-            messages.append(
-                ChatMessage(
-                    id=msg.id,
-                    date=msg.date.isoformat(timespec="minutes"),
-                    author=utils.get_display_name(sender) if sender else "Unbekannt",
-                    text=text,
-                    topic=topic,
-                    reply_to=reply_to,
-                    link=f"https://t.me/c/{group.id}/{msg.id}" if is_channel else None,
-                    kind=kind,
-                )
-            )
+            if m := await _to_chat_message(client, group, msg, cfg, topic_titles, transcribe=cfg.transcribe_voice):
+                messages.append(m)
             last_id = max(last_id, msg.id)
 
         state[key] = {"last_id": last_id, "title": utils.get_display_name(group)}
     finally:
         await client.disconnect()
 
-    return messages, state
+    return messages, context, state
+
+
+async def _to_chat_message(client, group, msg, cfg: Config, topic_titles: dict[int, str], transcribe: bool) -> ChatMessage | None:
+    if msg.action is not None:  # Service-Nachrichten (Beitritte etc.)
+        return None
+    kind = _kind(msg)
+    text = msg.message or ""
+    if kind == "voice" and transcribe:
+        text = await _transcribe_voice(msg) or text
+    if not text.strip():
+        return None
+
+    topic = None
+    reply_to = None
+    if msg.reply_to:
+        reply_to = msg.reply_to.reply_to_msg_id
+        if getattr(msg.reply_to, "forum_topic", False):
+            topic_id = msg.reply_to.reply_to_top_id or msg.reply_to.reply_to_msg_id
+            topic = await _topic_title(client, group, topic_id, topic_titles)
+            if not msg.reply_to.reply_to_top_id:  # direkt im Topic, keine echte Antwort
+                reply_to = None
+
+    sender = await msg.get_sender()
+    return ChatMessage(
+        id=msg.id,
+        date=msg.date.isoformat(timespec="minutes"),
+        author=utils.get_display_name(sender) if sender else "Unbekannt",
+        text=text,
+        topic=topic,
+        reply_to=reply_to,
+        link=f"https://t.me/c/{group.id}/{msg.id}" if isinstance(group, Channel) else None,
+        kind=kind,
+    )
 
 
 async def _topic_title(client, group, topic_id: int, cache: dict[int, str]) -> str:
