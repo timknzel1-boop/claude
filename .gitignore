@@ -148,3 +148,5 @@ vite.config.ts.timestamp-*
 state/
 output/
 recordings/
+__pycache__/
+*.pyc
