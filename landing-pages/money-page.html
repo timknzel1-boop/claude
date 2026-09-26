@@ -1,0 +1,947 @@
+<title>VitaPeptides — Research Peptide</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground: #0B1A2E;
+    --surface: #112240;
+    --surface-raised: #17325A;
+    --accent: #00D4AA;
+    --accent-hover: #00E8BC;
+    --accent-muted: rgba(0,212,170,0.10);
+    --accent-dark: #00A888;
+    --cta: #00D4AA;
+    --cta-hover: #33DDBB;
+    --cta-text: #0B1A2E;
+    --text: #E4EBF5;
+    --text-secondary: #8BA3C1;
+    --text-tertiary: #5A7899;
+    --border: #1E3A5F;
+    --border-accent: rgba(0,212,170,0.2);
+    --tag-bg: rgba(0,212,170,0.08);
+    --tag-text: #00D4AA;
+    --purity-bg: rgba(0,212,170,0.06);
+    --warning-text: #FFB86C;
+    --warning-bg: rgba(255,184,108,0.08);
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.2);
+    --font-display: 'Archivo', system-ui, -apple-system, sans-serif;
+    --font-body: 'Crimson Pro', Georgia, 'Times New Roman', serif;
+    --font-mono: 'IBM Plex Mono', 'Menlo', monospace;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --ground: #F4F7FA;
+      --surface: #FFFFFF;
+      --surface-raised: #EDF2F7;
+      --accent: #009E80;
+      --accent-hover: #00B894;
+      --accent-muted: rgba(0,158,128,0.08);
+      --accent-dark: #007D66;
+      --cta: #009E80;
+      --cta-hover: #00B894;
+      --cta-text: #FFFFFF;
+      --text: #1A2332;
+      --text-secondary: #526580;
+      --text-tertiary: #8A9BB2;
+      --border: #D8E2EC;
+      --border-accent: rgba(0,158,128,0.2);
+      --tag-bg: rgba(0,158,128,0.06);
+      --tag-text: #007D66;
+      --purity-bg: rgba(0,158,128,0.04);
+      --warning-text: #B8660A;
+      --warning-bg: rgba(184,102,10,0.06);
+      --card-shadow: 0 1px 3px rgba(26,35,50,0.06), 0 6px 16px rgba(26,35,50,0.04);
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #F4F7FA;
+    --surface: #FFFFFF;
+    --surface-raised: #EDF2F7;
+    --accent: #009E80;
+    --accent-hover: #00B894;
+    --accent-muted: rgba(0,158,128,0.08);
+    --accent-dark: #007D66;
+    --cta: #009E80;
+    --cta-hover: #00B894;
+    --cta-text: #FFFFFF;
+    --text: #1A2332;
+    --text-secondary: #526580;
+    --text-tertiary: #8A9BB2;
+    --border: #D8E2EC;
+    --border-accent: rgba(0,158,128,0.2);
+    --tag-bg: rgba(0,158,128,0.06);
+    --tag-text: #007D66;
+    --purity-bg: rgba(0,158,128,0.04);
+    --warning-text: #B8660A;
+    --warning-bg: rgba(184,102,10,0.06);
+    --card-shadow: 0 1px 3px rgba(26,35,50,0.06), 0 6px 16px rgba(26,35,50,0.04);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.65;
+    padding: 0;
+  }
+
+  .wrapper {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding-inline: 20px;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .logo-text { color: var(--text); }
+  .logo-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta-btn {
+    background: var(--cta);
+    color: var(--cta-text) !important;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 600 !important;
+    transition: background 0.2s;
+  }
+  .nav-cta-btn:hover { background: var(--cta-hover); }
+
+  /* HERO */
+  .hero {
+    padding: 72px 20px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, var(--accent-muted) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 30%, rgba(0,100,200,0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 5px 14px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    border: 1px solid var(--border-accent);
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5.5vw, 3.5rem);
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.08;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .hero h1 em {
+    color: var(--accent);
+    font-style: normal;
+  }
+  .hero-sub {
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+    max-width: 540px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+  }
+  .hero-cta-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--cta);
+    color: var(--cta-text);
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--cta-hover); transform: translateY(-1px); }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--text-secondary);
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* PURITY BAR */
+  .purity-bar {
+    background: var(--purity-bg);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 20px;
+  }
+  .purity-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .purity-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+  .purity-num {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* SECTIONS */
+  section { padding: 72px 0; }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .section-sub {
+    color: var(--text-secondary);
+    font-size: 1.02rem;
+    max-width: 560px;
+    line-height: 1.7;
+  }
+  .section-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .section-header .section-sub { margin: 0 auto; }
+
+  /* PRODUCT GRID */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  .product-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .product-card:hover {
+    border-color: var(--border-accent);
+    box-shadow: var(--card-shadow);
+  }
+  .product-header {
+    padding: 20px 24px 16px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .product-name-group { flex: 1; }
+  .product-code {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .product-name {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .product-purity {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border-accent);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .product-body-inner {
+    padding: 16px 24px;
+  }
+  .product-desc {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .product-specs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .spec-tag {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-tertiary);
+    background: var(--surface-raised);
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+  .product-footer-inner {
+    padding: 0 24px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .product-price {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+  .product-price-unit {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-tertiary);
+  }
+  .product-buy {
+    background: var(--cta);
+    color: var(--cta-text);
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .product-buy:hover { background: var(--cta-hover); }
+
+  /* WHY US */
+  .why-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 32px;
+  }
+  .why-item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .why-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--accent-muted);
+    border: 1px solid var(--border-accent);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--accent);
+  }
+  .why-item h3 {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .why-item p {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  /* FAQ */
+  .faq-list {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .faq-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .faq-q {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    text-align: left;
+    transition: color 0.2s;
+  }
+  .faq-q:hover { color: var(--accent); }
+  .faq-arrow {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    transition: transform 0.25s;
+    flex-shrink: 0;
+  }
+  .faq-item.open .faq-arrow { transform: rotate(180deg); }
+  .faq-a {
+    display: none;
+    padding: 0 24px 18px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+  .faq-item.open .faq-a { display: block; }
+
+  /* DISCLAIMER */
+  .disclaimer-section {
+    background: var(--warning-bg);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 20px;
+  }
+  .disclaimer-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .disclaimer-title {
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--warning-text);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .disclaimer-text {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+
+  /* FINAL CTA */
+  .final-cta {
+    padding: 64px 20px;
+    text-align: center;
+    position: relative;
+  }
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at center, var(--accent-muted) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .final-cta-inner {
+    position: relative;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+  .final-cta h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+    text-wrap: balance;
+  }
+  .final-cta p {
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+    font-size: 0.95rem;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 32px 20px;
+  }
+  .footer-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .footer-logo span { color: var(--text); }
+  .footer-nav {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+  }
+  .footer-nav a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .footer-nav a:hover { color: var(--text); }
+  .footer-disclaimer {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero { padding: 56px 20px 48px; }
+    .products-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr 1fr; }
+    .footer-top { flex-direction: column; text-align: center; }
+    .footer-nav { justify-content: center; flex-wrap: wrap; }
+    .purity-inner { gap: 16px; }
+  }
+  @media (max-width: 480px) {
+    .why-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.9rem; }
+    .hero-tags { gap: 6px; }
+    .purity-inner { flex-direction: column; align-items: center; gap: 12px; }
+    .product-footer-inner { flex-direction: column; align-items: stretch; }
+    .product-buy { text-align: center; }
+  }
+</style>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <span class="logo-dot"></span>
+      <span class="logo-text">Vita</span>Peptides
+    </a>
+    <ul class="nav-links">
+      <li><a href="#peptide">Peptide</a></li>
+      <li><a href="#qualitaet">Qualität</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#" class="nav-cta-btn">Bestellen</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tags">
+      <span class="hero-tag">&#9670; HPLC-geprüft</span>
+      <span class="hero-tag">&#9670; 99%+ Reinheit</span>
+      <span class="hero-tag">&#9670; COA verfügbar</span>
+    </div>
+    <h1>Research-Grade<br><em>Peptide</em></h1>
+    <p class="hero-sub">Höchste Reinheit für deine Forschung. Jedes Batch wird mittels HPLC und Massenspektrometrie analysiert. Schneller, diskreter Versand aus Deutschland.</p>
+    <div class="hero-cta-row">
+      <a href="#peptide" class="btn-primary">Peptide ansehen &#8594;</a>
+      <a href="#qualitaet" class="btn-ghost">Analyse-Methoden</a>
+    </div>
+  </div>
+</section>
+
+<!-- PURITY BAR -->
+<div class="purity-bar">
+  <div class="purity-inner">
+    <div class="purity-item"><span class="purity-num">&ge;99%</span> Reinheit per HPLC</div>
+    <div class="purity-item"><span class="purity-num">48h</span> Versand DE</div>
+    <div class="purity-item"><span class="purity-num">COA</span> je Batch</div>
+    <div class="purity-item"><span class="purity-num">3.200+</span> Bestellungen</div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="wrapper" id="peptide">
+  <div class="section-header">
+    <div class="section-label">// Katalog</div>
+    <h2 class="section-title">Research Peptide</h2>
+    <p class="section-sub">Alle Peptide werden lyophilisiert (gefriergetrocknet) geliefert. Analysezertifikat auf Anfrage für jede Charge verfügbar.</p>
+  </div>
+  <div class="products-grid">
+
+    <div class="product-card">
+      <div class="product-header">
+        <div class="product-name-group">
+          <div class="product-code">VP-001</div>
+          <div class="product-name">BPC-157</div>
+        </div>
+        <div class="product-purity">&ge;99.1%</div>
+      </div>
+      <div class="product-body-inner">
+        <p class="product-desc">Body Protection Compound — eines der meistuntersuchten Pentadecapeptide in der aktuellen Forschungsliteratur.</p>
+        <div class="product-specs">
+          <span class="spec-tag">5 mg</span>
+          <span class="spec-tag">Lyophilisiert</span>
+          <span class="spec-tag">15 Aminosäuren</span>
+        </div>
+      </div>
+      <div class="product-footer-inner">
+        <div class="product-price">49,90&euro; <span class="product-price-unit">/ Vial</span></div>
+        <button class="product-buy">In den Warenkorb</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-header">
+        <div class="product-name-group">
+          <div class="product-code">VP-002</div>
+          <div class="product-name">Semax</div>
+        </div>
+        <div class="product-purity">&ge;99.3%</div>
+      </div>
+      <div class="product-body-inner">
+        <p class="product-desc">Synthetisches Heptapeptid, abgeleitet von ACTH(4-10). Gegenstand zahlreicher neurobiologischer Studien.</p>
+        <div class="product-specs">
+          <span class="spec-tag">30 mg</span>
+          <span class="spec-tag">Lyophilisiert</span>
+          <span class="spec-tag">7 Aminosäuren</span>
+        </div>
+      </div>
+      <div class="product-footer-inner">
+        <div class="product-price">39,90&euro; <span class="product-price-unit">/ Vial</span></div>
+        <button class="product-buy">In den Warenkorb</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-header">
+        <div class="product-name-group">
+          <div class="product-code">VP-003</div>
+          <div class="product-name">GHK-Cu</div>
+        </div>
+        <div class="product-purity">&ge;98.7%</div>
+      </div>
+      <div class="product-body-inner">
+        <p class="product-desc">Kupferpeptid — natürlich vorkommendes Tripeptid-Kupfer-Komplex. Forschungsschwerpunkt: Zellregeneration.</p>
+        <div class="product-specs">
+          <span class="spec-tag">50 mg</span>
+          <span class="spec-tag">Lyophilisiert</span>
+          <span class="spec-tag">Kupfer-Komplex</span>
+        </div>
+      </div>
+      <div class="product-footer-inner">
+        <div class="product-price">44,90&euro; <span class="product-price-unit">/ Vial</span></div>
+        <button class="product-buy">In den Warenkorb</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-header">
+        <div class="product-name-group">
+          <div class="product-code">VP-004</div>
+          <div class="product-name">Selank</div>
+        </div>
+        <div class="product-purity">&ge;99.0%</div>
+      </div>
+      <div class="product-body-inner">
+        <p class="product-desc">Synthetisches Heptapeptid, Analogon des Immunglobulin-Fragments Tuftsin. Gegenstand anxiolytischer Forschung.</p>
+        <div class="product-specs">
+          <span class="spec-tag">10 mg</span>
+          <span class="spec-tag">Lyophilisiert</span>
+          <span class="spec-tag">7 Aminosäuren</span>
+        </div>
+      </div>
+      <div class="product-footer-inner">
+        <div class="product-price">42,90&euro; <span class="product-price-unit">/ Vial</span></div>
+        <button class="product-buy">In den Warenkorb</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-header">
+        <div class="product-name-group">
+          <div class="product-code">VP-005</div>
+          <div class="product-name">TB-500</div>
+        </div>
+        <div class="product-purity">&ge;99.2%</div>
+      </div>
+      <div class="product-body-inner">
+        <p class="product-desc">Thymosin Beta-4 Fragment — 43 Aminosäuren. Aktiver Forschungsgegenstand im Bereich Gewebereparatur.</p>
+        <div class="product-specs">
+          <span class="spec-tag">5 mg</span>
+          <span class="spec-tag">Lyophilisiert</span>
+          <span class="spec-tag">43 Aminosäuren</span>
+        </div>
+      </div>
+      <div class="product-footer-inner">
+        <div class="product-price">54,90&euro; <span class="product-price-unit">/ Vial</span></div>
+        <button class="product-buy">In den Warenkorb</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-header">
+        <div class="product-name-group">
+          <div class="product-code">VP-006</div>
+          <div class="product-name">Tirzepatide</div>
+        </div>
+        <div class="product-purity">&ge;98.9%</div>
+      </div>
+      <div class="product-body-inner">
+        <p class="product-desc">Dualer GIP- und GLP-1-Rezeptoragonist. 39 Aminosäuren, modifiziert mit C20-Fettsäure. Metabolische Forschung.</p>
+        <div class="product-specs">
+          <span class="spec-tag">10 mg</span>
+          <span class="spec-tag">Lyophilisiert</span>
+          <span class="spec-tag">39 Aminosäuren</span>
+        </div>
+      </div>
+      <div class="product-footer-inner">
+        <div class="product-price">89,90&euro; <span class="product-price-unit">/ Vial</span></div>
+        <button class="product-buy">In den Warenkorb</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-section" id="qualitaet">
+  <div class="wrapper">
+    <div class="section-header">
+      <div class="section-label">// Qualitätssicherung</div>
+      <h2 class="section-title">Warum VitaPeptides</h2>
+      <p class="section-sub">Jedes Produkt wird vor dem Versand analytisch verifiziert. Keine Kompromisse bei Reinheit und Identität.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-icon">&#9880;</div>
+        <h3>HPLC-Analyse</h3>
+        <p>Jedes Batch wird mittels Hochleistungsflüssigkeitschromatographie auf Reinheit geprüft. Mindeststandard: 98%.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">&#9878;</div>
+        <h3>Massenspektrometrie</h3>
+        <p>LC-MS Identitätsbestätigung für jedes Peptid. Das Molekulargewicht wird mit der theoretischen Masse abgeglichen.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">&#9993;</div>
+        <h3>Schneller Versand</h3>
+        <p>Versand innerhalb von 48h aus Deutschland. Diskrete, neutrale Verpackung. Tracking für jede Sendung.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">&#9733;</div>
+        <h3>Experten-Support</h3>
+        <p>Fragen zu Lagerung, Rekonstitution oder Analysedaten? Unser Team antwortet innerhalb von 24 Stunden.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="wrapper" id="faq">
+  <div class="section-header">
+    <div class="section-label">// Häufige Fragen</div>
+    <h2 class="section-title">FAQ</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item open">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Wie werden die Peptide geliefert?
+        <span class="faq-arrow">&#9660;</span>
+      </button>
+      <div class="faq-a">Alle Peptide werden lyophilisiert (gefriergetrocknet) in versiegelten Vials geliefert. Nach Erhalt sollten sie bei -20°C gelagert werden, um maximale Stabilität zu gewährleisten. Rekonstituiertes Peptid bei 2–8°C lagern.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Kann ich ein Analysezertifikat (COA) erhalten?
+        <span class="faq-arrow">&#9660;</span>
+      </button>
+      <div class="faq-a">Ja, für jede Charge ist ein Analysezertifikat mit HPLC-Reinheit und MS-Identitätsbestätigung verfügbar. Kontaktiere uns mit deiner Bestellnummer und wir senden dir das COA per E-Mail.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Welche Zahlungsmethoden werden akzeptiert?
+        <span class="faq-arrow">&#9660;</span>
+      </button>
+      <div class="faq-a">Wir akzeptieren Kreditkarte (Visa, Mastercard), PayPal, Banküberweisung (SEPA) und Kryptowährungen (Bitcoin, Ethereum). Alle Transaktionen werden sicher und verschlüsselt abgewickelt.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Sind die Peptide für den menschlichen Verzehr bestimmt?
+        <span class="faq-arrow">&#9660;</span>
+      </button>
+      <div class="faq-a">Nein. Alle Produkte sind ausschließlich für In-vitro-Forschung und wissenschaftliche Zwecke bestimmt. Sie sind nicht als Nahrungsergänzungsmittel, Lebensmittel oder Arzneimittel zugelassen und dürfen nicht am Menschen angewendet werden.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Wie lange dauert der Versand?
+        <span class="faq-arrow">&#9660;</span>
+      </button>
+      <div class="faq-a">Bestellungen werden werktags innerhalb von 24–48 Stunden versandt. Lieferzeit innerhalb Deutschlands: 1–3 Werktage. EU-Versand: 3–7 Werktage. Jede Sendung erhält eine Tracking-Nummer.</div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer-section">
+  <div class="disclaimer-inner">
+    <div class="disclaimer-title">Wichtiger Hinweis</div>
+    <p class="disclaimer-text">Alle auf dieser Website angebotenen Produkte sind ausschließlich für Forschungszwecke bestimmt. Sie sind nicht für den menschlichen Verzehr zugelassen und dürfen nicht als Nahrungsergänzungsmittel, Lebensmittel oder Arzneimittel verwendet werden. Der Käufer bestätigt mit seiner Bestellung, dass die Produkte ausschließlich für wissenschaftliche In-vitro-Forschung eingesetzt werden.</p>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-cta-inner">
+    <h2>Bereit für deine Forschung?</h2>
+    <p>Bestelle jetzt und erhalte deine Peptide innerhalb von 48 Stunden — mit Analysezertifikat.</p>
+    <a href="#peptide" class="btn-primary">Zum Katalog &#8594;</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo">Vita<span>Peptides</span></div>
+      <ul class="footer-nav">
+        <li><a href="#">Impressum</a></li>
+        <li><a href="#">Datenschutz</a></li>
+        <li><a href="#">AGB</a></li>
+        <li><a href="#">Widerrufsrecht</a></li>
+        <li><a href="#">Kontakt</a></li>
+      </ul>
+    </div>
+    <p class="footer-disclaimer">Alle Produkte dienen ausschließlich Forschungszwecken. Nicht für den menschlichen Verzehr. Kein Arzneimittel. &copy; 2024 VitaPeptides. Alle Rechte vorbehalten.</p>
+  </div>
+</footer>
