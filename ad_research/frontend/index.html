@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ad Research Tool</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .card-liked   { border-color:#10b981!important; background:#f0fdf4; }
+    .card-disliked{ border-color:#ef4444!important; background:#fef2f2; opacity:.65; }
+    .tab-active   { background:#2563eb; color:#fff; }
+    .tab-inactive { background:#e5e7eb; color:#374151; }
+    .line-clamp-3 { display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+    .spinner { border:3px solid #e5e7eb; border-top-color:#2563eb; border-radius:50%; width:22px; height:22px; animation:spin .8s linear infinite; display:inline-block; vertical-align:middle; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .badge-blue   { background:#dbeafe; color:#1d4ed8; }
+    .badge-purple { background:#ede9fe; color:#7c3aed; }
+    .badge-orange { background:#ffedd5; color:#c2410c; }
+    .badge-green  { background:#dcfce7; color:#15803d; }
+    .copy-btn { transition: background .15s; }
+    .copy-btn:active { background: #d1fae5!important; }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+<!-- NAV -->
+<nav class="bg-white shadow-sm border-b sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+    <span class="font-bold text-gray-900 text-lg">📊 Ad Research Tool</span>
+    <div class="flex gap-2" id="tab-bar">
+      <button onclick="showTab('products')"    id="tab-products"    class="tab-btn px-4 py-2 rounded-lg text-sm font-medium tab-active">🛍️ Produkte</button>
+      <button onclick="showTab('competitors')" id="tab-competitors" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium tab-inactive">🔍 Konkurrenten</button>
+      <button onclick="showTab('shopify')"     id="tab-shopify"     class="tab-btn px-4 py-2 rounded-lg text-sm font-medium tab-inactive">🛒 Shopify KI</button>
+    </div>
+  </div>
+</nav>
+
+<!-- CONFIG STATUS -->
+<div id="config-bar" class="bg-gray-800 text-white text-xs px-4 py-2 flex gap-4 items-center justify-center flex-wrap"></div>
+
+<div class="max-w-7xl mx-auto px-4 py-6">
+
+<!-- ═══ TAB 1: PRODUCTS ═══ -->
+<div id="tab-products-content">
+  <div class="flex items-start justify-between mb-5">
+    <div>
+      <h2 class="text-2xl font-bold text-gray-900">Tägliche Produkt-Empfehlungen</h2>
+      <p class="text-gray-500 text-sm mt-1" id="today-date"></p>
+    </div>
+    <button onclick="triggerScrape()" id="scrape-btn"
+      class="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium text-sm transition-colors">
+      🔄 Neue Suche
+    </button>
+  </div>
+
+  <div class="bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 mb-5 text-sm text-blue-800 flex gap-3 items-center flex-wrap">
+    <span>🎯</span>
+    <span>Filter: <strong>mind. 50 aktive Ads</strong> + <strong>mind. 200.000 Impressionen</strong> bei Video-Ads · Beliebige Nische · Täglich um 08:00 Uhr automatisch aktualisiert</span>
+  </div>
+
+  <div id="scrape-status" class="hidden mb-4 p-3 bg-blue-50 border border-blue-200 text-blue-700 rounded-lg flex items-center gap-3 text-sm">
+    <div class="spinner"></div>
+    <span>Suche läuft... Das kann 30–60 Sekunden dauern.</span>
+  </div>
+
+  <div id="prefs-section" class="hidden bg-white rounded-xl shadow-sm p-4 mb-5">
+    <h3 class="text-xs font-semibold text-gray-500 mb-3 uppercase tracking-wide">Deine Vorlieben</h3>
+    <div id="prefs-tags" class="flex flex-wrap gap-2"></div>
+  </div>
+
+  <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="col-span-full text-center py-16 text-gray-400">
+      <div class="text-6xl mb-4">📦</div>
+      <p class="text-lg font-medium">Noch keine Produkte für heute</p>
+      <p class="text-sm mt-1">Klicke auf "Neue Suche" um loszulegen.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TAB 2: COMPETITORS ═══ -->
+<div id="tab-competitors-content" class="hidden">
+  <h2 class="text-2xl font-bold text-gray-900 mb-5">Konkurrenten-Analyse</h2>
+  <div class="bg-white rounded-xl shadow-sm p-6 mb-5">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Nische</label>
+        <select id="niche-select" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm">
+          <option value="detox_supplement">🌿 Detox / Supplement</option>
+          <option value="ai_video">🤖 AI Video</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Land / Region</label>
+        <select id="country-select" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm">
+          <option value="EUROPE">🌍 Europa gesamt</option>
+          <option value="DE">🇩🇪 Deutschland</option>
+          <option value="AT">🇦🇹 Österreich</option>
+          <option value="CH">🇨🇭 Schweiz</option>
+          <option value="FR">🇫🇷 Frankreich</option>
+          <option value="IT">🇮🇹 Italien</option>
+          <option value="ES">🇪🇸 Spanien</option>
+          <option value="NL">🇳🇱 Niederlande</option>
+          <option value="GB">🇬🇧 UK</option>
+          <option value="US">🇺🇸 USA</option>
+        </select>
+      </div>
+      <div class="flex items-end flex-col gap-2">
+        <button onclick="searchCompetitors()" id="comp-search-btn"
+          class="w-full py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors">
+          🔍 Konkurrenten suchen
+        </button>
+        <button onclick="runUsaGap()" id="usa-gap-btn"
+          class="w-full py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium transition-colors">
+          🇺🇸→🇩🇪 USA-Lücken in DACH
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="comp-status" class="hidden mb-4 p-3 bg-blue-50 border border-blue-200 text-blue-700 rounded-lg flex items-center gap-3 text-sm">
+    <div class="spinner"></div><span>Suche läuft...</span>
+  </div>
+
+  <div id="competitors-list">
+    <div class="text-center py-16 text-gray-400">
+      <div class="text-6xl mb-4">🔍</div>
+      <p>Wähle eine Nische und starte die Suche.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TAB 3: SHOPIFY KI-BUILDER ═══ -->
+<div id="tab-shopify-content" class="hidden">
+  <h2 class="text-2xl font-bold text-gray-900 mb-2">🛒 Shopify KI-Builder</h2>
+  <p class="text-gray-500 text-sm mb-5">Claude AI generiert conversion-optimierte Store-Inhalte. Optional direkt in Shopify erstellen.</p>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <!-- Form -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <h3 class="font-semibold text-gray-800 mb-4">Store beschreiben</h3>
+
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Produkt / Nische <span class="text-red-500">*</span></label>
+        <textarea id="shop-product" rows="3" placeholder="z.B. Detox-Tee für besseren Schlaf und natürliche Entgiftung"
+          class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none"></textarea>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Zielgruppe</label>
+          <input id="shop-audience" type="text" placeholder="z.B. Frauen 30-50, gesundheitsbewusst"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"/>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Preis (€)</label>
+          <input id="shop-price" type="text" value="29.99"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"/>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Aus Liked Products übernehmen</label>
+        <select id="shop-from-liked" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm">
+          <option value="">— Manuell eingeben —</option>
+        </select>
+      </div>
+
+      <button onclick="generateShopifyContent()" id="shop-gen-btn"
+        class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold text-sm transition-colors">
+        🤖 KI-Inhalte generieren
+      </button>
+
+      <div id="shop-gen-status" class="hidden mt-3 text-sm text-purple-700 flex items-center gap-2">
+        <div class="spinner" style="border-top-color:#7c3aed;"></div>
+        <span>Claude denkt nach... ca. 15–20 Sek.</span>
+      </div>
+      <div id="shop-gen-error" class="hidden mt-3 text-sm text-red-600 bg-red-50 rounded-lg p-3"></div>
+    </div>
+
+    <!-- Preview -->
+    <div id="shopify-preview" class="hidden bg-white rounded-xl shadow-sm p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-semibold text-gray-800">Generierte Inhalte</h3>
+        <div class="flex gap-2">
+          <button onclick="generateVideoScriptFromShop()" id="shop-video-btn"
+            class="px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-xs font-medium">
+            🎬 Video-Skript
+          </button>
+          <button onclick="createInShopify()" id="shop-create-btn"
+            class="px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-xs font-medium">
+            🚀 In Shopify erstellen
+          </button>
+        </div>
+      </div>
+
+      <div id="shopify-preview-body" class="space-y-3 text-sm"></div>
+
+      <div id="shop-create-status" class="hidden mt-4 text-sm text-green-700 bg-green-50 rounded-lg p-3 flex items-center gap-2">
+        <div class="spinner" style="border-top-color:#15803d;"></div>
+        <span>Erstelle in Shopify...</span>
+      </div>
+      <div id="shop-create-result" class="hidden mt-4"></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /max-w -->
+
+<!-- ═══ ADS MODAL ═══ -->
+<div id="ads-modal" class="hidden fixed inset-0 bg-black/60 z-50 overflow-auto" onclick="closeModalBg(event,'ads-modal')">
+  <div class="max-w-3xl mx-auto my-10 px-4">
+    <div class="bg-white rounded-2xl shadow-2xl">
+      <div class="flex items-center justify-between p-5 border-b">
+        <div>
+          <h3 class="text-lg font-bold" id="ads-modal-title">Ads</h3>
+          <p class="text-sm text-gray-500" id="ads-modal-subtitle"></p>
+        </div>
+        <button onclick="closeModal('ads-modal')" class="text-gray-400 hover:text-gray-600 text-2xl">✕</button>
+      </div>
+      <div id="ads-modal-body" class="p-5 max-h-[70vh] overflow-y-auto space-y-3"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ VIDEO SCRIPT MODAL ═══ -->
+<div id="video-modal" class="hidden fixed inset-0 bg-black/60 z-50 overflow-auto" onclick="closeModalBg(event,'video-modal')">
+  <div class="max-w-2xl mx-auto my-10 px-4">
+    <div class="bg-white rounded-2xl shadow-2xl">
+      <div class="flex items-center justify-between p-5 border-b">
+        <div>
+          <h3 class="text-lg font-bold" id="video-modal-title">🎬 Video-Skript</h3>
+          <p class="text-sm text-gray-500">30 Sek · Seedance / Kling AI / Runway kompatibel</p>
+        </div>
+        <button onclick="closeModal('video-modal')" class="text-gray-400 hover:text-gray-600 text-2xl">✕</button>
+      </div>
+      <div id="video-modal-body" class="p-5 max-h-[75vh] overflow-y-auto"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Globals ───────────────────────────────────────────────────
+let shopifyContent = null; // holds last generated store content
+
+// ── Tabs ─────────────────────────────────────────────────────
+const TABS = ['products','competitors','shopify'];
+function showTab(name) {
+  TABS.forEach(t => {
+    document.getElementById('tab-'+t+'-content').classList.toggle('hidden', t !== name);
+    const btn = document.getElementById('tab-'+t);
+    btn.className = 'tab-btn px-4 py-2 rounded-lg text-sm font-medium ' + (t === name ? 'tab-active' : 'tab-inactive');
+  });
+  if (name === 'shopify') loadLikedProductsForShopify();
+}
+
+document.getElementById('today-date').textContent =
+  new Date().toLocaleDateString('de-DE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+// ── Config Status ─────────────────────────────────────────────
+async function loadConfigStatus() {
+  try {
+    const resp = await fetch('/api/config/status');
+    const s = await resp.json();
+    const bar = document.getElementById('config-bar');
+    bar.innerHTML = [
+      s.meta      ? '✅ Meta API' : '⚠️ Meta API fehlt',
+      s.anthropic ? '✅ Claude AI' : '⚠️ ANTHROPIC_API_KEY fehlt',
+      s.shopify   ? `✅ Shopify (${s.shopify_store})` : '⚠️ Shopify nicht konfiguriert',
+    ].map(t => `<span class="px-3 py-0.5 rounded-full ${t.startsWith('✅') ? 'bg-green-800' : 'bg-yellow-700'}">${t}</span>`).join('');
+  } catch {}
+}
+
+// ── Helpers ──────────────────────────────────────────────────
+function esc(s){ return s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
+function fmt(n){ if(!n)return'–'; if(n>=1e6)return(n/1e6).toFixed(1)+'M'; if(n>=1000)return(n/1000).toFixed(0)+'K'; return n; }
+
+function copyText(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✅ Kopiert!';
+    btn.classList.add('bg-green-100');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('bg-green-100'); }, 2000);
+  });
+}
+
+function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+function closeModalBg(e, id) { if (e.target === document.getElementById(id)) closeModal(id); }
+
+// ── PRODUCTS ─────────────────────────────────────────────────
+async function loadProducts() {
+  const resp = await fetch('/api/products/today');
+  const products = await resp.json();
+  renderProducts(products);
+  if (products.length) loadPreferences();
+}
+
+function renderProducts(products) {
+  const grid = document.getElementById('products-grid');
+  if (!products.length) {
+    grid.innerHTML = `<div class="col-span-full text-center py-16 text-gray-400">
+      <div class="text-6xl mb-4">📦</div>
+      <p class="text-lg font-medium">Noch keine Produkte für heute</p>
+      <p class="text-sm mt-1">Klicke auf "Neue Suche" um loszulegen.</p></div>`;
+    return;
+  }
+  grid.innerHTML = products.map(p => {
+    const tags = JSON.parse(p.tags||'[]');
+    const cls = p.vote==='liked' ? 'card-liked' : p.vote==='disliked' ? 'card-disliked' : '';
+    const likedCls    = p.vote==='liked'    ? 'bg-green-500 text-white' : 'bg-gray-100 hover:bg-green-100 text-gray-700';
+    const dislikedCls = p.vote==='disliked' ? 'bg-red-400 text-white'   : 'bg-gray-100 hover:bg-red-100 text-gray-700';
+    return `
+    <div id="prod-${p.id}" class="bg-white rounded-xl p-5 shadow-sm border-2 border-transparent ${cls} transition-all flex flex-col">
+      <div class="flex items-start justify-between gap-2 mb-2">
+        <h3 class="font-bold text-gray-900 text-sm leading-snug flex-1">${esc(p.page_name)}</h3>
+        <div class="flex flex-col items-end gap-1 shrink-0">
+          <span class="px-2 py-0.5 badge-blue text-xs rounded-full whitespace-nowrap">${p.ad_count} Ads</span>
+          ${p.max_impressions>0?`<span class="px-2 py-0.5 badge-purple text-xs rounded-full">${fmt(p.max_impressions)} Imp.</span>`:''}
+          ${p.has_video?'<span class="px-2 py-0.5 badge-orange text-xs rounded-full">📹 Video</span>':''}
+        </div>
+      </div>
+      ${p.sample_body
+        ? `<p class="text-gray-600 text-sm mb-3 line-clamp-3 flex-1">${esc(p.sample_body)}</p>`
+        : `<p class="text-gray-400 text-sm italic mb-3 flex-1">Kein Beispieltext verfügbar</p>`}
+      <div class="flex flex-wrap gap-1 mb-3">
+        ${tags.map(t=>`<span class="px-2 py-0.5 bg-gray-100 text-gray-500 text-xs rounded">${t}</span>`).join('')}
+      </div>
+      <div class="flex gap-2 mb-2">
+        <button onclick="vote(${p.id},'liked')"
+          class="flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${likedCls}">👍 Gut</button>
+        <button onclick="vote(${p.id},'disliked')"
+          class="flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${dislikedCls}">👎 Nein</button>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="openVideoScript(${p.id},'${esc(p.page_name).replace(/'/g,"\\'")}' )"
+          class="flex-1 py-1.5 bg-orange-100 hover:bg-orange-200 text-orange-700 rounded-lg text-xs font-medium transition-colors">
+          🎬 Video-Skript
+        </button>
+        <button onclick="prefillShopify(${p.id},'${esc(p.page_name).replace(/'/g,"\\'")}','${esc(p.sample_body||'').substring(0,100).replace(/'/g,"\\'")}' )"
+          class="flex-1 py-1.5 bg-purple-100 hover:bg-purple-200 text-purple-700 rounded-lg text-xs font-medium transition-colors">
+          🛒 Store bauen
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function vote(id, v) {
+  await fetch(`/api/products/${id}/vote`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({vote:v})});
+  loadProducts();
+}
+
+let scrapeTimer;
+async function triggerScrape() {
+  const btn = document.getElementById('scrape-btn');
+  const st  = document.getElementById('scrape-status');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div>';
+  st.classList.remove('hidden');
+  await fetch('/api/products/scrape',{method:'POST'});
+  clearTimeout(scrapeTimer);
+  scrapeTimer = setTimeout(async () => {
+    await loadProducts();
+    btn.disabled = false;
+    btn.innerHTML = '🔄 Neue Suche';
+    st.classList.add('hidden');
+  }, 55000);
+}
+
+async function loadPreferences() {
+  const resp = await fetch('/api/preferences');
+  const prefs = await resp.json();
+  if (!prefs.length) return;
+  document.getElementById('prefs-section').classList.remove('hidden');
+  document.getElementById('prefs-tags').innerHTML = prefs.map(p => {
+    const score = p.likes - p.dislikes;
+    const [bg,tx] = score>0 ? ['bg-green-100','text-green-700'] : score<0 ? ['bg-red-100','text-red-600'] : ['bg-gray-100','text-gray-600'];
+    return `<span class="px-3 py-1 ${bg} ${tx} rounded-full text-sm font-medium">${p.tag} (+${p.likes}/-${p.dislikes})</span>`;
+  }).join('');
+}
+
+// ── COMPETITORS ───────────────────────────────────────────────
+async function searchCompetitors() {
+  const niche   = document.getElementById('niche-select').value;
+  const country = document.getElementById('country-select').value;
+  const btn  = document.getElementById('comp-search-btn');
+  const st   = document.getElementById('comp-status');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner mx-auto"></div>';
+  st.classList.remove('hidden');
+  try {
+    const resp = await fetch(`/api/competitors/search/${niche}?country=${country}`);
+    renderCompetitors(await resp.json(), niche);
+  } catch { document.getElementById('competitors-list').innerHTML='<p class="text-red-500 text-center py-12">Fehler – bitte erneut versuchen.</p>'; }
+  btn.disabled = false;
+  btn.innerHTML = '🔍 Konkurrenten suchen';
+  st.classList.add('hidden');
+}
+
+function renderCompetitors(list, niche) {
+  const el = document.getElementById('competitors-list');
+  if (!list.length) { el.innerHTML='<p class="text-gray-400 text-center py-12">Keine Konkurrenten gefunden.</p>'; return; }
+  const label = niche==='detox_supplement' ? '🌿 Detox / Supplement' : '🤖 AI Video';
+  el.innerHTML = `
+  <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+    <div class="px-5 py-3 border-b bg-gray-50 flex justify-between items-center">
+      <span class="font-semibold text-gray-700">${list.length} Konkurrenten · ${label}</span>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead><tr class="border-b text-xs text-gray-500 uppercase tracking-wide">
+          <th class="px-4 py-3 text-left w-8">#</th>
+          <th class="px-4 py-3 text-left">Advertiser</th>
+          <th class="px-4 py-3 text-left">Aktive Ads</th>
+          <th class="px-4 py-3 text-left hidden md:table-cell">Beispiel</th>
+          <th class="px-4 py-3 text-left"></th>
+        </tr></thead>
+        <tbody>
+        ${list.map((c,i)=>{
+          const s = c.sample_ads&&c.sample_ads[0];
+          return `<tr class="border-b hover:bg-gray-50">
+            <td class="px-4 py-3 text-gray-400">${i+1}</td>
+            <td class="px-4 py-3"><p class="font-medium text-gray-900">${esc(c.page_name)}</p><p class="text-xs text-gray-400">${c.page_id}</p></td>
+            <td class="px-4 py-3"><span class="px-2.5 py-1 badge-blue rounded-full font-semibold text-xs">${c.ad_count}</span></td>
+            <td class="px-4 py-3 text-gray-500 max-w-xs hidden md:table-cell text-xs">${s?esc((s.body||'').substring(0,80)):'—'}</td>
+            <td class="px-4 py-3">
+              <button onclick="viewAds('${c.page_id}','${esc(c.page_name).replace(/'/g,"\\'")}',${c.ad_count})"
+                class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-medium whitespace-nowrap">Alle Ads →</button>
+            </td>
+          </tr>`;
+        }).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+async function viewAds(pageId, pageName, adCount) {
+  document.getElementById('ads-modal-title').textContent = pageName;
+  document.getElementById('ads-modal-subtitle').textContent = adCount+' aktive Ads';
+  document.getElementById('ads-modal-body').innerHTML = '<div class="text-center py-8"><div class="spinner mx-auto mb-3"></div><p class="text-gray-500 text-sm">Lade Ads...</p></div>';
+  document.getElementById('ads-modal').classList.remove('hidden');
+  try {
+    const resp = await fetch(`/api/competitors/${pageId}/ads`);
+    const ads  = await resp.json();
+    if (!ads.length) { document.getElementById('ads-modal-body').innerHTML='<p class="text-gray-400 text-center py-8">Keine aktiven Ads.</p>'; return; }
+    document.getElementById('ads-modal-body').innerHTML = ads.map((ad,i)=>`
+      <div class="border rounded-xl p-4">
+        <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+          <span class="text-xs text-gray-400">Ad #${i+1} · ${ad.start_date?new Date(ad.start_date).toLocaleDateString('de-DE'):'–'}</span>
+          <div class="flex gap-1">
+            ${ad.impressions_lower>0?`<span class="text-xs badge-purple px-2 py-0.5 rounded-full">${fmt(ad.impressions_lower)}–${fmt(ad.impressions_upper)} Imp.</span>`:''}
+            ${ad.has_video?'<span class="text-xs badge-orange px-2 py-0.5 rounded-full">📹 Video</span>':''}
+          </div>
+        </div>
+        ${ad.body?`<p class="text-gray-800 text-sm leading-relaxed">${esc(ad.body)}</p>`:'<p class="text-gray-400 italic text-sm">Kein Text</p>'}
+      </div>`).join('');
+  } catch { document.getElementById('ads-modal-body').innerHTML='<p class="text-red-500 text-center py-8">Fehler beim Laden.</p>'; }
+}
+
+// ── VIDEO SCRIPT ──────────────────────────────────────────────
+async function openVideoScript(productId, productName) {
+  document.getElementById('video-modal-title').textContent = '🎬 ' + productName;
+  document.getElementById('video-modal-body').innerHTML = '<div class="text-center py-10"><div class="spinner mx-auto mb-3" style="width:32px;height:32px;border-width:4px;border-top-color:#f97316;"></div><p class="text-gray-500 text-sm">Claude generiert dein Skript...</p></div>';
+  document.getElementById('video-modal').classList.remove('hidden');
+
+  try {
+    const resp = await fetch(`/api/products/${productId}/video-script`, {method:'POST'});
+    if (!resp.ok) {
+      const err = await resp.json();
+      document.getElementById('video-modal-body').innerHTML = `<div class="bg-red-50 text-red-600 rounded-lg p-4 text-sm">${esc(err.detail||'Fehler')}</div>`;
+      return;
+    }
+    const s = await resp.json();
+    renderVideoScript(s);
+  } catch(e) {
+    document.getElementById('video-modal-body').innerHTML = `<div class="bg-red-50 text-red-600 rounded-lg p-4 text-sm">Fehler: ${esc(e.message)}</div>`;
+  }
+}
+
+function renderVideoScript(s) {
+  const sections = [
+    {label:'🎯 Hook (0–3 Sek)', color:'badge-orange', text: s.hook},
+    {label:'😤 Problem (3–8 Sek)', color:'bg-red-50 text-red-700', text: s.problem},
+    {label:'✨ Lösung (8–20 Sek)', color:'badge-green', text: s.solution},
+    {label:'⭐ Social Proof (20–25 Sek)', color:'badge-blue', text: s.social_proof},
+    {label:'🛒 CTA (25–30 Sek)', color:'badge-purple', text: s.cta},
+  ];
+
+  const vo  = s.voice_over || '';
+  const sp  = s.seedance_prompt || '';
+  const vis = s.visual_description || '';
+
+  document.getElementById('video-modal-body').innerHTML = `
+    <div class="space-y-3">
+      ${sections.map(sec=>`
+        <div class="rounded-lg p-3 ${sec.color}">
+          <p class="text-xs font-bold uppercase tracking-wide mb-1 opacity-70">${sec.label}</p>
+          <p class="text-sm font-medium">${esc(sec.text||'–')}</p>
+        </div>`).join('')}
+
+      ${vis ? `
+      <div class="border rounded-lg p-3">
+        <p class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-1">🎥 Visuelle Beschreibung</p>
+        <p class="text-sm text-gray-700">${esc(vis)}</p>
+      </div>` : ''}
+
+      ${vo ? `
+      <div class="border rounded-lg p-3">
+        <div class="flex items-center justify-between mb-2">
+          <p class="text-xs font-bold uppercase tracking-wide text-gray-500">🎤 Voice-Over Text</p>
+          <button onclick="copyText(${JSON.stringify(vo)},this)" class="copy-btn px-2 py-1 bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs rounded">📋 Kopieren</button>
+        </div>
+        <p class="text-sm text-gray-700 leading-relaxed">${esc(vo)}</p>
+      </div>` : ''}
+
+      ${sp ? `
+      <div class="bg-gray-900 text-green-300 rounded-lg p-4">
+        <div class="flex items-center justify-between mb-2">
+          <p class="text-xs font-bold uppercase tracking-wide text-gray-400">🤖 Seedance / Kling Prompt</p>
+          <button onclick="copyText(${JSON.stringify(sp)},this)" class="copy-btn px-2 py-1 bg-gray-700 hover:bg-gray-600 text-gray-200 text-xs rounded">📋 Kopieren</button>
+        </div>
+        <p class="text-sm font-mono leading-relaxed">${esc(sp)}</p>
+      </div>` : ''}
+    </div>`;
+}
+
+// ── USA → DACH GAP ───────────────────────────────────────────
+async function runUsaGap() {
+  const niche = document.getElementById('niche-select').value;
+  const btn   = document.getElementById('usa-gap-btn');
+  const st    = document.getElementById('comp-status');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner mx-auto"></div>';
+  st.querySelector('span').textContent = 'Vergleiche USA vs. DACH... Das kann 60 Sek. dauern.';
+  st.classList.remove('hidden');
+
+  try {
+    const resp = await fetch(`/api/competitors/usa-gap/${niche}`);
+    const data = await resp.json();
+    renderUsaGap(data, niche);
+  } catch(e) {
+    document.getElementById('competitors-list').innerHTML =
+      '<p class="text-red-500 text-center py-12">Fehler – bitte erneut versuchen.</p>';
+  }
+  btn.disabled = false;
+  btn.innerHTML = '🇺🇸→🇩🇪 USA-Lücken in DACH';
+  st.classList.add('hidden');
+}
+
+function renderUsaGap(list, niche) {
+  const el = document.getElementById('competitors-list');
+  const nicheLabel = niche === 'detox_supplement' ? '🌿 Detox / Supplement' : '🤖 AI Video';
+  if (!list.length) {
+    el.innerHTML = '<p class="text-gray-400 text-center py-12">Keine Lücken gefunden — Markt scheint besetzt.</p>';
+    return;
+  }
+  el.innerHTML = `
+  <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4 text-sm text-amber-800">
+    <strong>🎯 Marktlücken-Analyse · ${nicheLabel}</strong><br/>
+    Diese ${list.length} Advertiser sind stark in den USA, haben aber <strong>keine aktiven Ads in DACH</strong> — ideale Produkte zum Testen!
+  </div>
+  <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead><tr class="border-b text-xs text-gray-500 uppercase tracking-wide bg-gray-50">
+          <th class="px-4 py-3 text-left w-8">#</th>
+          <th class="px-4 py-3 text-left">Advertiser (USA)</th>
+          <th class="px-4 py-3 text-left">USA Ads</th>
+          <th class="px-4 py-3 text-left">Max. Impressionen</th>
+          <th class="px-4 py-3 text-left hidden md:table-cell">Beispiel-Ad</th>
+          <th class="px-4 py-3 text-left">Aktionen</th>
+        </tr></thead>
+        <tbody>
+        ${list.map((c, i) => {
+          const s = c.sample_ads && c.sample_ads[0];
+          const imp = c.max_impressions;
+          const impStr = imp >= 1e6 ? (imp/1e6).toFixed(1)+'M' : imp >= 1000 ? (imp/1000).toFixed(0)+'K' : imp||'–';
+          return `<tr class="border-b hover:bg-amber-50">
+            <td class="px-4 py-3 text-gray-400 font-bold">${i+1}</td>
+            <td class="px-4 py-3">
+              <p class="font-semibold text-gray-900">${esc(c.page_name)}</p>
+              <span class="text-xs badge-green px-2 py-0.5 rounded-full">Nicht in DACH</span>
+            </td>
+            <td class="px-4 py-3"><span class="px-2 py-1 badge-blue rounded-full text-xs font-semibold">${c.us_ad_count}</span></td>
+            <td class="px-4 py-3"><span class="px-2 py-1 badge-purple rounded-full text-xs font-semibold">${impStr}</span></td>
+            <td class="px-4 py-3 text-gray-500 max-w-xs hidden md:table-cell text-xs">${s ? esc((s.body||'').substring(0,80)) : '—'}</td>
+            <td class="px-4 py-3 flex gap-1 flex-wrap">
+              <button onclick="viewAds('${c.page_id}','${esc(c.page_name).replace(/'/g,"\\'")}',${c.us_ad_count})"
+                class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-xs">Ads →</button>
+              <button onclick="prefillShopify(0,'${esc(c.page_name).replace(/'/g,"\\'")}','')"
+                class="px-2 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded text-xs">🛒 Store</button>
+            </td>
+          </tr>`;
+        }).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+// ── SHOPIFY KI-BUILDER ────────────────────────────────────────
+async function loadLikedProductsForShopify() {
+  const resp = await fetch('/api/products/today');
+  const products = await resp.json();
+  const liked = products.filter(p => p.vote === 'liked');
+  const sel = document.getElementById('shop-from-liked');
+  sel.innerHTML = '<option value="">— Manuell eingeben —</option>' +
+    liked.map(p => `<option value="${p.id}" data-name="${esc(p.page_name)}" data-copy="${esc(p.sample_body||'').substring(0,200)}">${esc(p.page_name)} (${p.ad_count} Ads)</option>`).join('');
+  sel.onchange = () => {
+    const opt = sel.selectedOptions[0];
+    if (opt.value) {
+      document.getElementById('shop-product').value = opt.dataset.name||'';
+    }
+  };
+}
+
+function prefillShopify(id, name, adCopy) {
+  showTab('shopify');
+  document.getElementById('shop-product').value = name;
+  const sel = document.getElementById('shop-from-liked');
+  for (const opt of sel.options) { if (opt.value == id) { sel.value = id; break; } }
+}
+
+async function generateShopifyContent() {
+  const product = document.getElementById('shop-product').value.trim();
+  if (!product) { alert('Bitte Produkt / Nische eingeben.'); return; }
+
+  const btn = document.getElementById('shop-gen-btn');
+  const st  = document.getElementById('shop-gen-status');
+  const err = document.getElementById('shop-gen-error');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner mr-2"></div> Generiere...';
+  st.classList.remove('hidden');
+  err.classList.add('hidden');
+  document.getElementById('shopify-preview').classList.add('hidden');
+
+  try {
+    const resp = await fetch('/api/shopify/generate', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        product_name: product,
+        niche: '',
+        target_audience: document.getElementById('shop-audience').value,
+        ad_copy: '',
+      })
+    });
+    if (!resp.ok) { const e=await resp.json(); throw new Error(e.detail||'API Fehler'); }
+    shopifyContent = await resp.json();
+    if (shopifyContent.error) throw new Error(shopifyContent.error);
+    renderShopifyPreview(shopifyContent);
+    document.getElementById('shopify-preview').classList.remove('hidden');
+  } catch(e) {
+    err.textContent = '❌ ' + e.message;
+    err.classList.remove('hidden');
+  }
+  btn.disabled = false;
+  btn.innerHTML = '🤖 KI-Inhalte generieren';
+  st.classList.add('hidden');
+}
+
+function renderShopifyPreview(c) {
+  document.getElementById('shopify-preview-body').innerHTML = `
+    <div class="bg-purple-50 rounded-lg p-3 mb-1">
+      <p class="text-xs text-purple-500 font-bold uppercase tracking-wide">Store Name · Tagline</p>
+      <p class="font-bold text-purple-900 text-base">${esc(c.store_name||'')}</p>
+      <p class="text-purple-700 text-sm italic">"${esc(c.tagline||'')}"</p>
+    </div>
+    <div class="border rounded-lg p-3">
+      <p class="text-xs text-gray-500 font-bold uppercase tracking-wide mb-1">Produkttitel</p>
+      <p class="font-semibold text-gray-800">${esc(c.product_title||'')}</p>
+    </div>
+    <div class="border rounded-lg p-3">
+      <p class="text-xs text-gray-500 font-bold uppercase tracking-wide mb-1">Produktbeschreibung</p>
+      <p class="text-gray-700 text-sm leading-relaxed">${esc(c.product_description||'')}</p>
+    </div>
+    <div class="bg-gray-900 text-white rounded-lg p-4">
+      <p class="text-xs text-gray-400 font-bold uppercase tracking-wide mb-1">Hero Headline</p>
+      <p class="text-xl font-bold">${esc(c.hero_headline||'')}</p>
+      <p class="text-gray-300 text-sm mt-1">${esc(c.hero_subtext||'')}</p>
+      <span class="inline-block mt-2 bg-white text-gray-900 px-4 py-1.5 rounded text-sm font-semibold">${esc(c.cta_text||'Jetzt kaufen')}</span>
+    </div>
+    ${(c.usps||[]).length ? `
+    <div class="border rounded-lg p-3">
+      <p class="text-xs text-gray-500 font-bold uppercase tracking-wide mb-2">USPs</p>
+      ${c.usps.map(u=>`<div class="flex gap-2 mb-1"><span class="text-green-500">✓</span><span class="text-sm text-gray-700">${esc(u)}</span></div>`).join('')}
+    </div>` : ''}
+    ${(c.faq||[]).length ? `
+    <div class="border rounded-lg p-3">
+      <p class="text-xs text-gray-500 font-bold uppercase tracking-wide mb-2">FAQ</p>
+      ${c.faq.map(f=>`<div class="mb-2"><p class="text-sm font-semibold text-gray-800">${esc(f.question)}</p><p class="text-xs text-gray-600">${esc(f.answer)}</p></div>`).join('')}
+    </div>` : ''}
+    <div class="border rounded-lg p-3 bg-gray-50">
+      <p class="text-xs text-gray-500 font-bold uppercase tracking-wide mb-1">SEO</p>
+      <p class="text-xs text-gray-600"><strong>Title:</strong> ${esc(c.meta_title||'')}</p>
+      <p class="text-xs text-gray-600 mt-0.5"><strong>Desc:</strong> ${esc(c.meta_description||'')}</p>
+    </div>
+  `;
+}
+
+async function createInShopify() {
+  if (!shopifyContent) return;
+  const btn = document.getElementById('shop-create-btn');
+  const st  = document.getElementById('shop-create-status');
+  const res = document.getElementById('shop-create-result');
+  btn.disabled = true;
+  st.classList.remove('hidden');
+  res.classList.add('hidden');
+
+  try {
+    const resp = await fetch('/api/shopify/create', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ content: shopifyContent, price: document.getElementById('shop-price').value }),
+    });
+    const data = await resp.json();
+    const links = data.admin_links || {};
+    res.innerHTML = `
+      <div class="bg-green-50 border border-green-200 rounded-lg p-4 text-sm text-green-800">
+        <p class="font-bold mb-2">✅ In Shopify erstellt (als Draft)</p>
+        ${links.product ? `<a href="${links.product}" target="_blank" class="underline block">→ Produkt im Admin ansehen</a>` : ''}
+        ${links.page    ? `<a href="${links.page}" target="_blank" class="underline block">→ Landingpage im Admin ansehen</a>` : ''}
+      </div>`;
+    res.classList.remove('hidden');
+  } catch(e) {
+    res.innerHTML = `<div class="bg-red-50 text-red-600 rounded-lg p-4 text-sm">Fehler: ${esc(e.message)}</div>`;
+    res.classList.remove('hidden');
+  }
+  btn.disabled = false;
+  st.classList.add('hidden');
+}
+
+async function generateVideoScriptFromShop() {
+  if (!shopifyContent) return;
+  document.getElementById('video-modal-title').textContent = '🎬 ' + (shopifyContent.store_name||'Video-Skript');
+
+  document.getElementById('video-modal-body').innerHTML =
+    '<div class="text-center py-10"><div class="spinner mx-auto mb-3" style="width:32px;height:32px;border-width:4px;border-top-color:#f97316;"></div><p class="text-gray-500 text-sm">Generiere Skript...</p></div>';
+  document.getElementById('video-modal').classList.remove('hidden');
+
+  try {
+    const resp = await fetch('/api/shopify/video-script', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        product_name: shopifyContent.product_title || shopifyContent.store_name,
+        ad_copy: shopifyContent.product_description||'',
+        niche: '',
+      }),
+    });
+    if (!resp.ok) { const e=await resp.json(); throw new Error(e.detail||'Fehler'); }
+    renderVideoScript(await resp.json());
+  } catch(e) {
+    document.getElementById('video-modal-body').innerHTML =
+      `<div class="bg-red-50 text-red-600 rounded-lg p-4 text-sm">Fehler: ${esc(e.message)}</div>`;
+  }
+}
+
+// ── Init ─────────────────────────────────────────────────────
+loadConfigStatus();
+loadProducts();
+</script>
+</body>
+</html>
