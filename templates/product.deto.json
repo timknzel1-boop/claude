@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "deto_landing": {
+      "type": "deto-landing",
+      "settings": {}
+    }
+  },
+  "order": ["deto_landing"]
+}

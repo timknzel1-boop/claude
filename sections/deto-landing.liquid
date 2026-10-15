@@ -1,0 +1,974 @@
+{% comment %} mysolv® DETOX COMPLEX — Landing Page Section {% endcomment %}
+
+<style>
+  :root {
+    --deto-primary: #2a6e3f;
+    --deto-primary-light: #3a8a52;
+    --deto-primary-dark: #1d4f2e;
+    --deto-accent: #f5f0e8;
+    --deto-gold: #c8a84b;
+    --deto-text: #1a1a1a;
+    --deto-muted: #6b7280;
+    --deto-white: #ffffff;
+    --deto-bg-light: #f8fdf9;
+    --deto-border: #e2ede6;
+    --deto-star: #f59e0b;
+    --deto-red: #dc2626;
+  }
+
+  .deto * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .deto {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--deto-text);
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .deto-hero {
+    background: linear-gradient(135deg, #f0f9f4 0%, #e8f5ee 50%, #f5f9f6 100%);
+    padding: 40px 20px;
+  }
+  .deto-hero__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    .deto-hero__inner { grid-template-columns: 1fr; gap: 24px; }
+  }
+  .deto-hero__badge {
+    display: inline-block;
+    background: var(--deto-primary);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .deto-hero__title {
+    font-size: clamp(26px, 4vw, 42px);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--deto-primary-dark);
+    margin-bottom: 12px;
+  }
+  .deto-hero__subtitle {
+    font-size: 16px;
+    color: var(--deto-muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .deto-hero__bullets { list-style: none; margin-bottom: 24px; }
+  .deto-hero__bullets li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--deto-text);
+    margin-bottom: 8px;
+  }
+  .deto-hero__bullets li::before {
+    content: '✓';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: var(--deto-primary);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .deto-hero__stars {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: var(--deto-muted);
+  }
+  .deto-hero__stars .stars { color: var(--deto-star); font-size: 18px; letter-spacing: 1px; }
+  .deto-hero__stars strong { color: var(--deto-text); }
+
+  .deto-variant-picker { margin-bottom: 20px; }
+  .deto-variant-picker__label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--deto-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .deto-variant-picker__options { display: flex; flex-wrap: wrap; gap: 8px; }
+  .deto-variant-option {
+    padding: 10px 16px;
+    border: 2px solid var(--deto-border);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    background: #fff;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .deto-variant-option.active {
+    border-color: var(--deto-primary);
+    background: #f0f9f4;
+    color: var(--deto-primary);
+  }
+  .deto-variant-option .save-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--deto-red);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 2px 5px;
+    border-radius: 10px;
+  }
+  .deto-price-display { margin-bottom: 20px; }
+  .deto-price-display__current {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--deto-primary-dark);
+  }
+  .deto-price-display__per {
+    font-size: 13px;
+    color: var(--deto-muted);
+    margin-left: 6px;
+  }
+  .deto-add-to-cart {
+    display: block;
+    width: 100%;
+    background: var(--deto-primary);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    padding: 16px 24px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
+  }
+  .deto-add-to-cart:hover { background: var(--deto-primary-light); transform: translateY(-1px); }
+  .deto-guarantee-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--deto-muted);
+  }
+  .deto-guarantee-line svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  .deto-hero__image-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .deto-hero__image-wrap img {
+    max-width: 100%;
+    max-height: 480px;
+    object-fit: contain;
+    border-radius: 16px;
+    filter: drop-shadow(0 20px 40px rgba(42,110,63,0.15));
+  }
+
+  /* ─── TRUST BAR ─── */
+  .deto-trust-bar {
+    background: var(--deto-primary-dark);
+    padding: 16px 20px;
+  }
+  .deto-trust-bar__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .deto-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .deto-trust-item__icon { font-size: 18px; }
+
+  /* ─── SECTION WRAPPER ─── */
+  .deto-section {
+    padding: 64px 20px;
+  }
+  .deto-section--alt { background: var(--deto-bg-light); }
+  .deto-section--dark { background: var(--deto-primary-dark); color: #fff; }
+  .deto-inner { max-width: 1100px; margin: 0 auto; }
+  .deto-section-label {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--deto-primary);
+    margin-bottom: 12px;
+  }
+  .deto-section--dark .deto-section-label { color: #86efac; }
+  .deto-section-title {
+    text-align: center;
+    font-size: clamp(22px, 3.5vw, 36px);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: var(--deto-primary-dark);
+  }
+  .deto-section--dark .deto-section-title { color: #fff; }
+  .deto-section-desc {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 48px;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--deto-muted);
+  }
+  .deto-section--dark .deto-section-desc { color: #d1fae5; }
+
+  /* ─── SOCIAL PROOF ─── */
+  .deto-social-proof {
+    background: var(--deto-primary);
+    padding: 20px;
+    text-align: center;
+  }
+  .deto-social-proof p {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .deto-social-proof strong { font-size: 18px; }
+
+  /* ─── STATS ─── */
+  .deto-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+  .deto-stat-card {
+    background: #fff;
+    border: 1px solid var(--deto-border);
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .deto-stat-card__number {
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--deto-primary);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .deto-stat-card__title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--deto-text);
+  }
+  .deto-stat-card__desc { font-size: 13px; color: var(--deto-muted); line-height: 1.5; }
+
+  /* ─── INGREDIENTS ─── */
+  .deto-ingredients-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .deto-ingredient-card {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: #fff;
+    border: 1px solid var(--deto-border);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .deto-ingredient-card__icon {
+    width: 44px;
+    height: 44px;
+    background: #f0f9f4;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .deto-ingredient-card__name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--deto-primary-dark);
+    margin-bottom: 4px;
+  }
+  .deto-ingredient-card__desc { font-size: 13px; color: var(--deto-muted); line-height: 1.5; }
+
+  /* ─── TIMELINE ─── */
+  .deto-timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    position: relative;
+  }
+  .deto-timeline::before {
+    content: '';
+    position: absolute;
+    top: 32px;
+    left: 5%;
+    right: 5%;
+    height: 2px;
+    background: linear-gradient(to right, var(--deto-primary), var(--deto-primary-light));
+  }
+  @media (max-width: 600px) { .deto-timeline::before { display: none; } }
+  .deto-timeline-step { text-align: center; padding: 20px 16px; position: relative; }
+  .deto-timeline-step__dot {
+    width: 64px;
+    height: 64px;
+    background: var(--deto-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 16px;
+    border: 4px solid #fff;
+    box-shadow: 0 0 0 3px var(--deto-primary);
+    position: relative;
+    z-index: 1;
+  }
+  .deto-timeline-step__week {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--deto-primary);
+    margin-bottom: 6px;
+  }
+  .deto-section--dark .deto-timeline-step__week { color: #86efac; }
+  .deto-timeline-step__title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .deto-timeline-step__desc { font-size: 13px; color: var(--deto-muted); line-height: 1.5; }
+  .deto-section--dark .deto-timeline-step__desc { color: #d1fae5; }
+
+  /* ─── COMPARISON ─── */
+  .deto-comparison {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .deto-comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 520px;
+  }
+  .deto-comparison-table th {
+    padding: 16px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .deto-comparison-table th:first-child { text-align: left; }
+  .deto-comparison-table th:nth-child(2) {
+    background: var(--deto-primary);
+    color: #fff;
+    border-radius: 12px 12px 0 0;
+  }
+  .deto-comparison-table td {
+    padding: 13px 20px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--deto-border);
+    text-align: center;
+  }
+  .deto-comparison-table td:first-child { text-align: left; font-weight: 500; }
+  .deto-comparison-table td:nth-child(2) {
+    background: #f0f9f4;
+    font-weight: 600;
+    color: var(--deto-primary-dark);
+  }
+  .deto-comparison-table tr:last-child td { border-bottom: none; }
+  .deto-comparison-table tr:last-child td:nth-child(2) { border-radius: 0 0 12px 12px; }
+  .check { color: var(--deto-primary); font-size: 18px; }
+  .cross { color: #9ca3af; font-size: 18px; }
+
+  /* ─── REVIEWS ─── */
+  .deto-reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .deto-review-card {
+    background: #fff;
+    border: 1px solid var(--deto-border);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .deto-review-card__stars { color: var(--deto-star); font-size: 18px; margin-bottom: 12px; }
+  .deto-review-card__text {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--deto-text);
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+  .deto-review-card__author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .deto-review-card__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--deto-primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .deto-review-card__name { font-size: 14px; font-weight: 700; }
+  .deto-review-card__meta { font-size: 12px; color: var(--deto-muted); }
+  .deto-review-card__verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11px;
+    color: var(--deto-primary);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  /* ─── GUARANTEE ─── */
+  .deto-guarantee {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .deto-guarantee__seal {
+    flex-shrink: 0;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid var(--deto-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--deto-primary-dark);
+    background: #fff;
+  }
+  .deto-guarantee__seal .days { font-size: 36px; font-weight: 900; line-height: 1; }
+  .deto-guarantee__seal .label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .deto-guarantee__content { flex: 1; min-width: 240px; }
+  .deto-guarantee__title { font-size: 22px; font-weight: 800; margin-bottom: 10px; }
+  .deto-guarantee__text { font-size: 15px; line-height: 1.65; color: var(--deto-muted); }
+
+  /* ─── FAQ ─── */
+  .deto-faq { max-width: 720px; margin: 0 auto; }
+  .deto-faq-item {
+    border: 1px solid var(--deto-border);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .deto-faq-item__question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    background: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: left;
+    gap: 12px;
+  }
+  .deto-faq-item__question:hover { background: #f8fdf9; }
+  .deto-faq-item__chevron {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    transition: transform 0.25s;
+    color: var(--deto-primary);
+  }
+  .deto-faq-item.open .deto-faq-item__chevron { transform: rotate(180deg); }
+  .deto-faq-item__answer {
+    display: none;
+    padding: 0 20px 18px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--deto-muted);
+    background: #fff;
+  }
+  .deto-faq-item.open .deto-faq-item__answer { display: block; }
+
+  /* ─── CTA BOTTOM ─── */
+  .deto-cta-bottom {
+    background: linear-gradient(135deg, var(--deto-primary-dark), var(--deto-primary));
+    padding: 64px 20px;
+    text-align: center;
+    color: #fff;
+  }
+  .deto-cta-bottom h2 { font-size: clamp(22px, 4vw, 36px); font-weight: 800; margin-bottom: 12px; }
+  .deto-cta-bottom p { font-size: 16px; opacity: 0.85; margin-bottom: 32px; }
+  .deto-cta-bottom .deto-add-to-cart {
+    max-width: 360px;
+    margin: 0 auto;
+    background: #fff;
+    color: var(--deto-primary-dark);
+    font-size: 16px;
+  }
+  .deto-cta-bottom .deto-add-to-cart:hover { background: #f0f9f4; }
+
+  /* ─── DIVIDER ─── */
+  .deto-divider {
+    width: 48px;
+    height: 4px;
+    background: var(--deto-primary);
+    border-radius: 2px;
+    margin: 0 auto 32px;
+  }
+</style>
+
+{% assign product_image = product.featured_image | img_url: 'master' %}
+{% assign variant_1 = product.variants[0] %}
+{% assign variant_2 = product.variants[1] %}
+{% assign variant_3 = product.variants[2] %}
+
+<div class="deto">
+
+  {%- comment -%} ── HERO ── {%- endcomment -%}
+  <section class="deto-hero">
+    <div class="deto-hero__inner">
+      <div class="deto-hero__content">
+        <span class="deto-hero__badge">{{ product.vendor }}</span>
+        <h1 class="deto-hero__title">{{ product.title }}</h1>
+        <p class="deto-hero__subtitle">Natürliche Entgiftung mit 29 bioaktiven Wirkstoffen — tiefenwirksam, täglich einnehmbar, wissenschaftlich formuliert.</p>
+
+        <ul class="deto-hero__bullets">
+          <li>Unterstützt Leber, Darm & Nieren</li>
+          <li>29 natürliche Wirkstoffe in jeder Softgel-Kapsel</li>
+          <li>Ohne Zusatzstoffe, glutenfrei & laktosefrei</li>
+          <li>Hergestellt in Deutschland, GMP-zertifiziert</li>
+        </ul>
+
+        <div class="deto-hero__stars">
+          <span class="stars">★★★★★</span>
+          <strong>4.9/5</strong>
+          <span>— über 1.200 Bewertungen</span>
+        </div>
+
+        <div class="deto-variant-picker">
+          <span class="deto-variant-picker__label">Paket wählen:</span>
+          <div class="deto-variant-picker__options">
+            <button class="deto-variant-option active" data-variant="{{ variant_1.id }}" data-price="{{ variant_1.price | money }}">
+              1 Dose<br><small>Monatskur</small>
+            </button>
+            <button class="deto-variant-option" data-variant="{{ variant_2.id }}" data-price="{{ variant_2.price | money }}">
+              3 Dosen<br><small>Vorteilspaket</small>
+              <span class="save-badge">-33%</span>
+            </button>
+            <button class="deto-variant-option" data-variant="{{ variant_3.id }}" data-price="{{ variant_3.price | money }}">
+              6 Dosen<br><small>Vorrat</small>
+              <span class="save-badge">-58%</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="deto-price-display">
+          <span class="deto-price-display__current" id="deto-price">{{ variant_1.price | money }}</span>
+          <span class="deto-price-display__per">inkl. MwSt. · zzgl. Versand</span>
+        </div>
+
+        <form action="/cart/add" method="post" id="deto-form">
+          <input type="hidden" name="id" id="deto-variant-id" value="{{ variant_1.id }}">
+          <button type="submit" class="deto-add-to-cart">
+            Jetzt in den Warenkorb →
+          </button>
+        </form>
+
+        <div class="deto-guarantee-line">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+          30-Tage Geld-zurück-Garantie · Kostenloser Versand ab 50€
+        </div>
+      </div>
+
+      <div class="deto-hero__image-wrap">
+        <img src="{{ product_image }}" alt="{{ product.title }}" loading="eager">
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── TRUST BAR ── {%- endcomment -%}
+  <div class="deto-trust-bar">
+    <div class="deto-trust-bar__inner">
+      <div class="deto-trust-item"><span class="deto-trust-item__icon">🌿</span> 100% Natürlich</div>
+      <div class="deto-trust-item"><span class="deto-trust-item__icon">🏭</span> In Deutschland hergestellt</div>
+      <div class="deto-trust-item"><span class="deto-trust-item__icon">🔬</span> GMP-zertifiziert</div>
+      <div class="deto-trust-item"><span class="deto-trust-item__icon">🚚</span> Versand in 1–3 Tagen</div>
+      <div class="deto-trust-item"><span class="deto-trust-item__icon">🔒</span> 30 Tage Garantie</div>
+    </div>
+  </div>
+
+  {%- comment -%} ── SOCIAL PROOF ── {%- endcomment -%}
+  <div class="deto-social-proof">
+    <p>⭐ <strong>Über 1.200 Kunden</strong> vertrauen bereits auf mysolv® DETOX COMPLEX</p>
+  </div>
+
+  {%- comment -%} ── STATS ── {%- endcomment -%}
+  <section class="deto-section deto-section--alt">
+    <div class="deto-inner">
+      <div class="deto-section-label">Wissenschaftlich belegt</div>
+      <h2 class="deto-section-title">Echte Wirkung. Echte Zahlen.</h2>
+      <div class="deto-divider"></div>
+      <div class="deto-stats-grid">
+        <div class="deto-stat-card">
+          <div class="deto-stat-card__number">87%</div>
+          <div class="deto-stat-card__title">spürten mehr Energie</div>
+          <div class="deto-stat-card__desc">der Kunden berichteten innerhalb von 4 Wochen von deutlich mehr Vitalität und Leistungsfähigkeit.</div>
+        </div>
+        <div class="deto-stat-card">
+          <div class="deto-stat-card__number">80%</div>
+          <div class="deto-stat-card__title">verbesserte Verdauung</div>
+          <div class="deto-stat-card__desc">bemerkten eine spürbar bessere Darmfunktion und weniger Blähungen nach 30 Tagen Einnahme.</div>
+        </div>
+        <div class="deto-stat-card">
+          <div class="deto-stat-card__number">29</div>
+          <div class="deto-stat-card__title">Wirkstoffe pro Kapsel</div>
+          <div class="deto-stat-card__desc">sorgfältig ausgewählte, natürliche Inhaltsstoffe — kein Füllstoff, keine unnötigen Zusätze.</div>
+        </div>
+        <div class="deto-stat-card">
+          <div class="deto-stat-card__number">3</div>
+          <div class="deto-stat-card__title">Monate Wirkdauer</div>
+          <div class="deto-stat-card__desc">dauert eine vollständige Entgiftungskur für nachhaltige Ergebnisse — daher unser 3er-Paket empfohlen.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── INGREDIENTS ── {%- endcomment -%}
+  <section class="deto-section">
+    <div class="deto-inner">
+      <div class="deto-section-label">Inhaltsstoffe</div>
+      <h2 class="deto-section-title">Jede Kapsel — vollgepackt mit Natur</h2>
+      <div class="deto-divider"></div>
+      <p class="deto-section-desc">29 bioaktive Wirkstoffe, die gezielt Leber, Darm, Nieren und das Lymphsystem unterstützen — für eine ganzheitliche Entgiftung.</p>
+
+      <div class="deto-ingredients-grid">
+        <div class="deto-ingredient-card">
+          <div class="deto-ingredient-card__icon">🌿</div>
+          <div>
+            <div class="deto-ingredient-card__name">Mariendistel-Extrakt</div>
+            <div class="deto-ingredient-card__desc">Das Silymarin in der Mariendistel schützt Leberzellen aktiv vor Schadstoffen und fördert die Regeneration.</div>
+          </div>
+        </div>
+        <div class="deto-ingredient-card">
+          <div class="deto-ingredient-card__icon">🫚</div>
+          <div>
+            <div class="deto-ingredient-card__name">Artischocken-Extrakt</div>
+            <div class="deto-ingredient-card__desc">Steigert die Galleproduktion, fördert die Fettverdauung und unterstützt die Entgiftungsleistung der Leber.</div>
+          </div>
+        </div>
+        <div class="deto-ingredient-card">
+          <div class="deto-ingredient-card__icon">🍃</div>
+          <div>
+            <div class="deto-ingredient-card__name">Löwenzahn-Wurzel</div>
+            <div class="deto-ingredient-card__desc">Klassisches Entgiftungskraut, das die Nierenfunktion stärkt und die natürliche Ausleitung fördert.</div>
+          </div>
+        </div>
+        <div class="deto-ingredient-card">
+          <div class="deto-ingredient-card__icon">🌱</div>
+          <div>
+            <div class="deto-ingredient-card__name">Chlorella-Alge</div>
+            <div class="deto-ingredient-card__desc">Bindet Schwermetalle und Umweltgifte im Darm und ermöglicht deren sichere Ausscheidung.</div>
+          </div>
+        </div>
+        <div class="deto-ingredient-card">
+          <div class="deto-ingredient-card__icon">🧄</div>
+          <div>
+            <div class="deto-ingredient-card__name">Knoblauch-Extrakt</div>
+            <div class="deto-ingredient-card__desc">Starke antimikrobielle Wirkung, schützt den Darm und stärkt das Immunsystem.</div>
+          </div>
+        </div>
+        <div class="deto-ingredient-card">
+          <div class="deto-ingredient-card__icon">🫐</div>
+          <div>
+            <div class="deto-ingredient-card__name">Kurkuma + Piperin</div>
+            <div class="deto-ingredient-card__desc">Curcumin hemmt Entzündungen, Piperin erhöht die Bioverfügbarkeit um bis zu 2.000%.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── TIMELINE ── {%- endcomment -%}
+  <section class="deto-section deto-section--dark">
+    <div class="deto-inner">
+      <div class="deto-section-label">Echte Ergebnisse brauchen Zeit</div>
+      <h2 class="deto-section-title">Dein Körper auf dem Weg zur Entgiftung</h2>
+      <div class="deto-divider" style="background:#86efac"></div>
+      <p class="deto-section-desc">Echte Entgiftung passiert nicht über Nacht. Gib deinem Körper die Zeit, die er verdient.</p>
+
+      <div class="deto-timeline">
+        <div class="deto-timeline-step">
+          <div class="deto-timeline-step__dot">1</div>
+          <div class="deto-timeline-step__week">Woche 1–2</div>
+          <div class="deto-timeline-step__title">Aktivierung</div>
+          <div class="deto-timeline-step__desc">Die Wirkstoffe beginnen, Entgiftungsenzyme in der Leber zu aktivieren. Erste Verbesserungen der Verdauung.</div>
+        </div>
+        <div class="deto-timeline-step">
+          <div class="deto-timeline-step__dot">2</div>
+          <div class="deto-timeline-step__week">Woche 3–4</div>
+          <div class="deto-timeline-step__title">Entgiftung</div>
+          <div class="deto-timeline-step__desc">Die Leber arbeitet auf Hochtouren. Viele Kunden berichten von mehr Energie und klarerer Haut.</div>
+        </div>
+        <div class="deto-timeline-step">
+          <div class="deto-timeline-step__dot">3</div>
+          <div class="deto-timeline-step__week">Woche 5–8</div>
+          <div class="deto-timeline-step__title">Regeneration</div>
+          <div class="deto-timeline-step__desc">Spürbare Verbesserung der Vitalität. Darm und Nieren arbeiten effizienter. Weniger Müdigkeit.</div>
+        </div>
+        <div class="deto-timeline-step">
+          <div class="deto-timeline-step__dot">4</div>
+          <div class="deto-timeline-step__week">Woche 9–12</div>
+          <div class="deto-timeline-step__title">Transformation</div>
+          <div class="deto-timeline-step__desc">Vollständige Entgiftungskur abgeschlossen. Nachhaltiges Wohlbefinden, stärkere Immunabwehr.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── COMPARISON ── {%- endcomment -%}
+  <section class="deto-section deto-section--alt">
+    <div class="deto-inner">
+      <div class="deto-section-label">Vergleich</div>
+      <h2 class="deto-section-title">Warum mysolv® DETOX COMPLEX?</h2>
+      <div class="deto-divider"></div>
+      <div class="deto-comparison">
+        <table class="deto-comparison-table">
+          <thead>
+            <tr>
+              <th>Merkmal</th>
+              <th>mysolv® DETOX COMPLEX</th>
+              <th>Andere Produkte</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>29 natürliche Wirkstoffe</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td>Softgel-Kapsel (höhere Bioverfügbarkeit)</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td>In Deutschland hergestellt</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td>GMP-zertifizierte Produktion</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td>Ohne Füllstoffe & künstliche Zusätze</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td>30-Tage Geld-zurück-Garantie</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td>Glutenfrei & laktosefrei</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── REVIEWS ── {%- endcomment -%}
+  <section class="deto-section">
+    <div class="deto-inner">
+      <div class="deto-section-label">Kundenstimmen</div>
+      <h2 class="deto-section-title">Was unsere Kunden sagen</h2>
+      <div class="deto-divider"></div>
+
+      <div class="deto-reviews-grid">
+        <div class="deto-review-card">
+          <div class="deto-review-card__stars">★★★★★</div>
+          <div class="deto-review-card__text">„Nach nur 3 Wochen merkte ich einen riesigen Unterschied. Meine Energie ist deutlich höher und mein Bauch macht endlich keine Probleme mehr. Ich werde das definitiv weiter bestellen."</div>
+          <div class="deto-review-card__author">
+            <div class="deto-review-card__avatar">S</div>
+            <div>
+              <div class="deto-review-card__name">Sandra K.</div>
+              <div class="deto-review-card__meta">München · vor 2 Wochen</div>
+              <div class="deto-review-card__verified">✓ Verifizierter Kauf</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="deto-review-card">
+          <div class="deto-review-card__stars">★★★★★</div>
+          <div class="deto-review-card__text">„Ich war skeptisch, aber die Kapseln haben mich wirklich überzeugt. Haut ist klarer, Schlafen besser, und das allgemeine Wohlbefinden hat sich deutlich verbessert. Top Produkt!"</div>
+          <div class="deto-review-card__author">
+            <div class="deto-review-card__avatar">M</div>
+            <div>
+              <div class="deto-review-card__name">Marcus H.</div>
+              <div class="deto-review-card__meta">Hamburg · vor 1 Monat</div>
+              <div class="deto-review-card__verified">✓ Verifizierter Kauf</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="deto-review-card">
+          <div class="deto-review-card__stars">★★★★★</div>
+          <div class="deto-review-card__text">„Das 3er-Paket ist das beste Investment! Man spürt die Wirkung wirklich erst nach 4–6 Wochen richtig, aber es lohnt sich. Lieber spät als nie mit dem Entgiften anfangen."</div>
+          <div class="deto-review-card__author">
+            <div class="deto-review-card__avatar">L</div>
+            <div>
+              <div class="deto-review-card__name">Laura T.</div>
+              <div class="deto-review-card__meta">Berlin · vor 3 Wochen</div>
+              <div class="deto-review-card__verified">✓ Verifizierter Kauf</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── GUARANTEE ── {%- endcomment -%}
+  <section class="deto-section deto-section--alt">
+    <div class="deto-inner">
+      <div class="deto-guarantee">
+        <div class="deto-guarantee__seal">
+          <span class="days">30</span>
+          <span class="label">Tage<br>Garantie</span>
+        </div>
+        <div class="deto-guarantee__content">
+          <h3 class="deto-guarantee__title">30-Tage Geld-zurück-Garantie</h3>
+          <p class="deto-guarantee__text">Wir sind zu 100% von unserem Produkt überzeugt. Wenn du nach 30 Tagen nicht zufrieden bist, erstattest wir dir den vollen Kaufpreis — ohne Wenn und Aber. Keine Rückfragen, kein Aufwand. Einfach eine E-Mail an uns und du bekommst dein Geld zurück.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── FAQ ── {%- endcomment -%}
+  <section class="deto-section">
+    <div class="deto-inner">
+      <div class="deto-section-label">Häufige Fragen</div>
+      <h2 class="deto-section-title">Noch offene Fragen?</h2>
+      <div class="deto-divider"></div>
+
+      <div class="deto-faq">
+        <div class="deto-faq-item open">
+          <button class="deto-faq-item__question" onclick="this.parentElement.classList.toggle('open')">
+            Wie nehme ich mysolv® DETOX COMPLEX ein?
+            <svg class="deto-faq-item__chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="deto-faq-item__answer">Nimm täglich 2 Softgel-Kapseln morgens zum Frühstück mit ausreichend Wasser ein. Für optimale Ergebnisse empfehlen wir eine kontinuierliche Einnahme über mindestens 3 Monate.</div>
+        </div>
+        <div class="deto-faq-item">
+          <button class="deto-faq-item__question" onclick="this.parentElement.classList.toggle('open')">
+            Ab wann spüre ich die Wirkung?
+            <svg class="deto-faq-item__chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="deto-faq-item__answer">Die ersten Veränderungen — bessere Verdauung, mehr Energie — sind oft schon nach 2–3 Wochen spürbar. Die volle Entgiftungswirkung entfaltet sich nach 8–12 Wochen regelmäßiger Einnahme.</div>
+        </div>
+        <div class="deto-faq-item">
+          <button class="deto-faq-item__question" onclick="this.parentElement.classList.toggle('open')">
+            Ist das Produkt vegan und glutenfrei?
+            <svg class="deto-faq-item__chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="deto-faq-item__answer">Die Softgel-Hülle ist aus pflanzlicher Gelatine. Das Produkt ist glutenfrei, laktosefrei und frei von künstlichen Farbstoffen und Konservierungsmitteln.</div>
+        </div>
+        <div class="deto-faq-item">
+          <button class="deto-faq-item__question" onclick="this.parentElement.classList.toggle('open')">
+            Gibt es Nebenwirkungen?
+            <svg class="deto-faq-item__chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="deto-faq-item__answer">mysolv® DETOX COMPLEX ist aus natürlichen Inhaltsstoffen hergestellt und gut verträglich. In seltenen Fällen können zu Beginn Entgiftungsreaktionen wie leichte Müdigkeit auftreten. Bei Schwangerschaft, Stillzeit oder Medikamenteneinnahme bitte Arzt befragen.</div>
+        </div>
+        <div class="deto-faq-item">
+          <button class="deto-faq-item__question" onclick="this.parentElement.classList.toggle('open')">
+            Wie schnell wird geliefert?
+            <svg class="deto-faq-item__chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="deto-faq-item__answer">Bestellungen werden innerhalb von 1–2 Werktagen versendet. Die Lieferzeit beträgt in der Regel 1–3 Werktage innerhalb Deutschlands. Ab 50€ Bestellwert versandkostenfrei.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── CTA BOTTOM ── {%- endcomment -%}
+  <div class="deto-cta-bottom">
+    <h2>Starte jetzt deine Entgiftungskur</h2>
+    <p>Gib deinem Körper das, was er wirklich braucht — mit mysolv® DETOX COMPLEX.</p>
+    <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;" class="deto-add-to-cart">
+      Jetzt bestellen — ab {{ variant_1.price | money }} →
+    </a>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var opts = document.querySelectorAll('.deto-variant-option');
+  var priceEl = document.getElementById('deto-price');
+  var variantInput = document.getElementById('deto-variant-id');
+
+  opts.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      opts.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      priceEl.textContent = btn.dataset.price;
+      variantInput.value = btn.dataset.variant;
+    });
+  });
+})();
+</script>
